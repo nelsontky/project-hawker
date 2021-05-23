@@ -15,7 +15,9 @@ export class ImagesService {
 
   static async build() {
     const connection = await getDbConnection();
-    const imagesRepository = connection.getRepository(Image);
+    const imagesRepository = connection.getRepository(
+      "Image"
+    ) as Repository<Image>;
 
     return new ImagesService(connection, imagesRepository);
   }

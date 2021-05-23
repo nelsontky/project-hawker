@@ -20,6 +20,7 @@
     "reflect-metadata": "^0.1.13",
     "remark": "^13.0.0",
     "remark-html": "^12.0.0",
+    "slugify": "^1.5.3",
     "typeorm": "^0.2.32"
   },
   "devDependencies": {

@@ -6,9 +6,11 @@ import {
   CreateDateColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from "typeorm";
 
 import { Image } from "modules/images/entities/image.entity";
+import { Stall } from "modules/stalls/entities/stall.entity";
 
 @Entity()
 export class Location {
@@ -19,11 +21,17 @@ export class Location {
   name: string;
 
   @Column("text", { unique: true })
+  slug: string;
+
+  @Column("text", { unique: true })
   postalCode: string;
 
   @ManyToMany(() => Image)
   @JoinTable()
   images: Image[];
+
+  @OneToMany(() => Stall, (stall) => stall.location)
+  stalls: Stall[];
 
   @CreateDateColumn()
   createdAt: Date;

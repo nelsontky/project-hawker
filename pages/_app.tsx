@@ -1,5 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 import "../styles/global.css";
 import { AppProps } from "next/app";
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Component {...pageProps} />
     </ThemeProvider>
   );

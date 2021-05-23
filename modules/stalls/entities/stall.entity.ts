@@ -5,10 +5,12 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   ManyToMany,
+  ManyToOne,
   JoinTable,
 } from "typeorm";
 
 import { Image } from "modules/images/entities/image.entity";
+import { Location } from "modules/locations/entities/location.entity";
 
 @Entity()
 export class Stall {
@@ -19,13 +21,10 @@ export class Stall {
   name: string;
 
   @Column("text")
+  slug: string;
+
+  @Column("text")
   stallNumber: string;
-
-  @Column("int")
-  openingTime: number;
-
-  @Column("int")
-  closingTime: number;
 
   @Column("text")
   htmlDescription: string;
@@ -33,6 +32,11 @@ export class Stall {
   @ManyToMany(() => Image)
   @JoinTable()
   images: Image[];
+
+  @ManyToOne(() => Location, (location) => location.stalls, {
+    onDelete: "CASCADE",
+  })
+  location: Location;
 
   @CreateDateColumn()
   createdAt: Date;

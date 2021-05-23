@@ -1,5 +1,5 @@
 import getDbConnection from "lib/utils/get-db-connection.util";
-import { Connection, Repository } from "typeorm";
+import { Connection, FindOneOptions, Repository } from "typeorm";
 
 import { ImagesService } from "modules/images/image.service";
 import { Location } from "modules/locations/entities/location.entity";
@@ -21,7 +21,9 @@ export class LocationsService {
 
   static async build() {
     const connection = await getDbConnection();
-    const locationsRepository = connection.getRepository(Location);
+    const locationsRepository = connection.getRepository(
+      "Location"
+    ) as Repository<Location>;
     const imagesService = await ImagesService.build();
 
     return new LocationsService(connection, locationsRepository, imagesService);
@@ -33,8 +35,8 @@ export class LocationsService {
       .select([
         "location.name",
         "location.postalCode",
-        "location.images",
         "image.link",
+        "location.slug",
         "location.updatedAt",
         "location.createdAt",
       ])
@@ -42,19 +44,25 @@ export class LocationsService {
       .getMany();
   }
 
+  async findOne(options: FindOneOptions<Location>) {
+    return this.locationsRepository.findOne(options);
+  }
+
   async create() {
     if (process.env.NODE_ENV === "development") {
-      const image = await this.imagesService.create({
-        link: "images/hawker-centers/ghim-moh-market-and-hawker-centre/ghim-moh-market-and-hawker-centre.jpg",
-      });
+      for (let i = 270020; i < 270021; i++) {
+        const image = await this.imagesService.create({
+          link: "images/hawker-centers/ghim-moh-market-and-hawker-centre/ghim-moh-market-and-hawker-centre.jpg",
+        });
 
-      const location = new Location();
-      location.name = "Ghim Moh Market and Hawker Centre";
-      location.postalCode = "270020";
-      location.images = [image];
+        const location = new Location();
+        location.name = "Ghim Moh Market and Hawker Centre";
+        location.slug = "ghim-moh-market-and-hawker-center";
+        location.postalCode = "" + i;
+        location.images = [image];
 
-      const result = await this.locationsRepository.save(location);
-      return result;
+        await this.locationsRepository.save(location);
+      }
     }
   }
 }
