@@ -1,5 +1,10 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default (_: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).json({ text: 'Hello' })
-}
+import { LocationsService } from "modules/locations/locations.service";
+
+export default async (_: NextApiRequest, res: NextApiResponse) => {
+  const locationsService = await LocationsService.build();
+  const result = await locationsService.create();
+
+  res.status(200).json({ result });
+};
