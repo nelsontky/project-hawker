@@ -187,7 +187,7 @@ export class StallsService {
       .select([
         "stall.name",
         "stall.stallNumber",
-        "stall.htmlDescription",
+        "stall.information",
         "stall.createdAt",
         "stall.updatedAt",
         "images.link",
@@ -227,24 +227,24 @@ export class StallsService {
         const price = store.price.trim().length > 0 ? store.price : undefined;
         const favorites =
           store.favorites.trim().length > 0 ? store.favorites : undefined;
-        let htmlDescription = "";
+        let descriptionObj: any = {};
         if (openingHours) {
-          htmlDescription += `<p><strong>Opening Hours</strong><br/>${openingHours}</p>`;
+          descriptionObj.openingHours = openingHours;
         }
         if (dishes) {
-          htmlDescription += `<p><strong>Dishes</strong><br/>${dishes}</p>`;
+          descriptionObj.dishes = dishes;
         }
         if (description) {
-          htmlDescription += `<p><strong>Description</strong><br/>${description}</p>`;
+          descriptionObj.description = description;
         }
         if (price) {
-          htmlDescription += `<p><strong>Price</strong><br/>${price}</p>`;
+          descriptionObj.price = price;
         }
         if (favorites) {
-          htmlDescription += `<p><strong>Favorites</strong><br/>${favorites}</p>`;
+          descriptionObj.favorites = favorites;
         }
 
-        stall.htmlDescription = htmlDescription;
+        stall.information = descriptionObj;
         stall.slug = slugify(store.name, { replacement: "-", lower: true });
         stall.location = await this.locationsService.findOne({
           where: { id: "ad62f958-5900-47e9-8597-bad96b0b2496" },

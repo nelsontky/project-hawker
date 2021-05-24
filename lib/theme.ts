@@ -7,6 +7,17 @@ let theme = createMuiTheme({
   },
   palette: {
     primary: { main: "#FF9F80" },
+    secondary: { main: "#80E0FF" },
+  },
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        ".MuiContainer-root": {
+          paddingLeft: "24px !important",
+          paddingRight: "24px !important",
+        },
+      },
+    },
   },
 });
 theme = responsiveFontSizes(theme);

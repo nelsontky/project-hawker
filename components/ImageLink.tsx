@@ -8,15 +8,11 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       position: "relative",
-      width: 140,
-      height: 140,
+      width: 180,
+      height: 180,
       transition: "transform 0.2s",
 
       "&:hover": {
-        transform: "scale(1.2)",
-      },
-
-      "&:focus": {
         transform: "scale(1.2)",
       },
     },
@@ -57,7 +53,7 @@ export default function ImageLink({
         <a target={target} rel={rel}>
           <img src={src} />
           <div className={classes.caption}>
-            <Typography>{children}</Typography>
+            <Typography variant="h6">{children}</Typography>
           </div>
         </a>
       </Link>

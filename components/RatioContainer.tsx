@@ -11,9 +11,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
     root: {
       height: 0,
       paddingTop: (props) => props.percentage,
-      borderStyle: "solid",
-      borderColor: theme.palette.common.white,
-      borderWidth: theme.spacing(2),
     },
   })
 );

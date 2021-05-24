@@ -16,6 +16,24 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       backgroundColor: theme.palette.primary.main,
     },
+    ratioContainer: {
+      borderStyle: "solid",
+      borderColor: theme.palette.common.white,
+      borderWidth: theme.spacing(2),
+    },
+    location: {
+      color: theme.palette.common.white,
+      transition: "transform 0.2s",
+
+      "&:hover": {
+        transform: `translateY(-${theme.spacing(3)}px)`,
+        color: theme.palette.secondary.main,
+
+        "& > a > div": {
+          borderColor: theme.palette.secondary.main,
+        },
+      },
+    },
   })
 );
 
@@ -32,25 +50,36 @@ export default function LocationList({ allLocationsData }: LocationListProps) {
     <div className={classes.root}>
       <Container fixed>
         <div className="text-center py-10">
-          <Typography variant="h2" className="font-bold text-white">
+          <Typography variant="h3" className="font-bold text-white">
             Explore
           </Typography>
         </div>
-        <Grid container spacing={isSmall ? 8 : 4} justify="center">
+        <Grid container spacing={isSmall ? 10 : 4} justify="center">
           {allLocationsData.map((location, i) => (
-            <Grid item xs={12} sm={4} md={3} key={i}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              key={i}
+              className={classes.location}
+            >
               <Link href={"/" + location.slug}>
                 <a>
                   <RatioContainer
                     percentage={isSmall ? "100%" : "56.25%"}
+                    className={classes.ratioContainer}
                     style={{
                       background: `url(${location.images[0].link}) no-repeat center`,
                       backgroundSize: "cover",
                     }}
                   ></RatioContainer>
-                  <Typography className="text-white" variant="h6">
-                    {location.name}
-                  </Typography>
+                  <div className="text-center mt-4">
+                    <Typography variant="h6" className="font-bold leading-none">
+                      {location.name}
+                    </Typography>
+                  </div>
                 </a>
               </Link>
             </Grid>
