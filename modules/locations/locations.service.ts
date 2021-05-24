@@ -33,19 +33,39 @@ export class LocationsService {
     return this.locationsRepository
       .createQueryBuilder("location")
       .select([
+        "location.id",
         "location.name",
         "location.postalCode",
-        "image.link",
+        "images.link",
         "location.slug",
         "location.updatedAt",
         "location.createdAt",
       ])
-      .leftJoin("location.images", "image")
+      .leftJoin("location.images", "images")
       .getMany();
   }
 
   async findOne(options: FindOneOptions<Location>) {
     return this.locationsRepository.findOne(options);
+  }
+
+  async findOneDeep(locationSlug: string) {
+    return this.locationsRepository
+      .createQueryBuilder("location")
+      .select([
+        "location.name",
+        "location.postalCode",
+        "images.link",
+        "location.slug",
+        "stallImages.link",
+        "location.updatedAt",
+        "location.createdAt",
+      ])
+      .leftJoin("location.images", "images")
+      .leftJoinAndSelect("location.stalls", "stalls")
+      .leftJoin("stalls.images", "stallImages")
+      .where("location.slug = :locationSlug", { locationSlug })
+      .getOne();
   }
 
   async create() {

@@ -1,38 +1,38 @@
 import React from "react";
-import clsx from "clsx";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import clsx from "clsx";
 
 interface StyleProps {
-  percentage: string;
+  image: string;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
     root: {
-      height: 0,
-      paddingTop: (props) => props.percentage,
-      borderStyle: "solid",
-      borderColor: theme.palette.common.white,
-      borderWidth: theme.spacing(2),
+      background: "no-repeat center",
+      backgroundImage: (props) =>
+        `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(${props.image})`,
+      backgroundSize: "cover",
+      height: "80vh",
     },
   })
 );
 
-interface RatioContainerProps
+interface BannerTopProps
   extends React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {
-  percentage: string;
+  image: string;
 }
 
-export default function RatioContainer({
-  percentage,
-  className,
+export default function BannerTop({
+  image,
   children,
+  className,
   ...rest
-}: RatioContainerProps) {
-  const classes = useStyles({ percentage });
+}: BannerTopProps) {
+  const classes = useStyles({ image });
 
   return (
     <div className={clsx(classes.root, className)} {...rest}>

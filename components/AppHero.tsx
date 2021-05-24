@@ -6,7 +6,7 @@ import ImageLink from "components/ImageLink";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      background: "no-repeat center center fixed",
+      background: "no-repeat center",
       backgroundImage:
         "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(images/hawker-centers/ghim-moh-market-and-hawker-centre/ghim-moh-market-and-hawker-centre.jpg)",
       backgroundSize: "cover",

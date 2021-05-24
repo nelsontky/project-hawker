@@ -32,11 +32,11 @@ export default function LocationList({ allLocationsData }: LocationListProps) {
     <div className={classes.root}>
       <Container fixed>
         <div className="text-center py-10">
-          <Typography variant="h2" className="font-bold">
+          <Typography variant="h2" className="font-bold text-white">
             Explore
           </Typography>
         </div>
-        <Grid container spacing={8}>
+        <Grid container spacing={isSmall ? 8 : 4} justify="center">
           {allLocationsData.map((location, i) => (
             <Grid item xs={12} sm={4} md={3} key={i}>
               <Link href={"/" + location.slug}>
@@ -48,7 +48,9 @@ export default function LocationList({ allLocationsData }: LocationListProps) {
                       backgroundSize: "cover",
                     }}
                   ></RatioContainer>
-                  <Typography variant="h6">{location.name}</Typography>
+                  <Typography className="text-white" variant="h6">
+                    {location.name}
+                  </Typography>
                 </a>
               </Link>
             </Grid>

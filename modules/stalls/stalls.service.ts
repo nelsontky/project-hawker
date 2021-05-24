@@ -172,13 +172,35 @@ export class StallsService {
     );
   }
 
-  findAllSlugs(hawkerSlug: string) {
+  findAllSlugs(locationSlug: string) {
     return this.stallsRepository
       .createQueryBuilder("stall")
       .select(["stall.slug"])
       .leftJoin("stall.location", "location")
-      .where("location.slug = :hawkerSlug", { hawkerSlug })
+      .where("location.slug = :locationSlug", { locationSlug })
       .getMany();
+  }
+
+  findOneDeep(locationSlug: string, stallSlug: string) {
+    return this.stallsRepository
+      .createQueryBuilder("stall")
+      .select([
+        "stall.name",
+        "stall.stallNumber",
+        "stall.htmlDescription",
+        "stall.createdAt",
+        "stall.updatedAt",
+        "images.link",
+        "locationImages.link",
+      ])
+      .leftJoin("stall.images", "images")
+      .leftJoinAndSelect("stall.location", "location")
+      .leftJoin("location.images", "locationImages")
+      .where("location.slug = :locationSlug AND stall.slug = :stallSlug", {
+        locationSlug,
+        stallSlug,
+      })
+      .getOne();
   }
 
   async create() {
