@@ -1,5 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from "next";
 import { Container, Typography } from "@material-ui/core";
+import Head from "next/head";
 
 import BannerTop from "components/BannerTop";
 import StallContent from "components/StallContent";
@@ -15,24 +16,28 @@ interface StallPageProps {
 }
 
 export default function StallPage({ stallData }: StallPageProps) {
-  console.log(stallData.images);
   return (
-    <BannerTop image={"/" + stallData.location.images[0].link}>
-      <div className="relative h-full">
-        <Typography variant="h4" className="font-bold absolute top-4 left-4">
-          {"#" + stallData.stallNumber}
-        </Typography>
-        <Container
-          maxWidth="md"
-          className="flex flex-col justify-center h-full text-center"
-        >
-          <Typography variant="h2" className="font-bold">
-            {stallData.name}
+    <div>
+      <Head>
+        <title>{stallData.name}</title>
+      </Head>
+      <BannerTop image={"/" + stallData.location.images[0].link}>
+        <div className="relative h-full">
+          <Typography variant="h4" className="font-bold absolute top-4 left-4">
+            {"#" + stallData.stallNumber}
           </Typography>
-        </Container>
-      </div>
-      <StallContent stallData={stallData} />
-    </BannerTop>
+          <Container
+            maxWidth="md"
+            className="flex flex-col justify-center h-full text-center"
+          >
+            <Typography variant="h2" className="font-bold">
+              {stallData.name}
+            </Typography>
+          </Container>
+        </div>
+        <StallContent stallData={stallData} />
+      </BannerTop>
+    </div>
   );
 }
 
