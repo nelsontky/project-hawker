@@ -1,6 +1,7 @@
 import { GetStaticProps, GetStaticPaths } from "next";
 import { Container, Typography } from "@material-ui/core";
 import Head from "next/head";
+import AppFooter from "components/AppFooter";
 
 import BannerTop from "components/BannerTop";
 import StallContent from "components/StallContent";
@@ -35,8 +36,9 @@ export default function StallPage({ stallData }: StallPageProps) {
             </Typography>
           </Container>
         </div>
-        <StallContent stallData={stallData} />
       </BannerTop>
+      <StallContent stallData={stallData} />
+      <AppFooter />
     </div>
   );
 }

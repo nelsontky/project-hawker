@@ -1,5 +1,6 @@
 import { GetStaticProps, GetStaticPaths } from "next";
 import { Container, Typography, Grid } from "@material-ui/core";
+import AppFooter from "components/AppFooter";
 import Head from "next/head";
 import {
   makeStyles,
@@ -65,9 +66,17 @@ export default function HawkerCenter({
         </Container>
       </BannerTop>
       <Container fixed className="pt-16">
-        <Grid container spacing={isSmall ? 10 : 4} justify="center">
+        <Grid container spacing={10} justify="center">
           {locationData.stalls.map((stall, i) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={i} className={classes.stall}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              key={i}
+              className={classes.stall}
+            >
               <Link href={`/${locationSlug}/${stall.slug}`}>
                 <a>
                   <RatioContainer
@@ -89,6 +98,7 @@ export default function HawkerCenter({
           ))}
         </Grid>
       </Container>
+      <AppFooter />
     </div>
   );
 }

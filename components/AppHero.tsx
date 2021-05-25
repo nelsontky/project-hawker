@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     container: {
       paddingTop: theme.spacing(40),
+      paddingBottom: theme.spacing(20),
       minHeight: "100vh",
       height: "100%",
       display: "flex",
@@ -55,9 +56,9 @@ export default function AppHero() {
             href="http://projecthawker.com/submit"
             target="_blank"
             rel="noopener noreferrer"
-          >
-            Contribute
-          </ImageLink>
+            width="400px"
+            height="100%"
+          />
         </div>
       </Container>
     </div>

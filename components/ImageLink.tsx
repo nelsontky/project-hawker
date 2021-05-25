@@ -4,12 +4,18 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Link, { LinkProps } from "next/link";
 import { Typography } from "@material-ui/core";
 
-const useStyles = makeStyles((theme: Theme) =>
+interface StyleProps {
+  width?: string;
+  height?: string;
+  color?: string;
+}
+
+const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
     root: {
       position: "relative",
-      width: 180,
-      height: 180,
+      width: (props) => props.width ?? 180,
+      height: (props) => props.height ?? 180,
       transition: "transform 0.2s",
 
       "&:hover": {
@@ -18,12 +24,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     caption: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
       position: "absolute",
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: (props) => props.color ?? theme.palette.primary.main,
       left: "50%",
-      bottom: theme.spacing(4),
+      bottom: theme.spacing(2),
       transform: "translateX(-50%)",
     },
   })
@@ -31,10 +37,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface ImageLinkProps extends LinkProps {
   src: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   target?: string;
   rel?: string;
+  width?: string;
+  height?: string;
+  color?: string;
+  fontVariant?: any;
 }
 
 export default function ImageLink({
@@ -43,18 +53,24 @@ export default function ImageLink({
   className,
   target,
   rel,
+  width,
+  height,
+  color,
+  fontVariant,
   ...rest
 }: ImageLinkProps) {
-  const classes = useStyles();
+  const classes = useStyles({ width, height, color });
 
   return (
     <div className={clsx(classes.root, className)}>
       <Link {...rest}>
         <a target={target} rel={rel}>
           <img src={src} />
-          <div className={classes.caption}>
-            <Typography variant="h6">{children}</Typography>
-          </div>
+          {children && (
+            <div className={classes.caption}>
+              <Typography variant={fontVariant ?? "h6"}>{children}</Typography>
+            </div>
+          )}
         </a>
       </Link>
     </div>

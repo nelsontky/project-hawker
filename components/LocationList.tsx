@@ -2,8 +2,8 @@ import { Grid, Typography, Container } from "@material-ui/core";
 import {
   makeStyles,
   createStyles,
-  Theme,
   useTheme,
+  Theme,
 } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Link from "next/link";
@@ -15,6 +15,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       backgroundColor: theme.palette.primary.main,
+      paddingTop: theme.spacing(10),
+      paddingBottom: theme.spacing(10),
     },
     ratioContainer: {
       borderStyle: "solid",
@@ -49,12 +51,12 @@ export default function LocationList({ allLocationsData }: LocationListProps) {
   return (
     <div className={classes.root}>
       <Container fixed>
-        <div className="text-center py-10">
+        <div className="text-center mb-8">
           <Typography variant="h3" className="font-bold text-white">
             Explore
           </Typography>
         </div>
-        <Grid container spacing={isSmall ? 10 : 4} justify="center">
+        <Grid container spacing={10} justify="center">
           {allLocationsData.map((location, i) => (
             <Grid
               item

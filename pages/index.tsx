@@ -1,8 +1,10 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
+import { useTheme } from "@material-ui/core/styles";
 
 import AppHero from "components/AppHero";
 import LocationList from "components/LocationList";
+import AppFooter from "components/AppFooter";
 
 import { LocationsService } from "modules/locations/locations.service";
 import { Location } from "modules/locations/entities/location.entity";
@@ -14,6 +16,8 @@ interface HomeProps {
 }
 
 export default function Home({ allLocationsData }: HomeProps) {
+  const theme = useTheme()
+
   return (
     <div>
       <Head>
@@ -21,6 +25,7 @@ export default function Home({ allLocationsData }: HomeProps) {
       </Head>
       <AppHero />
       <LocationList allLocationsData={allLocationsData} />
+      <AppFooter neighborColor={theme.palette.primary.main} />
     </div>
   );
 }
