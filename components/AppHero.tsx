@@ -18,8 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
     },
     storyLink: {
-      height: "120px",
-      width: "268px",
+      maxWidth: "300px",
       margin: "auto",
     },
   })
@@ -37,9 +36,6 @@ export default function AppHero() {
           className="hidden md:flex pr-20 pl-4 flex-col justify-evenly"
         >
           <RotateAnimateImage
-            layout="responsive"
-            width="711"
-            height="636"
             origin="30% 0%"
             angle="5"
             src="/images/hawkermain01.png"
@@ -47,9 +43,6 @@ export default function AppHero() {
           <RotateAnimateImage
             origin="60% 0%"
             angle="-10"
-            layout="responsive"
-            width="709"
-            height="631"
             src="/images/hawkermain02.png"
           />
         </Grid>
@@ -89,17 +82,11 @@ export default function AppHero() {
             origin="55% 0%"
             angle="-2"
             src="/images/hawkermain03.png"
-            layout="responsive"
-            width="711"
-            height="806"
           />
           <RotateAnimateImage
             origin="35% 0%"
             angle="7"
             src="/images/hawkermain04.png"
-            layout="responsive"
-            width="712"
-            height="734"
           />
         </Grid>
       </Grid>
