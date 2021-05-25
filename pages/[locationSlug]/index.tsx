@@ -65,7 +65,7 @@ export default function HawkerCenter({
           </Typography>
         </Container>
       </BannerTop>
-      <Container fixed className="pt-16">
+      <Container fixed className="py-16">
         <Grid container spacing={10} justify="center">
           {locationData.stalls.map((stall, i) => (
             <Grid

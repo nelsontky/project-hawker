@@ -33,7 +33,7 @@ export default function StallContent({ stallData }: StallContentProps) {
         <Grid container item xs={12} sm={6} spacing={4}>
           {stallData.images.map((image, i) => (
             <Grid item xs={12} key={i}>
-              <img src={"/" + image.link} />
+              <img src={image.link} />
             </Grid>
           ))}
         </Grid>
