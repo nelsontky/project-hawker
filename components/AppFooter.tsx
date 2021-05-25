@@ -10,7 +10,7 @@ interface StyleProps {
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
     root: {
-      minHeight: 350,
+      paddingBottom: theme.spacing(10),
       backgroundColor: theme.palette.secondary.main,
     },
     title: {
