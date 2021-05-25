@@ -7,4 +7,7 @@ export class Image {
 
   @Column("text")
   link: string;
+
+  @Column("text")
+  compressedBase64: string;
 }

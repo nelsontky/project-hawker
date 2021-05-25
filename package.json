@@ -6,7 +6,12 @@
     "dev": "next dev",
     "start": "next start",
     "build": "rm -rf node_modules/.cache && next build && next export && touch out/.nojekyll",
-    "deploy": "git add -f out/ && git commit -m \"Deploy Next.js to gh-pages\" && git subtree push --prefix out origin gh-pages"
+    "deploy": "git add -f out/ && git commit -m \"Deploy Next.js to gh-pages\" && git subtree push --prefix out origin gh-pages",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config ./ormconfig.ts",
+    "typeorm:create": "npm run typeorm migration:create -- -n",
+    "typeorm:generate": "npm run typeorm migration:generate -- -n",
+    "typeorm:migrate": "npm run typeorm migration:run",
+    "typeorm:revert": "npm run typeorm migration:revert"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
@@ -22,6 +27,7 @@
     "reflect-metadata": "^0.1.13",
     "remark": "^13.0.0",
     "remark-html": "^12.0.0",
+    "sharp": "^0.28.3",
     "slugify": "^1.5.3",
     "typeorm": "^0.2.32"
   },
@@ -31,9 +37,12 @@
     "@types/lodash": "^4.14.170",
     "@types/node": "^13.13.52",
     "@types/react": "^16.9.32",
+    "@types/sharp": "^0.28.2",
     "autoprefixer": "^10.2.5",
     "postcss": "^8.3.0",
     "tailwindcss": "^2.1.2",
+    "ts-node": "^10.0.0",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3"
   }
 }

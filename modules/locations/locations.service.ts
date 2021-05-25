@@ -37,6 +37,7 @@ export class LocationsService {
         "location.name",
         "location.postalCode",
         "images.link",
+        "images.compressedBase64",
         "location.slug",
         "location.updatedAt",
         "location.createdAt",
@@ -56,8 +57,10 @@ export class LocationsService {
         "location.name",
         "location.postalCode",
         "images.link",
+        "images.compressedBase64",
         "location.slug",
         "stallImages.link",
+        "stallImages.compressedBase64",
         "location.updatedAt",
         "location.createdAt",
       ])

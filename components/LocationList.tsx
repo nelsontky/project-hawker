@@ -76,7 +76,8 @@ export default function LocationList({ allLocationsData }: LocationListProps) {
                       background: `url(${location.images[0].link}) no-repeat center`,
                       backgroundSize: "cover",
                     }}
-                  ></RatioContainer>
+                  >
+                  </RatioContainer>
                   <div className="text-center mt-4">
                     <Typography variant="h6" className="font-bold leading-none">
                       {location.name}

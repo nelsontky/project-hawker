@@ -191,6 +191,7 @@ export class StallsService {
         "stall.createdAt",
         "stall.updatedAt",
         "images.link",
+        "images.compressedBase64",
         "locationImages.link",
       ])
       .leftJoin("stall.images", "images")
