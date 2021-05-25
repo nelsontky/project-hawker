@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       textAlign: "center",
     },
+    storyLink: {
+      maxWidth: "400px",
+      width: "100%",
+    },
   })
 );
 
@@ -36,28 +40,26 @@ export default function AppHero() {
             Stories of our hawker heroes
           </Typography>
           <Typography className="mb-4">
-            Hi all Singaporeans, with the recent restrictions, many hawkers have
-            been struggling to make ends meet, yet a lot of the older ones fall
-            under the radar as they are not on any delivery platforms. We really
-            love the effort the community is putting in to support the heart and
-            work of our hawkers who have been putting in the hours even these
-            times to get delicious food to us at such a low cost.
+            Project Hawker is a passion project aiming to be a consolidated
+            place to list all hawkers and their stories. We are also working on
+            helping to future-proof these hawkers (e.g. by being on listed
+            online and on delivery apps).
           </Typography>
-          <Typography>
-            Inspired, we are embarking on this passion project to consolidate
-            all hawker information into a database where it can be easily
-            accessed. We need your cherished stories and experiences with your
-            favorite hawkers so no one gets left behind.
+          <Typography className="mb-4">
+            But we can't do this alone. We need the help of all hawker
+            supporters to bring these hawkers to light.
+          </Typography>
+          <Typography className="font-bold">
+            Help us reach out to them and let their stories be heard.
           </Typography>
         </div>
-        <div className="m-auto">
+        <div className="m-auto mt-12">
           <ImageLink
             src="images/icons/contribute.png"
             href="http://projecthawker.com/submit"
             target="_blank"
             rel="noopener noreferrer"
-            width="400px"
-            height="100%"
+            className={classes.storyLink}
           />
         </div>
       </Container>

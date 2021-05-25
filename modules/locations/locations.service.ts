@@ -63,6 +63,7 @@ export class LocationsService {
       ])
       .leftJoin("location.images", "images")
       .leftJoinAndSelect("location.stalls", "stalls")
+      .orderBy("stalls.name", "ASC")
       .leftJoin("stalls.images", "stallImages")
       .where("location.slug = :locationSlug", { locationSlug })
       .getOne();

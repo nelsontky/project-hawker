@@ -10,11 +10,19 @@ interface StyleProps {
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
     root: {
-      minHeight: 300,
+      minHeight: 350,
       backgroundColor: theme.palette.secondary.main,
+    },
+    title: {
+      fontFamily: "'Fredericka the Great', cursive",
+      color: theme.palette.common.white,
     },
     waves: {
       fill: (props) => props.neighborColor ?? theme.palette.background.default,
+    },
+    icon: {
+      height: theme.spacing(16),
+      width: theme.spacing(16),
     },
   })
 );
@@ -25,8 +33,6 @@ interface AppFooterProps {
 
 export default function AppFooter({ neighborColor }: AppFooterProps) {
   const classes = useStyles({ neighborColor });
-
-  return null;
 
   return (
     <div className={classes.root}>
@@ -55,30 +61,46 @@ export default function AppFooter({ neighborColor }: AppFooterProps) {
       <Container fixed className="pt-8">
         <Grid container spacing={6}>
           <Grid item xs={12} className="text-center">
-            <Typography className="font-bold text-white" variant="h4">
-              Connect with us!
+            <Typography className={classes.title} variant="h4">
+              @projecthawker
             </Typography>
           </Grid>
-          <Grid item xs={12} container spacing={4} justify="center">
+          <Grid item xs={12} container spacing={2} justify="center">
             <Grid item>
               <ImageLink
-                width="60px"
-                height="60px"
+                className={classes.icon}
                 src="/images/icons/instagram.png"
                 href="https://www.instagram.com/projecthawker/"
                 target="_blank"
                 rel="noopener noreferrer"
-              ></ImageLink>
+              />
             </Grid>
             <Grid item>
               <ImageLink
-                width="60px"
-                height="60px"
+                className={classes.icon}
                 src="/images/icons/facebook.png"
                 href="https://www.facebook.com/projecthawker"
                 target="_blank"
                 rel="noopener noreferrer"
-              ></ImageLink>
+              />
+            </Grid>
+            <Grid item>
+              <ImageLink
+                className={classes.icon}
+                src="/images/icons/whatsapp.png"
+                href="https://api.whatsapp.com/send?phone=6590682937"
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            </Grid>
+            <Grid item>
+              <ImageLink
+                className={classes.icon}
+                src="/images/icons/telegram.png"
+                href="https://t.me/projecthawker"
+                target="_blank"
+                rel="noopener noreferrer"
+              />
             </Grid>
           </Grid>
         </Grid>

@@ -5,8 +5,6 @@ import Link, { LinkProps } from "next/link";
 import { Typography } from "@material-ui/core";
 
 interface StyleProps {
-  width?: string;
-  height?: string;
   color?: string;
 }
 
@@ -14,8 +12,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
     root: {
       position: "relative",
-      width: (props) => props.width ?? 180,
-      height: (props) => props.height ?? 180,
       transition: "transform 0.2s",
 
       "&:hover": {
@@ -41,8 +37,6 @@ interface ImageLinkProps extends LinkProps {
   className?: string;
   target?: string;
   rel?: string;
-  width?: string;
-  height?: string;
   color?: string;
   fontVariant?: any;
 }
@@ -53,13 +47,11 @@ export default function ImageLink({
   className,
   target,
   rel,
-  width,
-  height,
   color,
   fontVariant,
   ...rest
 }: ImageLinkProps) {
-  const classes = useStyles({ width, height, color });
+  const classes = useStyles({ color });
 
   return (
     <div className={clsx(classes.root, className)}>
