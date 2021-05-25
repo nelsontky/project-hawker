@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Image, { ImageProps } from "next/image";
 
 interface StyleProps {
   angle?: string;
@@ -19,14 +20,10 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   })
 );
 
-interface RotateAnimateImageProps
-  extends React.DetailedHTMLProps<
-    React.ImgHTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  > {
+type RotateAnimateImageProps = {
   angle?: string;
   origin?: string;
-}
+} & ImageProps;
 
 export default function RotateAnimateImage({
   className,

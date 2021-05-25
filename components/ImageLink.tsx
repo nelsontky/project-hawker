@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Link, { LinkProps } from "next/link";
 import { Typography } from "@material-ui/core";
+import Image from "next/image";
 
 interface StyleProps {
   color?: string;
@@ -57,7 +58,7 @@ export default function ImageLink({
     <div className={clsx(classes.root, className)}>
       <Link {...rest}>
         <a target={target} rel={rel}>
-          <img src={src} />
+          <Image layout="fill" src={src} />
           {children && (
             <div className={classes.caption}>
               <Typography variant={fontVariant ?? "h6"}>{children}</Typography>
