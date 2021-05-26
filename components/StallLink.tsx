@@ -22,7 +22,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
     root: {
       boxShadow: "3px 6px 4px -2px rgba(0,0,0,0.62)",
-      transition: "transform 0.2s, box-shadow 0.2s, filter 0.3s ease-out",
+      transition: "transform 0.2s, box-shadow 0.2s, filter 0.2s ease-out",
 
       "&:hover": {
         transform: `translateY(-${theme.spacing(3)}px)`,

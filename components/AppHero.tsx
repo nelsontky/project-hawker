@@ -4,19 +4,36 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import ImageLink from "components/ImageLink";
 import RotateAnimateImage from "components/RotateAnimateImage";
 
-const useStyles = makeStyles((theme: Theme) =>
+import { useProgressiveImage } from "lib/hooks/use-progressive-image.hook";
+
+interface StyleProps {
+  blur: boolean;
+  src: string;
+}
+
+const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
     root: {
-      background: "no-repeat center",
-      backgroundImage:
-        "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(images/hawker-centers/ghim-moh-market-and-hawker-centre/ghim-moh-market-and-hawker-centre.jpg)",
-      backgroundSize: "cover",
+      position: "relative",
       minHeight: "100vh",
       color: theme.palette.common.white,
       display: "flex",
       justifyContent: "center",
       flexDirection: "column",
     },
+    background: (props) => ({
+      position: "absolute",
+      top: 0,
+      height: "100%",
+      width: "100%",
+      zIndex: -1,
+      background: "no-repeat center",
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${props.src})`,
+      backgroundSize: "cover",
+      
+      filter: props.blur ? "blur(8px)" : "none",
+      transition: "filter 0.2s ease-out",
+    }),
     storyLink: {
       maxWidth: "300px",
       margin: "auto",
@@ -24,11 +41,21 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const IMAGE_LINK =
+  "images/hawker-centers/ghim-moh-market-and-hawker-centre/ghim-moh-market-and-hawker-centre.jpg";
+const COMPRESSED_BASE64 =
+  "data:image/png;base64,/9j/4QC8RXhpZgAASUkqAAgAAAAGABIBAwABAAAAAQAAABoBBQABAAAAVgAAABsBBQABAAAAXgAAACgBAwABAAAAAgAAABMCAwABAAAAAQAAAGmHBAABAAAAZgAAAAAAAAAAdwEA6AMAAAB3AQDoAwAABgAAkAcABAAAADAyMTABkQcABAAAAAECAwAAoAcABAAAADAxMDABoAMAAQAAAP//AAACoAQAAQAAACEAAAADoAQAAQAAABQAAAAAAAAA/9sAQwAGBAUGBQQGBgUGBwcGCAoQCgoJCQoUDg8MEBcUGBgXFBYWGh0lHxobIxwWFiAsICMmJykqKRkfLTAtKDAlKCko/9sAQwEHBwcKCAoTCgoTKBoWGigoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo/8AAEQgAFAAhAwEiAAIRAQMRAf/EABoAAQACAwEAAAAAAAAAAAAAAAAFCAIDBAf/xAAwEAABAgQEAgcJAAAAAAAAAAABAgMABAURBhIhMRNxFBUiQVGRlCRTVYGhscHR0v/EABgBAAMBAQAAAAAAAAAAAAAAAAECAwAE/8QAIBEAAgIBBAMBAAAAAAAAAAAAAAECEQMhMUGBBBMUMv/aAAwDAQACEQMRAD8A9qwRjhurS7cpVJmXYqLacylGwS8kWGYG9grXUfMaR2YlxfQqY4wzPqVMuvAqAlQFhIBtrqAN4piwSBZdLlEbauTSB+YnJSqKZl0tCn0UhO15wa+Qics6j+de6DLHPhFhJ7H2H0rHs08hBFyospNhfc9q9uWsTLr1HRlW5VJEm1wkTCNPrFX36mtakZadRMxtZPS0k/aIebU2+4pTrNCTmFwRMpO0GHl26arsRYsjesS2PWtH+ISXqWv6hFOeE17uj+oT+4RX6IjemRsxMWWKZLqYlJZtTwCFFKPEbi/f4czELWJRqnYjm5JgBTLK8qeIAokabm0IRzYm3uVlsdaUIGJJFnInh8NpVrDvRrGD7TaXk5G0pzKJNoQgLZG57NVuXkIQhFaJWf/Z";
+
 export default function AppHero() {
-  const classes = useStyles();
+  const { src, blur } = useProgressiveImage({
+    src: IMAGE_LINK,
+    compressedSrc: COMPRESSED_BASE64,
+  });
+  const classes = useStyles({ src, blur });
 
   return (
     <div className={classes.root}>
+      <div className={classes.background} />
       <Grid container className="h-full text-center py-10" justify="center">
         <Grid
           item

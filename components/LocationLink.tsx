@@ -10,7 +10,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import RatioContainer from "components/RatioContainer";
 
-import { Stall } from "modules/stalls/entities/stall.entity";
 import { useProgressiveImage } from "lib/hooks/use-progressive-image.hook";
 import { Location } from "modules/locations/entities/location.entity";
 
@@ -27,6 +26,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       filter: props.blur ? "blur(8px)" : "none",
+      transition: "filter 0.2s ease-out",
 
       borderStyle: "solid",
       borderColor: theme.palette.common.white,

@@ -2,11 +2,8 @@ import { Grid, Typography, Container } from "@material-ui/core";
 import {
   makeStyles,
   createStyles,
-  useTheme,
   Theme,
 } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Link from "next/link";
 
 import LocationLink from "components/LocationLink";
 
@@ -46,8 +43,6 @@ interface LocationListProps {
 
 export default function LocationList({ allLocationsData }: LocationListProps) {
   const classes = useStyles();
-  const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
     <div className={classes.root}>
