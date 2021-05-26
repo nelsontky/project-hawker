@@ -8,7 +8,8 @@ import {
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Link from "next/link";
 
-import RatioContainer from "components/RatioContainer";
+import LocationLink from "components/LocationLink";
+
 import { Location } from "modules/locations/entities/location.entity";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -67,24 +68,7 @@ export default function LocationList({ allLocationsData }: LocationListProps) {
               key={i}
               className={classes.location}
             >
-              <Link href={"/" + location.slug}>
-                <a>
-                  <RatioContainer
-                    percentage={isSmall ? "100%" : "56.25%"}
-                    className={classes.ratioContainer}
-                    style={{
-                      background: `url(${location.images[0].link}) no-repeat center`,
-                      backgroundSize: "cover",
-                    }}
-                  >
-                  </RatioContainer>
-                  <div className="text-center mt-4">
-                    <Typography variant="h6" className="font-bold leading-none">
-                      {location.name}
-                    </Typography>
-                  </div>
-                </a>
-              </Link>
+              <LocationLink location={location} />
             </Grid>
           ))}
         </Grid>
