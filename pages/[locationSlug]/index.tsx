@@ -37,7 +37,7 @@ export default function HawkerCenter({
       <Head>
         <title>{locationData.name}</title>
       </Head>
-      <BannerTop image={locationData.images[0].link}>
+      <BannerTop image={locationData.images[0]}>
         <Container
           maxWidth="md"
           className="flex flex-col justify-center h-full text-center"

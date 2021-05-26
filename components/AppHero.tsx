@@ -27,10 +27,11 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
       height: "100%",
       width: "100%",
       zIndex: -1,
+      
       background: "no-repeat center",
       backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${props.src})`,
       backgroundSize: "cover",
-      
+
       filter: props.blur ? "blur(8px)" : "none",
       transition: "filter 0.2s ease-out",
     }),

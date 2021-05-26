@@ -18,12 +18,10 @@ export function useProgressiveImage({
     const image = new Image();
     image.src = src;
     image.onload = () => {
-      setTimeout(() => {
-        setResult({
-          blur: false,
-          src,
-        });
-      }, 1000);
+      setResult({
+        blur: false,
+        src,
+      });
     };
   }, []);
 
