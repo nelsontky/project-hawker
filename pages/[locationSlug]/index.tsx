@@ -2,33 +2,22 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import { Container, Typography, Grid } from "@material-ui/core";
 import AppFooter from "components/AppFooter";
 import Head from "next/head";
-import {
-  makeStyles,
-  createStyles,
-  Theme,
-  useTheme,
-} from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Link from "next/link";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 import BannerTop from "components/BannerTop";
-import RatioContainer from "components/RatioContainer";
+import StallLink from "components/StallLink";
 
 import { LocationsService } from "modules/locations/locations.service";
 import { Location } from "modules/locations/entities/location.entity";
 import { entityToObject } from "lib/utils/entity-to-object.util";
 
+interface HawkerCenterProps {
+  locationData: Location;
+  locationSlug: string;
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    ratioContainer: {
-      boxShadow: "3px 6px 4px -2px rgba(0,0,0,0.62)",
-      transition: "transform 0.2s, box-shadow 0.2s",
-
-      "&:hover": {
-        transform: `translateY(-${theme.spacing(3)}px)`,
-        boxShadow: `3px 18px 4px -2px rgba(0,0,0,0.62)`,
-      },
-    },
     stall: {
       "&:hover": {
         color: theme.palette.primary.main,
@@ -37,18 +26,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface HawkerCenterProps {
-  locationData: Location;
-  locationSlug: string;
-}
-
 export default function HawkerCenter({
   locationData,
   locationSlug,
 }: HawkerCenterProps) {
   const classes = useStyles();
-  const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
     <div>
@@ -77,23 +59,7 @@ export default function HawkerCenter({
               key={i}
               className={classes.stall}
             >
-              <Link href={`/${locationSlug}/${stall.slug}`}>
-                <a>
-                  <RatioContainer
-                    className={classes.ratioContainer}
-                    percentage={isSmall ? "100%" : "56.25%"}
-                    style={{
-                      background: `url(${stall.images[0].link}) no-repeat center`,
-                      backgroundSize: "cover",
-                    }}
-                  ></RatioContainer>
-                  <div className="text-center mt-4">
-                    <Typography variant="h6" className="font-bold leading-none">
-                      {stall.name}
-                    </Typography>
-                  </div>
-                </a>
-              </Link>
+              <StallLink stall={stall} locationSlug={locationSlug} />
             </Grid>
           ))}
         </Grid>

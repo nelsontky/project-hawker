@@ -17,6 +17,7 @@ export class RefactorImages1621971054175 implements MigrationInterface {
       try {
         const resized = await sharp("public/" + image.link)
           .resize(undefined, 20)
+          .withMetadata()
           .toBuffer();
         const base64 = `data:image/png;base64,${resized.toString("base64")}`;
         const newLink = image.link;
