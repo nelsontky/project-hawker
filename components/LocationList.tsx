@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme: Theme) =>
     header: {
       fontFamily: "'Fredericka the Great', cursive",
       "-webkit-text-stroke-width": "0.5px",
-      "-webkit-text-stroke-color": "black",
+      "-webkit-text-stroke-color": "#404040",
+      color: "#404040",
     },
     ratioContainer: {
       borderStyle: "solid",

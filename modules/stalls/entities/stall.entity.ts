@@ -26,7 +26,7 @@ export class Stall {
   @Column("text")
   stallNumber: string;
 
-  @Column("jsonb")
+  @Column("json")
   information: { [property: string]: string };
 
   @ManyToMany(() => Image)

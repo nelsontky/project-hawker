@@ -20,6 +20,9 @@ export class Location {
   @Column("text")
   name: string;
 
+  @Column("text")
+  region: string;
+
   @Column("text", { unique: true })
   slug: string;
 

@@ -14,10 +14,12 @@
     "typeorm:revert": "npm run typeorm migration:revert"
   },
   "dependencies": {
+    "@fast-csv/parse": "^4.3.6",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "clsx": "^1.1.1",
     "date-fns": "^2.11.1",
+    "googleapis": "^39.2.0",
     "gray-matter": "^4.0.2",
     "lodash": "^4.17.21",
     "next": "^10.0.0",
@@ -29,7 +31,8 @@
     "remark-html": "^12.0.0",
     "sharp": "^0.28.3",
     "slugify": "^1.5.3",
-    "typeorm": "^0.2.32"
+    "typeorm": "^0.2.32",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
