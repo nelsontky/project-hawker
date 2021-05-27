@@ -15,6 +15,8 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
     },
     title: {
       fontFamily: "'Fredericka the Great', cursive",
+      "-webkit-text-stroke-width": "0.5px",
+      "-webkit-text-stroke-color": "black",
     },
     waves: {
       fill: (props) => props.neighborColor ?? theme.palette.background.default,

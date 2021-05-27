@@ -1,9 +1,5 @@
 import { Grid, Typography, Container } from "@material-ui/core";
-import {
-  makeStyles,
-  createStyles,
-  Theme,
-} from "@material-ui/core/styles";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 import LocationLink from "components/LocationLink";
 
@@ -15,6 +11,11 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.primary.main,
       paddingTop: theme.spacing(10),
       paddingBottom: theme.spacing(10),
+    },
+    header: {
+      fontFamily: "'Fredericka the Great', cursive",
+      "-webkit-text-stroke-width": "0.5px",
+      "-webkit-text-stroke-color": "black",
     },
     ratioContainer: {
       borderStyle: "solid",
@@ -48,7 +49,7 @@ export default function LocationList({ allLocationsData }: LocationListProps) {
     <div className={classes.root}>
       <Container fixed>
         <div className="text-center mb-8">
-          <Typography variant="h3" className="font-bold text-white">
+          <Typography variant="h3" className={classes.header}>
             Explore
           </Typography>
         </div>
