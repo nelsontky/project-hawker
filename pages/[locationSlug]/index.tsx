@@ -1,6 +1,5 @@
 import { GetStaticProps, GetStaticPaths } from "next";
 import { Container, Typography, Grid } from "@material-ui/core";
-import AppFooter from "components/AppFooter";
 import Head from "next/head";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
@@ -64,7 +63,6 @@ export default function HawkerCenter({
           ))}
         </Grid>
       </Container>
-      <AppFooter />
     </div>
   );
 }

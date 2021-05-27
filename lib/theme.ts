@@ -7,7 +7,7 @@ let theme = createMuiTheme({
   },
   palette: {
     primary: { main: "#FF9F80" },
-    secondary: { main: "#80E0FF" },
+    secondary: { main: "#FFD093" },
   },
   overrides: {
     MuiCssBaseline: {

@@ -3,8 +3,10 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 import ImageLink from "components/ImageLink";
 import RotateAnimateImage from "components/RotateAnimateImage";
+import ProgressiveImage from "components/ProgressiveImage";
 
 import { useProgressiveImage } from "lib/hooks/use-progressive-image.hook";
+import { IMAGES_AND_COMPRESSED } from "constants/images-and-compressed";
 
 interface StyleProps {
   blur: boolean;
@@ -16,10 +18,11 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
     root: {
       position: "relative",
       minHeight: "100vh",
-      color: theme.palette.common.white,
       display: "flex",
       justifyContent: "center",
       flexDirection: "column",
+      paddingTop: theme.spacing(8),
+      paddingBottom: theme.spacing(8),
     },
     background: (props) => ({
       position: "absolute",
@@ -27,25 +30,44 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
       height: "100%",
       width: "100%",
       zIndex: -1,
-      
+
       background: "no-repeat center",
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${props.src})`,
+      backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${props.src})`,
       backgroundSize: "cover",
 
       filter: props.blur ? "blur(8px)" : "none",
       transition: "filter 0.2s ease-out",
     }),
-    storyLink: {
-      maxWidth: "300px",
-      margin: "auto",
+    logo: {
+      position: "absolute",
+      top: 0,
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+    },
+    content: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      position: "relative",
+      backgroundColor: "white",
+      borderRadius: "40px",
+      padding: theme.spacing(8),
+      paddingTop: theme.spacing(20),
+      paddingBottom: theme.spacing(32),
+      textAlign: "justify",
+    },
+    contribute: {
+      position: "absolute",
+      bottom: 0,
+      left: "50%",
+      transform: "translate(-50%, 25%)",
+      width: 300,
     },
   })
 );
 
-const IMAGE_LINK =
-  "images/hawker-centers/ghim-moh-market-and-hawker-centre/ghim-moh-market-and-hawker-centre.jpg";
-const COMPRESSED_BASE64 =
-  "data:image/png;base64,/9j/4QC8RXhpZgAASUkqAAgAAAAGABIBAwABAAAAAQAAABoBBQABAAAAVgAAABsBBQABAAAAXgAAACgBAwABAAAAAgAAABMCAwABAAAAAQAAAGmHBAABAAAAZgAAAAAAAAAAdwEA6AMAAAB3AQDoAwAABgAAkAcABAAAADAyMTABkQcABAAAAAECAwAAoAcABAAAADAxMDABoAMAAQAAAP//AAACoAQAAQAAACEAAAADoAQAAQAAABQAAAAAAAAA/9sAQwAGBAUGBQQGBgUGBwcGCAoQCgoJCQoUDg8MEBcUGBgXFBYWGh0lHxobIxwWFiAsICMmJykqKRkfLTAtKDAlKCko/9sAQwEHBwcKCAoTCgoTKBoWGigoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo/8AAEQgAFAAhAwEiAAIRAQMRAf/EABoAAQACAwEAAAAAAAAAAAAAAAAFCAIDBAf/xAAwEAABAgQEAgcJAAAAAAAAAAABAgMABAURBhIhMRNxFBUiQVGRlCRTVYGhscHR0v/EABgBAAMBAQAAAAAAAAAAAAAAAAECAwAE/8QAIBEAAgIBBAMBAAAAAAAAAAAAAAECEQMhMUGBBBMUMv/aAAwDAQACEQMRAD8A9qwRjhurS7cpVJmXYqLacylGwS8kWGYG9grXUfMaR2YlxfQqY4wzPqVMuvAqAlQFhIBtrqAN4piwSBZdLlEbauTSB+YnJSqKZl0tCn0UhO15wa+Qics6j+de6DLHPhFhJ7H2H0rHs08hBFyospNhfc9q9uWsTLr1HRlW5VJEm1wkTCNPrFX36mtakZadRMxtZPS0k/aIebU2+4pTrNCTmFwRMpO0GHl26arsRYsjesS2PWtH+ISXqWv6hFOeE17uj+oT+4RX6IjemRsxMWWKZLqYlJZtTwCFFKPEbi/f4czELWJRqnYjm5JgBTLK8qeIAokabm0IRzYm3uVlsdaUIGJJFnInh8NpVrDvRrGD7TaXk5G0pzKJNoQgLZG57NVuXkIQhFaJWf/Z";
+const IMAGE_LINK = IMAGES_AND_COMPRESSED.appHeroBg.link;
+const COMPRESSED_BASE64 = IMAGES_AND_COMPRESSED.appHeroBg.compressedBase64;
 
 export default function AppHero() {
   const { src, blur } = useProgressiveImage({
@@ -57,7 +79,7 @@ export default function AppHero() {
   return (
     <div className={classes.root}>
       <div className={classes.background} />
-      <Grid container className="h-full text-center py-10" justify="center">
+      <Grid container className="h-full py-10" justify="center">
         <Grid
           item
           xs={3}
@@ -75,30 +97,44 @@ export default function AppHero() {
           />
         </Grid>
         <Grid item xs={10} md={6} className="flex flex-col justify-center">
-          <Typography variant="h2" className="font-bold mb-8">
-            Stories of our hawker heroes
-          </Typography>
-          <Typography className="mb-4">
-            Project Hawker is a passion project aiming to be a consolidated
-            place to list all hawkers and their stories. We are also working on
-            helping to future-proof these hawkers (e.g. by being on listed
-            online and on delivery apps).
-          </Typography>
-          <Typography className="mb-4">
-            But we can't do this alone. We need the help of all hawker
-            supporters to bring these hawkers to light.
-          </Typography>
-          <Typography className="font-bold">
-            Help us reach out to them and let their stories be heard.
-          </Typography>
-          <div className="mt-12">
-            <ImageLink
-              src="/images/icons/contribute.png"
-              href="http://projecthawker.com/submit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={classes.storyLink}
+          <div className={classes.content}>
+            <ProgressiveImage
+              className={classes.logo}
+              src={IMAGES_AND_COMPRESSED.appHeroHeader.link}
+              compressedBase64={
+                IMAGES_AND_COMPRESSED.appHeroHeader.compressedBase64
+              }
+              width={IMAGES_AND_COMPRESSED.appHeroHeader.width}
+              height={IMAGES_AND_COMPRESSED.appHeroHeader.height}
             />
+            <Typography className="mb-1">
+              is a passion project aiming to be a{" "}
+              <span className="font-bold">
+                consolidated place to list all hawkers and their stories.
+              </span>
+            </Typography>
+            <Typography className="mb-1">
+              We are also working on{" "}
+              <span className="font-bold">
+                helping to future-proof these hawkers (e.g. by being on listed
+                online and on delivery apps).
+              </span>
+            </Typography>
+            <Typography className="mb-1">
+              But we can't do this alone. We need the help of all hawker
+              supporters to bring these hawkers to light.
+            </Typography>
+            <Typography className="font-bold">
+              Help us reach out to them and let their stories be heard.
+            </Typography>
+            <div className={classes.contribute}>
+              <ImageLink
+                src="/images/icons/contribute.png"
+                href="http://projecthawker.com/submit"
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            </div>
           </div>
         </Grid>
         <Grid

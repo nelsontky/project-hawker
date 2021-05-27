@@ -5,6 +5,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 import "tailwindcss/tailwind.css";
 import { AppProps } from "next/app";
+
+import AppFooter from "components/AppFooter";
+
 import theme from "lib/theme";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -41,6 +44,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...pageProps} />
+        <AppFooter />
       </ThemeProvider>
     </React.Fragment>
   );

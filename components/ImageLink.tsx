@@ -39,6 +39,8 @@ interface ImageLinkProps extends LinkProps {
   rel?: string;
   color?: string;
   fontVariant?: any;
+  width?: string;
+  height?: string;
 }
 
 export default function ImageLink({
@@ -49,6 +51,8 @@ export default function ImageLink({
   rel,
   color,
   fontVariant,
+  width,
+  height,
   ...rest
 }: ImageLinkProps) {
   const classes = useStyles({ color });
@@ -57,7 +61,7 @@ export default function ImageLink({
     <div className={clsx(classes.root, className)}>
       <Link {...rest}>
         <a target={target} rel={rel}>
-          <img src={src} />
+          <img src={src} width={width} height={height} />
           {children && (
             <div className={classes.caption}>
               <Typography variant={fontVariant ?? "h6"}>{children}</Typography>

@@ -20,6 +20,11 @@ interface StyleProps {
 
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
+    root: {
+      borderStyle: "solid",
+      borderColor: theme.palette.common.white,
+      borderWidth: theme.spacing(2),
+    },
     ratioContainer: (props) => ({
       backgroundImage: `url(${props.src})`,
       backgroundPosition: "center center",
@@ -27,10 +32,6 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
       backgroundSize: "cover",
       filter: props.blur ? "blur(8px)" : "none",
       transition: "filter 0.2s ease-out",
-
-      borderStyle: "solid",
-      borderColor: theme.palette.common.white,
-      borderWidth: theme.spacing(2),
     }),
   })
 );
@@ -54,10 +55,12 @@ export default function LocationLink({ location }: LocationLinkProps) {
   return (
     <Link href={`/${location.slug}`}>
       <a>
-        <RatioContainer
-          className={classes.ratioContainer}
-          percentage={isSmall ? "100%" : "56.25%"}
-        ></RatioContainer>
+        <div className={classes.root}>
+          <RatioContainer
+            className={classes.ratioContainer}
+            percentage={isSmall ? "100%" : "56.25%"}
+          ></RatioContainer>
+        </div>
         <div className="text-center mt-4">
           <Typography variant="h6" className="font-bold leading-none">
             {location.name}
