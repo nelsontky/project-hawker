@@ -1,7 +1,6 @@
 import { Stall } from "modules/stalls/entities/stall.entity";
 import { Container, Grid, Typography } from "@material-ui/core";
 import _ from "lodash";
-import clsx from "clsx";
 
 interface StallContentProps {
   stallData: Stall;
@@ -16,15 +15,10 @@ export default function StallContent({ stallData }: StallContentProps) {
         <Grid item xs={12} sm={6}>
           {Object.keys(information).map((property, i) => (
             <div key={i} className="mb-4">
-              <Typography className="font-bold text-center sm:text-left">
+              <Typography className="font-bold text-left">
                 {_.startCase(property)}
               </Typography>
-              <Typography
-                className={clsx(
-                  property !== "moreAboutThisHawker" && "text-center",
-                  "sm:text-justify"
-                )}
-              >
+              <Typography className="text-justify">
                 {information[property]}
               </Typography>
             </div>
