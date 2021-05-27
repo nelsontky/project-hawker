@@ -21,8 +21,8 @@ export default function StallContent({ stallData }: StallContentProps) {
               </Typography>
               <Typography
                 className={clsx(
-                  property !== "description" && "text-center",
-                  "sm:text-left"
+                  property !== "moreAboutThisHawker" && "text-center",
+                  "sm:text-justify"
                 )}
               >
                 {information[property]}

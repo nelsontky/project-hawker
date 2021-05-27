@@ -21,10 +21,10 @@ export default function StallPage({ stallData }: StallPageProps) {
       <Head>
         <title>{stallData.name}</title>
       </Head>
-      <BannerTop image={stallData.location.images[0]}>
+      <BannerTop image={stallData.images[0]}>
         <div className="relative h-full">
           <Typography variant="h4" className="font-bold absolute top-4 left-4">
-            {"#" + stallData.stallNumber}
+            {stallData.stallNumber}
           </Typography>
           <Container
             maxWidth="md"

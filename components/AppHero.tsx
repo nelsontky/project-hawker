@@ -107,24 +107,24 @@ export default function AppHero() {
               width={IMAGES_AND_COMPRESSED.appHeroHeader.width}
               height={IMAGES_AND_COMPRESSED.appHeroHeader.height}
             />
-            <Typography className="mb-1">
+            <Typography className="mb-4 text-lg sm:text-xl">
               is a passion project aiming to be a{" "}
               <span className="font-bold">
                 consolidated place to list all hawkers and their stories.
               </span>
             </Typography>
-            <Typography className="mb-1">
+            <Typography className="mb-4 text-lg sm:text-xl">
               We are also working on{" "}
               <span className="font-bold">
                 helping to future-proof these hawkers (e.g. by being on listed
                 online and on delivery apps).
               </span>
             </Typography>
-            <Typography className="mb-1">
+            <Typography className="mb-4 text-lg sm:text-xl">
               But we can't do this alone. We need the help of all hawker
               supporters to bring these hawkers to light.
             </Typography>
-            <Typography className="font-bold">
+            <Typography className="font-bold text-lg sm:text-xl">
               Help us reach out to them and let their stories be heard.
             </Typography>
             <div className={classes.contribute}>

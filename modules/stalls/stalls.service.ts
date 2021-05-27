@@ -181,6 +181,29 @@ export class StallsService {
       .getMany();
   }
 
+  findAll() {
+    return this.stallsRepository
+      .createQueryBuilder("stall")
+      .select([
+        "stall.name",
+        "stall.stallNumber",
+        "stall.information",
+        "stall.slug",
+        "stall.createdAt",
+        "stall.updatedAt",
+        "images.link",
+        "images.compressedBase64",
+        "location.name",
+        "location.slug",
+        "locationImages.link",
+      ])
+      .leftJoin("stall.images", "images")
+      .leftJoin("stall.location", "location")
+      .leftJoin("location.images", "locationImages")
+      .orderBy("stall.name", "ASC")
+      .getMany();
+  }
+
   findOneDeep(locationSlug: string, stallSlug: string) {
     return this.stallsRepository
       .createQueryBuilder("stall")

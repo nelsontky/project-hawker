@@ -3,19 +3,19 @@ import { GetStaticProps } from "next";
 import { useTheme } from "@material-ui/core/styles";
 
 import AppHero from "components/AppHero";
-import LocationList from "components/LocationList";
+import ExploreList from "components/ExploreList";
 
-import { LocationsService } from "modules/locations/locations.service";
-import { Location } from "modules/locations/entities/location.entity";
+import { StallsService } from "modules/stalls/stalls.service";
+import { Stall } from "modules/stalls/entities/stall.entity";
 
 import { entityToObject } from "lib/utils/entity-to-object.util";
 
 interface HomeProps {
-  allLocationsData: Location[];
+  allStalls: Stall[];
 }
 
-export default function Home({ allLocationsData }: HomeProps) {
-  const theme = useTheme()
+export default function Home({ allStalls }: HomeProps) {
+  const theme = useTheme();
 
   return (
     <div>
@@ -23,18 +23,18 @@ export default function Home({ allLocationsData }: HomeProps) {
         <title>Project Hawker</title>
       </Head>
       <AppHero />
-      <LocationList allLocationsData={allLocationsData} />
+      <ExploreList allStalls={allStalls} />
     </div>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const locationsService = await LocationsService.build();
-  const allLocationsData = await locationsService.findAll();
+  const stallsService = await StallsService.build();
+  const allStalls = await stallsService.findAll();
 
   return {
     props: {
-      allLocationsData: entityToObject(allLocationsData),
+      allStalls: entityToObject(allStalls),
     },
   };
 };

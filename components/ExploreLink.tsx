@@ -11,7 +11,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import RatioContainer from "components/RatioContainer";
 
 import { useProgressiveImage } from "lib/hooks/use-progressive-image.hook";
-import { Location } from "modules/locations/entities/location.entity";
+import { Stall } from "modules/stalls/entities/stall.entity";
 
 interface StyleProps {
   blur: boolean;
@@ -36,15 +36,15 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   })
 );
 
-interface LocationLinkProps {
-  location: Location;
+interface StallLinkProps {
+  stall: Stall;
 }
 
-export default function LocationLink({ location }: LocationLinkProps) {
+export default function LocationLink({ stall }: StallLinkProps) {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const image = location.images[0];
+  const image = stall.images[0];
   const { src, blur } = useProgressiveImage({
     compressedSrc: image.compressedBase64,
     src: image.link,
@@ -53,7 +53,7 @@ export default function LocationLink({ location }: LocationLinkProps) {
   const classes = useStyles({ src, blur });
 
   return (
-    <Link href={`/${location.slug}`}>
+    <Link href={`/${stall.location.slug}/${stall.slug}`}>
       <a>
         <div className={classes.root}>
           <RatioContainer
@@ -63,7 +63,7 @@ export default function LocationLink({ location }: LocationLinkProps) {
         </div>
         <div className="text-center mt-4">
           <Typography variant="h6" className="font-bold leading-none">
-            {location.name}
+            {stall.name}
           </Typography>
         </div>
       </a>

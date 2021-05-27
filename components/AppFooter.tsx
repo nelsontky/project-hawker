@@ -10,7 +10,8 @@ interface StyleProps {
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
     root: {
-      paddingBottom: theme.spacing(10),
+      paddingTop: theme.spacing(10),
+      paddingBottom: theme.spacing(30),
       backgroundColor: theme.palette.secondary.main,
     },
     title: {

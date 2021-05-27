@@ -1,16 +1,16 @@
 import { Grid, Typography, Container } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-import LocationLink from "components/LocationLink";
+import ExploreLink from "components/ExploreLink";
 
-import { Location } from "modules/locations/entities/location.entity";
+import { Stall } from "modules/stalls/entities/stall.entity";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       backgroundColor: theme.palette.primary.main,
       paddingTop: theme.spacing(10),
-      paddingBottom: theme.spacing(10),
+      paddingBottom: theme.spacing(15),
     },
     header: {
       fontFamily: "'Fredericka the Great', cursive",
@@ -39,11 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface LocationListProps {
-  allLocationsData: Location[];
+interface ExploreListProps {
+  allStalls: Stall[];
 }
 
-export default function LocationList({ allLocationsData }: LocationListProps) {
+export default function LocationList({ allStalls }: ExploreListProps) {
   const classes = useStyles();
 
   return (
@@ -55,7 +55,7 @@ export default function LocationList({ allLocationsData }: LocationListProps) {
           </Typography>
         </div>
         <Grid container spacing={10} justify="center">
-          {allLocationsData.map((location, i) => (
+          {allStalls.map((stall, i) => (
             <Grid
               item
               xs={12}
@@ -65,7 +65,7 @@ export default function LocationList({ allLocationsData }: LocationListProps) {
               key={i}
               className={classes.location}
             >
-              <LocationLink location={location} />
+              <ExploreLink stall={stall} />
             </Grid>
           ))}
         </Grid>

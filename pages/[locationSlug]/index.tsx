@@ -36,16 +36,16 @@ export default function HawkerCenter({
       <Head>
         <title>{locationData.name}</title>
       </Head>
-      <BannerTop image={locationData.images[0]}>
-        <Container
-          maxWidth="md"
-          className="flex flex-col justify-center h-full text-center"
-        >
-          <Typography variant="h2" className="font-bold">
-            {locationData.name}
-          </Typography>
-        </Container>
-      </BannerTop>
+      {/* <BannerTop image={locationData.images[0]}> */}
+      <Container
+        maxWidth="md"
+        className="flex flex-col justify-center h-full text-center pt-10"
+      >
+        <Typography variant="h2" className="font-bold">
+          {locationData.name}
+        </Typography>
+      </Container>
+      {/* </BannerTop> */}
       <Container fixed className="py-16">
         <Grid container spacing={10} justify="center">
           {locationData.stalls.map((stall, i) => (
