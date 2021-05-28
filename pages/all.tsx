@@ -48,7 +48,7 @@ export default function All({ allStalls }: AllProps) {
                 {stall.name}
                 <br />
                 <Typography color="textSecondary" variant="subtitle2">
-                  {stall.location.name}
+                  ({stall.location.name})
                 </Typography>
               </span>
             ),

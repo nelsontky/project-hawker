@@ -57,7 +57,7 @@ export default function LocationList({ allStalls }: ExploreListProps) {
                   {stall.name}
                   <br />
                   <Typography color="textSecondary" variant="subtitle2">
-                    {stall.location.name}
+                    ({stall.location.name})
                   </Typography>
                 </span>
               ),
