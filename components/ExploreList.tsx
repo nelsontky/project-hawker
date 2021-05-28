@@ -1,10 +1,11 @@
-import { Typography, Container } from "@material-ui/core";
+import { Typography, Container, Button } from "@material-ui/core";
 import {
   makeStyles,
   createStyles,
   Theme,
   useTheme,
 } from "@material-ui/core/styles";
+import Link from "next/link";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import SquareLinkGrid from "components/SquareLinkGrid";
@@ -54,6 +55,13 @@ export default function LocationList({ allStalls }: ExploreListProps) {
               name: stall.name,
             }))}
         />
+        <div className="text-center mt-10">
+          <Link href="/all">
+            <Button variant="contained" color="secondary">
+              View All
+            </Button>
+          </Link>
+        </div>
       </Container>
     </div>
   );
