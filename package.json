@@ -26,6 +26,7 @@
     "pg": "^8.6.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-waypoint": "^10.1.0",
     "reflect-metadata": "^0.1.13",
     "remark": "^13.0.0",
     "remark-html": "^12.0.0",

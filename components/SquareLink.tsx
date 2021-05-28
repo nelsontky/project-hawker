@@ -1,8 +1,11 @@
+import React from "react";
 import Link from "next/link";
 import { Typography } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Waypoint } from "react-waypoint";
 
 import RatioContainer from "components/RatioContainer";
+import FadeUp from "components/FadeUp";
 
 import { useProgressiveImage } from "lib/hooks/use-progressive-image.hook";
 import { Image } from "modules/images/entities/image.entity";
@@ -52,22 +55,31 @@ export default function StallLink({ image, href, children }: StallLinkProps) {
     src: image.link,
   });
   const classes = useStyles({ src, blur });
+  const [isShow, setIsShow] = React.useState(false);
 
   return (
-    <div className={classes.root}>
-      <Link href={href}>
-        <a>
-          <RatioContainer
-            className={classes.ratioContainer}
-            percentage="100%"
-          ></RatioContainer>
-          <div className={classes.textContainer}>
-            <Typography variant="h6" className="font-bold leading-none">
-              {children}
-            </Typography>
-          </div>
-        </a>
-      </Link>
-    </div>
+    <Waypoint
+      onEnter={() => {
+        setIsShow(true);
+      }}
+    >
+      <div className={classes.root}>
+        <FadeUp in={isShow}>
+          <Link href={href}>
+            <a>
+              <RatioContainer
+                className={classes.ratioContainer}
+                percentage="100%"
+              ></RatioContainer>
+              <div className={classes.textContainer}>
+                <Typography variant="h6" className="font-bold leading-none">
+                  {children}
+                </Typography>
+              </div>
+            </a>
+          </Link>
+        </FadeUp>
+      </div>
+    </Waypoint>
   );
 }
