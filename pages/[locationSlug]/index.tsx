@@ -3,8 +3,7 @@ import { Container, Typography, Grid } from "@material-ui/core";
 import Head from "next/head";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-import BannerTop from "components/BannerTop";
-import StallLink from "components/StallLink";
+import SquareLinkGrid from "components/SquareLinkGrid";
 
 import { LocationsService } from "modules/locations/locations.service";
 import { Location } from "modules/locations/entities/location.entity";
@@ -17,10 +16,8 @@ interface HawkerCenterProps {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    stall: {
-      "&:hover": {
-        color: theme.palette.primary.main,
-      },
+    root: {
+      backgroundColor: theme.palette.primary.main,
     },
   })
 );
@@ -32,11 +29,10 @@ export default function HawkerCenter({
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.root}>
       <Head>
         <title>{locationData.name}</title>
       </Head>
-      {/* <BannerTop image={locationData.images[0]}> */}
       <Container
         maxWidth="md"
         className="flex flex-col justify-center h-full text-center pt-10"
@@ -45,23 +41,14 @@ export default function HawkerCenter({
           {locationData.name}
         </Typography>
       </Container>
-      {/* </BannerTop> */}
       <Container fixed className="py-16">
-        <Grid container spacing={10} justify="center">
-          {locationData.stalls.map((stall, i) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              key={i}
-              className={classes.stall}
-            >
-              <StallLink stall={stall} locationSlug={locationSlug} />
-            </Grid>
-          ))}
-        </Grid>
+        <SquareLinkGrid
+          items={locationData.stalls.map((stall) => ({
+            href: `/${locationSlug}/${stall.slug}`,
+            image: stall.images[0],
+            name: stall.name,
+          }))}
+        />
       </Container>
     </div>
   );

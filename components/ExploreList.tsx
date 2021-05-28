@@ -1,7 +1,13 @@
-import { Grid, Typography, Container } from "@material-ui/core";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { Typography, Container } from "@material-ui/core";
+import {
+  makeStyles,
+  createStyles,
+  Theme,
+  useTheme,
+} from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import ExploreLink from "components/ExploreLink";
+import SquareLinkGrid from "components/SquareLinkGrid";
 
 import { Stall } from "modules/stalls/entities/stall.entity";
 
@@ -18,24 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
       "-webkit-text-stroke-color": "#404040",
       color: "#404040",
     },
-    ratioContainer: {
-      borderStyle: "solid",
-      borderColor: theme.palette.common.white,
-      borderWidth: theme.spacing(2),
-    },
-    location: {
-      color: theme.palette.common.white,
-      transition: "transform 0.2s",
-
-      "&:hover": {
-        transform: `translateY(-${theme.spacing(3)}px)`,
-        color: theme.palette.secondary.main,
-
-        "& > a > div": {
-          borderColor: theme.palette.secondary.main,
-        },
-      },
-    },
   })
 );
 
@@ -45,6 +33,9 @@ interface ExploreListProps {
 
 export default function LocationList({ allStalls }: ExploreListProps) {
   const classes = useStyles();
+  const theme = useTheme();
+  const isMedium = useMediaQuery(theme.breakpoints.up("md"));
+  const isLarge = useMediaQuery(theme.breakpoints.up("lg"));
 
   return (
     <div className={classes.root}>
@@ -54,21 +45,15 @@ export default function LocationList({ allStalls }: ExploreListProps) {
             Explore
           </Typography>
         </div>
-        <Grid container spacing={10} justify="center">
-          {allStalls.map((stall, i) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              key={i}
-              className={classes.location}
-            >
-              <ExploreLink stall={stall} />
-            </Grid>
-          ))}
-        </Grid>
+        <SquareLinkGrid
+          items={allStalls
+            .slice(0, isLarge ? undefined : isMedium ? 6 : 4)
+            .map((stall) => ({
+              href: `/${stall.location.slug}/${stall.slug}`,
+              image: stall.images[0],
+              name: stall.name,
+            }))}
+        />
       </Container>
     </div>
   );

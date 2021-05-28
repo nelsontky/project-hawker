@@ -30,7 +30,7 @@ export default function Home({ allStalls }: HomeProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const stallsService = await StallsService.build();
-  const allStalls = await stallsService.findAll();
+  const allStalls = await stallsService.findAll({ limit: 8 });
 
   return {
     props: {
