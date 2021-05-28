@@ -21,7 +21,7 @@ const TOKEN_PATH = "token.json";
 fs.readFile("scripts/sheets-import/credentials.json", async (err, content) => {
   if (err) return console.log("Error loading client secret file:", err);
   // Authorize a client with credentials, then call the Google Drive API.
-  const rows = await readCsv(16, 19);
+  const rows = await readCsv(3, 15);
 
   authorize(JSON.parse(content), (auth) => downloadAndAdd(auth, 0, rows));
 });
