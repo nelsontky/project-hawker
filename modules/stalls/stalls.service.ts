@@ -181,10 +181,11 @@ export class StallsService {
       .getMany();
   }
 
-  findAll(options: { limit?: number; skip?: number } = {}) {
+  findAll(options: { limit?: number; skip?: number; orderBy?: any[] } = {}) {
     return this.stallsRepository
       .createQueryBuilder("stall")
       .select([
+        "stall.id",
         "stall.name",
         "stall.stallNumber",
         "stall.information",
@@ -200,9 +201,12 @@ export class StallsService {
       .leftJoin("stall.images", "images")
       .leftJoin("stall.location", "location")
       .leftJoin("location.images", "locationImages")
-      .orderBy("stall.name", "ASC")
+      .orderBy(
+        options.orderBy ? options.orderBy[0] : "stall.name",
+        options.orderBy ? options.orderBy[1] : "ASC"
+      )
       .skip(options.skip)
-      .limit(options.limit)
+      .take(options.limit)
       .getMany();
   }
 

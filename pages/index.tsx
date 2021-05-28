@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
-import { useTheme } from "@material-ui/core/styles";
 
 import AppHero from "components/AppHero";
 import ExploreList from "components/ExploreList";
@@ -15,8 +14,6 @@ interface HomeProps {
 }
 
 export default function Home({ allStalls }: HomeProps) {
-  const theme = useTheme();
-
   return (
     <div>
       <Head>
@@ -30,7 +27,10 @@ export default function Home({ allStalls }: HomeProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const stallsService = await StallsService.build();
-  const allStalls = await stallsService.findAll({ limit: 8 });
+  const allStalls = await stallsService.findAll({
+    limit: 8,
+    orderBy: ["stall.id", "ASC"],
+  });
 
   return {
     props: {
