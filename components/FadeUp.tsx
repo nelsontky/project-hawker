@@ -14,7 +14,13 @@ const transitionStyles = {
   entered: { opacity: 1, transform: "translateY(0)" },
 };
 
-export default function FadeUp({ in: inProp, children, ...rest }) {
+interface FadeUpProps {
+  in: any;
+  children?: React.ReactNode;
+  [x: string]: any;
+}
+
+export default function FadeUp({ in: inProp, children, ...rest }: FadeUpProps) {
   return (
     <Transition in={inProp} timeout={duration} {...rest}>
       {(state) => (
