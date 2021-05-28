@@ -13,6 +13,12 @@ export default function StallContent({ stallData }: StallContentProps) {
     <Container fixed className="py-8">
       <Grid container spacing={8}>
         <Grid item xs={12} sm={6}>
+          <div className="mb-4">
+            <Typography className="font-bold text-left">Location</Typography>
+            <Typography className="text-justify">
+              {stallData.location.name} ({stallData.location.postalCode})
+            </Typography>
+          </div>
           {Object.keys(information).map((property, i) => (
             <div key={i} className="mb-4">
               <Typography className="font-bold text-left">

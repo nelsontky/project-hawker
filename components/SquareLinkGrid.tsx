@@ -7,7 +7,7 @@ import SquareLink from "components/SquareLink";
 import { Image } from "modules/images/entities/image.entity";
 
 interface SquareLinkGridProps {
-  items: { href: string; image: Image; name: string }[];
+  items: { href: string; image: Image; children: React.ReactNode }[];
 }
 
 export default function SquareLinkGrid({ items }: SquareLinkGridProps) {
@@ -19,7 +19,7 @@ export default function SquareLinkGrid({ items }: SquareLinkGridProps) {
       {items.map((item, i) => (
         <Grid item xs={6} md={4} lg={3} key={i}>
           <SquareLink href={item.href} image={item.image}>
-            {item.name}
+            {item.children}
           </SquareLink>
         </Grid>
       ))}

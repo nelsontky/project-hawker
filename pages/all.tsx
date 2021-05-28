@@ -1,5 +1,5 @@
-import { GetStaticProps, GetStaticPaths } from "next";
-import { Container, Typography, Grid } from "@material-ui/core";
+import { GetStaticProps } from "next";
+import { Container, Typography } from "@material-ui/core";
 import Head from "next/head";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
@@ -43,7 +43,15 @@ export default function All({ allStalls }: AllProps) {
           items={allStalls.map((stall) => ({
             href: `/${stall.location.slug}/${stall.slug}`,
             image: stall.images[0],
-            name: stall.name,
+            children: (
+              <span>
+                {stall.name}
+                <br />
+                <Typography color="textSecondary" variant="subtitle2">
+                  {stall.location.name}
+                </Typography>
+              </span>
+            ),
           }))}
         />
       </Container>

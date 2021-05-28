@@ -52,7 +52,15 @@ export default function LocationList({ allStalls }: ExploreListProps) {
             .map((stall) => ({
               href: `/${stall.location.slug}/${stall.slug}`,
               image: stall.images[0],
-              name: stall.name,
+              children: (
+                <span>
+                  {stall.name}
+                  <br />
+                  <Typography color="textSecondary" variant="subtitle2">
+                    {stall.location.name}
+                  </Typography>
+                </span>
+              ),
             }))}
         />
         <div className="text-center mt-10">

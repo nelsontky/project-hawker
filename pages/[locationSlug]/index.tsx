@@ -46,7 +46,7 @@ export default function HawkerCenter({
           items={locationData.stalls.map((stall) => ({
             href: `/${locationSlug}/${stall.slug}`,
             image: stall.images[0],
-            name: stall.name,
+            children: stall.name,
           }))}
         />
       </Container>
