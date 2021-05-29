@@ -1,5 +1,6 @@
 import { Stall } from "modules/stalls/entities/stall.entity";
-import { Container, Grid, Typography } from "@material-ui/core";
+import { Container, Grid, Typography, Button } from "@material-ui/core";
+import { Phone } from "@material-ui/icons";
 import _ from "lodash";
 
 interface StallContentProps {
@@ -27,6 +28,16 @@ export default function StallContent({ stallData }: StallContentProps) {
               <Typography className="text-justify">
                 {information[property]}
               </Typography>
+              {property === "contact" && !!information[property] && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<Phone />}
+                  href={`tel:+65${information[property]}`}
+                >
+                  Call to dabao
+                </Button>
+              )}
             </div>
           ))}
         </Grid>
