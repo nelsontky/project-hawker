@@ -1,9 +1,11 @@
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Fade } from "@material-ui/core";
+import { Waypoint } from "react-waypoint";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 import ImageLink from "components/ImageLink";
 import RotateAnimateImage from "components/RotateAnimateImage";
 import ProgressiveImage from "components/ProgressiveImage";
+import ScrollDownIndicator from "components/ScrollDownIndicator";
 
 import { useProgressiveImage } from "lib/hooks/use-progressive-image.hook";
 import { IMAGES_AND_COMPRESSED } from "constants/images-and-compressed";
@@ -63,13 +65,27 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
       transform: "translate(-50%, 25%)",
       width: 300,
     },
+    scrollDown: {
+      position: "fixed",
+      bottom: theme.spacing(2),
+      left: "50%",
+      transform: "translateX(-50%)",
+    },
   })
 );
 
 const IMAGE_LINK = IMAGES_AND_COMPRESSED.appHeroBg.link;
 const COMPRESSED_BASE64 = IMAGES_AND_COMPRESSED.appHeroBg.compressedBase64;
 
-export default function AppHero() {
+interface AppHeroProps {
+  isScrollIndicatorShown: boolean;
+  setIsScrollIndicatorShown: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function AppHero({
+  isScrollIndicatorShown,
+  setIsScrollIndicatorShown,
+}: AppHeroProps) {
   const { src, blur } = useProgressiveImage({
     src: IMAGE_LINK,
     compressedSrc: COMPRESSED_BASE64,
@@ -77,83 +93,95 @@ export default function AppHero() {
   const classes = useStyles({ src, blur });
 
   return (
-    <div className={classes.root}>
-      <div className={classes.background} />
-      <Grid container className="h-full py-10" justify="center">
-        <Grid
-          item
-          xs={3}
-          className="hidden md:flex pr-20 pl-4 flex-col justify-evenly"
-        >
-          <RotateAnimateImage
-            origin="30% 0%"
-            angle="5"
-            src="/images/hawkermain01.png"
-          />
-          <RotateAnimateImage
-            origin="60% 0%"
-            angle="-10"
-            src="/images/hawkermain02.png"
-          />
-        </Grid>
-        <Grid item xs={10} md={6} className="flex flex-col justify-center">
-          <div className={classes.content}>
-            <ProgressiveImage
-              className={classes.logo}
-              src={IMAGES_AND_COMPRESSED.appHeroHeader.link}
-              compressedBase64={
-                IMAGES_AND_COMPRESSED.appHeroHeader.compressedBase64
-              }
-              width={IMAGES_AND_COMPRESSED.appHeroHeader.width}
-              height={IMAGES_AND_COMPRESSED.appHeroHeader.height}
+    <>
+      <Waypoint
+        onEnter={() => {
+          setIsScrollIndicatorShown(true);
+        }}
+      ></Waypoint>
+      <div className={classes.root}>
+        <div className={classes.background} />
+        <Grid container className="h-full py-10" justify="center">
+          <Grid
+            item
+            xs={3}
+            className="hidden md:flex pr-20 pl-4 flex-col justify-evenly"
+          >
+            <RotateAnimateImage
+              origin="30% 0%"
+              angle="5"
+              src="/images/hawkermain01.png"
             />
-            <Typography className="mb-4 text-lg sm:text-xl">
-              is a passion project aiming to be a{" "}
-              <span className="font-bold">
-                consolidated place to list all hawkers and their stories.
-              </span>
-            </Typography>
-            <Typography className="mb-4 text-lg sm:text-xl">
-              We are also working on{" "}
-              <span className="font-bold">
-                helping to future-proof these hawkers (e.g. by being on listed
-                online and on delivery apps).
-              </span>
-            </Typography>
-            <Typography className="mb-4 text-lg sm:text-xl">
-              But we can't do this alone. We need the help of all hawker
-              supporters to bring these hawkers to light.
-            </Typography>
-            <Typography className="font-bold text-lg sm:text-xl">
-              Help us reach out to them and let their stories be heard.
-            </Typography>
-            <div className={classes.contribute}>
-              <ImageLink
-                src="/images/icons/contribute.png"
-                href="http://projecthawker.com/submit"
-                target="_blank"
-                rel="noopener noreferrer"
+            <RotateAnimateImage
+              origin="60% 0%"
+              angle="-10"
+              src="/images/hawkermain02.png"
+            />
+          </Grid>
+          <Grid item xs={10} md={6} className="flex flex-col justify-center">
+            <div className={classes.content}>
+              <ProgressiveImage
+                className={classes.logo}
+                src={IMAGES_AND_COMPRESSED.appHeroHeader.link}
+                compressedBase64={
+                  IMAGES_AND_COMPRESSED.appHeroHeader.compressedBase64
+                }
+                width={IMAGES_AND_COMPRESSED.appHeroHeader.width}
+                height={IMAGES_AND_COMPRESSED.appHeroHeader.height}
               />
+              <Typography className="mb-4 text-lg sm:text-xl">
+                is a passion project aiming to be a{" "}
+                <span className="font-bold">
+                  consolidated place to list all hawkers and their stories.
+                </span>
+              </Typography>
+              <Typography className="mb-4 text-lg sm:text-xl">
+                We are also working on{" "}
+                <span className="font-bold">
+                  helping to future-proof these hawkers (e.g. by being on listed
+                  online and on delivery apps).
+                </span>
+              </Typography>
+              <Typography className="mb-4 text-lg sm:text-xl">
+                But we can't do this alone. We need the help of all hawker
+                supporters to bring these hawkers to light.
+              </Typography>
+              <Typography className="font-bold text-lg sm:text-xl">
+                Help us reach out to them and let their stories be heard.
+              </Typography>
+              <div className={classes.contribute}>
+                <ImageLink
+                  src="/images/icons/contribute.png"
+                  href="http://projecthawker.com/submit"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              </div>
             </div>
-          </div>
+            <div className={classes.scrollDown}>
+              <Fade in={isScrollIndicatorShown}>
+                <ScrollDownIndicator />
+              </Fade>
+            </div>
+          </Grid>
+          <Grid
+            item
+            xs={3}
+            className="hidden md:flex pl-20 pr-4 flex-col justify-evenly"
+          >
+            <RotateAnimateImage
+              origin="55% 0%"
+              angle="-2"
+              src="/images/hawkermain03.png"
+            />
+            <RotateAnimateImage
+              origin="35% 0%"
+              angle="7"
+              src="/images/hawkermain04.png"
+            />
+          </Grid>
         </Grid>
-        <Grid
-          item
-          xs={3}
-          className="hidden md:flex pl-20 pr-4 flex-col justify-evenly"
-        >
-          <RotateAnimateImage
-            origin="55% 0%"
-            angle="-2"
-            src="/images/hawkermain03.png"
-          />
-          <RotateAnimateImage
-            origin="35% 0%"
-            angle="7"
-            src="/images/hawkermain04.png"
-          />
-        </Grid>
-      </Grid>
-    </div>
+      </div>
+    </>
   );
 }

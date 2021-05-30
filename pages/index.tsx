@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import { GetStaticProps } from "next";
 
@@ -14,13 +15,22 @@ interface HomeProps {
 }
 
 export default function Home({ allStalls }: HomeProps) {
+  const [isScrollIndicatorShown, setIsScrollIndicatorShown] =
+    React.useState(false);
+
   return (
     <div>
       <Head>
         <title>Project Hawker</title>
       </Head>
-      <AppHero />
-      <ExploreList allStalls={allStalls} />
+      <AppHero
+        isScrollIndicatorShown={isScrollIndicatorShown}
+        setIsScrollIndicatorShown={setIsScrollIndicatorShown}
+      />
+      <ExploreList
+        setIsScrollIndicatorShown={setIsScrollIndicatorShown}
+        allStalls={allStalls}
+      />
     </div>
   );
 }
