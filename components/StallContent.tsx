@@ -28,16 +28,18 @@ export default function StallContent({ stallData }: StallContentProps) {
               <Typography className="text-justify">
                 {information[property]}
               </Typography>
-              {property === "contact" && !!information[property] && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<Phone />}
-                  href={`tel:+65${information[property]}`}
-                >
-                  Call to dabao
-                </Button>
-              )}
+              {property === "contact" &&
+                !!information[property] &&
+                information[property].trim().length > 7 && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<Phone />}
+                    href={`tel:+65${information[property]}`}
+                  >
+                    Call to dabao
+                  </Button>
+                )}
             </div>
           ))}
         </Grid>

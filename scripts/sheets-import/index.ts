@@ -21,8 +21,8 @@ const TOKEN_PATH = "token.json";
 fs.readFile("scripts/sheets-import/credentials.json", async (err, content) => {
   if (err) return console.log("Error loading client secret file:", err);
   // Authorize a client with credentials, then call the Google Drive API.
-  const rows = await readCsv(3, 15);
-
+  const rows = await readCsv(71, 71);
+  console.log(rows);
   authorize(JSON.parse(content), (auth) => downloadAndAdd(auth, 0, rows));
 });
 
@@ -41,6 +41,7 @@ function downloadAndAdd(auth, i: number, rows: any[]) {
     const file = files[i];
     const fileName = `${uuidv4()}.${file.fileExtension}`;
     const dest = fs.createWriteStream(`public/images/submissions/${fileName}`);
+    console.log(fileName);
     drive.files
       .get(
         {
@@ -79,7 +80,7 @@ function downloadAndAdd(auth, i: number, rows: any[]) {
           downloadAndAdd(auth, i + 1, rows);
         });
       } else {
-        console.log("No files found.");
+        console.log(i, "No files found.");
         await addToDatabase(rows[i]);
         downloadAndAdd(auth, i + 1, rows);
       }

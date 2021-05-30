@@ -37,6 +37,12 @@ export default function StallPage({ stallData }: StallPageProps) {
         </div>
       </BannerTop>
       <StallContent stallData={stallData} />
+      <div className="text-center mt-20 mb-5">
+        <Typography variant="caption" color="textSecondary">
+          If you do not wish for your image to be displayed here, message us and
+          we will take it down
+        </Typography>
+      </div>
     </div>
   );
 }
