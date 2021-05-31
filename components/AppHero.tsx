@@ -89,7 +89,7 @@ export default function AppHero() {
     if (window.scrollY === 0) {
       setArrowOpacity(1);
     }
-    
+
     const PIXEL_TO_DISAPPEAR = 100;
     const changeOpacity = () => {
       const opacity = (PIXEL_TO_DISAPPEAR - window.scrollY) / 100;
@@ -164,7 +164,10 @@ export default function AppHero() {
             </div>
           </div>
           <div className={classes.scrollDown}>
-            <ScrollDownIndicator style={{ opacity: arrowOpacity }} />
+            {/* TODO: width and height included due to tailwind bug */}
+            <ScrollDownIndicator
+              style={{ opacity: arrowOpacity, width: "3rem", height: "3rem" }}
+            />
           </div>
         </Grid>
         <Grid
