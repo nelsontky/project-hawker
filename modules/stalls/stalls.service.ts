@@ -210,6 +210,10 @@ export class StallsService {
       .getMany();
   }
 
+  countStalls() {
+    return this.stallsRepository.count();
+  }
+
   findOneDeep(locationSlug: string, stallSlug: string) {
     return this.stallsRepository
       .createQueryBuilder("stall")

@@ -1,7 +1,9 @@
-import { GetStaticProps } from "next";
+import { GetStaticProps, GetStaticPaths } from "next";
 import { Container, Typography } from "@material-ui/core";
+import { Pagination, PaginationItem } from "@material-ui/lab";
 import Head from "next/head";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import Link from "next/link";
 
 import SquareLinkGrid from "components/SquareLinkGrid";
 
@@ -11,7 +13,9 @@ import { Stall } from "modules/stalls/entities/stall.entity";
 import { entityToObject } from "lib/utils/entity-to-object.util";
 
 interface AllProps {
-  allStalls: Stall[];
+  stalls: Stall[];
+  numberOfPages: number;
+  pageNumber: number;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -19,10 +23,13 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       backgroundColor: theme.palette.primary.main,
     },
+    pageUl: {
+      justifyContent: "center",
+    },
   })
 );
 
-export default function All({ allStalls }: AllProps) {
+export default function AllPage({ stalls, numberOfPages, pageNumber }: AllProps) {
   const classes = useStyles();
 
   return (
@@ -40,7 +47,7 @@ export default function All({ allStalls }: AllProps) {
       </Container>
       <Container fixed className="py-16">
         <SquareLinkGrid
-          items={allStalls.map((stall) => ({
+          items={stalls.map((stall) => ({
             href: `/${stall.location.slug}/${stall.slug}`,
             image: stall.images[0],
             children: (
@@ -54,18 +61,56 @@ export default function All({ allStalls }: AllProps) {
             ),
           }))}
         />
+        <Pagination
+          className="mt-8"
+          page={pageNumber}
+          count={numberOfPages}
+          classes={{ ul: classes.pageUl }}
+          renderItem={(item) => (
+            <Link href={`/all/${item.page}`}>
+              <a>
+                <PaginationItem {...item} />
+              </a>
+            </Link>
+          )}
+        />
       </Container>
     </div>
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const stallsService = await StallsService.build();
-  const allStalls = await stallsService.findAll();
+  const stallsCount = await stallsService.countStalls();
+
+  const paths = Array.from({ length: stallsCount }, (_, i) => ({
+    params: { pageNumber: i + 1 + "" },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const PAGE_SIZE = 12;
+  const pageNumber = +params.pageNumber;
+
+  const stallsService = await StallsService.build();
+  const stalls = await stallsService.findAll({
+    skip: PAGE_SIZE * (pageNumber - 1),
+    limit: PAGE_SIZE,
+  });
+  const numberOfPages = Math.ceil(
+    (await stallsService.countStalls()) / PAGE_SIZE
+  );
 
   return {
     props: {
-      allStalls: entityToObject(allStalls),
+      stalls: entityToObject(stalls),
+      numberOfPages,
+      pageNumber,
     },
   };
 };

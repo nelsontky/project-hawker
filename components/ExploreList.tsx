@@ -65,10 +65,12 @@ export default function LocationList({ allStalls }: ExploreListProps) {
             }))}
         />
         <div className="text-center mt-10">
-          <Link href="/all">
-            <Button variant="contained" color="secondary">
-              View All
-            </Button>
+          <Link href="/all/1">
+            <a>
+              <Button variant="contained" color="secondary">
+                View All
+              </Button>
+            </a>
           </Link>
         </div>
       </Container>
