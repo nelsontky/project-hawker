@@ -1,6 +1,5 @@
 import React from "react";
 import { Typography, Container, Button } from "@material-ui/core";
-import { Waypoint } from "react-waypoint";
 import {
   makeStyles,
   createStyles,
@@ -32,13 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface ExploreListProps {
   allStalls: Stall[];
-  setIsScrollIndicatorShown: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function LocationList({
-  allStalls,
-  setIsScrollIndicatorShown,
-}: ExploreListProps) {
+export default function LocationList({ allStalls }: ExploreListProps) {
   const classes = useStyles();
   const theme = useTheme();
   const isMedium = useMediaQuery(theme.breakpoints.up("md"));
@@ -52,11 +47,6 @@ export default function LocationList({
             Explore
           </Typography>
         </div>
-        <Waypoint
-          onEnter={() => {
-            setIsScrollIndicatorShown(false);
-          }}
-        />
         <SquareLinkGrid
           items={allStalls
             .slice(0, isLarge ? undefined : isMedium ? 6 : 4)

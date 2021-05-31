@@ -6,7 +6,7 @@ export default function ScrollDownIndicator(props: ScrollDownIndicatorProps) {
   return (
     <svg
       {...props}
-      className="animate-bounce w-6 h-6"
+      className="animate-bounce w-12 h-12"
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"

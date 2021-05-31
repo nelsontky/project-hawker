@@ -15,22 +15,13 @@ interface HomeProps {
 }
 
 export default function Home({ allStalls }: HomeProps) {
-  const [isScrollIndicatorShown, setIsScrollIndicatorShown] =
-    React.useState(false);
-
   return (
     <div>
       <Head>
         <title>Project Hawker</title>
       </Head>
-      <AppHero
-        isScrollIndicatorShown={isScrollIndicatorShown}
-        setIsScrollIndicatorShown={setIsScrollIndicatorShown}
-      />
-      <ExploreList
-        setIsScrollIndicatorShown={setIsScrollIndicatorShown}
-        allStalls={allStalls}
-      />
+      <AppHero />
+      <ExploreList allStalls={allStalls} />
     </div>
   );
 }
