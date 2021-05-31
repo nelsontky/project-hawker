@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import BannerTop from "components/BannerTop";
 import StallContent from "components/StallContent";
+import HomeButton from "components/HomeButton";
 
 import { LocationsService } from "modules/locations/locations.service";
 import { StallsService } from "modules/stalls/stalls.service";
@@ -23,7 +24,8 @@ export default function StallPage({ stallData }: StallPageProps) {
       </Head>
       <BannerTop image={stallData.images[0]}>
         <div className="relative h-full">
-          <Typography variant="h4" className="font-bold absolute top-4 left-4">
+          <HomeButton className="absolute top-0 left-0" />
+          <Typography variant="h4" className="font-bold absolute top-4 right-4">
             {stallData.stallNumber}
           </Typography>
           <Container

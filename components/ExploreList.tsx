@@ -10,6 +10,7 @@ import Link from "next/link";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import SquareLinkGrid from "components/SquareLinkGrid";
+import SearchBar from "components/SearchBar";
 
 import { Stall } from "modules/stalls/entities/stall.entity";
 
@@ -47,6 +48,7 @@ export default function LocationList({ allStalls }: ExploreListProps) {
             Explore
           </Typography>
         </div>
+        <SearchBar className="mb-10" />
         <SquareLinkGrid
           items={allStalls
             .slice(0, isLarge ? undefined : isMedium ? 6 : 4)

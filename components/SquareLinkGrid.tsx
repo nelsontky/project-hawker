@@ -17,7 +17,7 @@ export default function SquareLinkGrid({ items }: SquareLinkGridProps) {
   return (
     <Grid container spacing={isSmall ? 10 : 6} justify="center">
       {items.map((item, i) => (
-        <Grid item xs={6} md={4} lg={3} key={i}>
+        <Grid item xs={6} md={4} lg={3} key={item.href}>
           <SquareLink href={item.href} image={item.image}>
             {item.children}
           </SquareLink>

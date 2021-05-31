@@ -6,6 +6,8 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Link from "next/link";
 
 import SquareLinkGrid from "components/SquareLinkGrid";
+import SearchBar from "components/SearchBar";
+import HomeButton from "components/HomeButton";
 
 import { StallsService } from "modules/stalls/stalls.service";
 import { Stall } from "modules/stalls/entities/stall.entity";
@@ -29,7 +31,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function AllPage({ stalls, numberOfPages, pageNumber }: AllProps) {
+export default function AllPage({
+  stalls,
+  numberOfPages,
+  pageNumber,
+}: AllProps) {
   const classes = useStyles();
 
   return (
@@ -37,6 +43,7 @@ export default function AllPage({ stalls, numberOfPages, pageNumber }: AllProps)
       <Head>
         <title>All Stalls</title>
       </Head>
+      <HomeButton />
       <Container
         maxWidth="md"
         className="flex flex-col justify-center h-full text-center pt-10"
@@ -46,6 +53,7 @@ export default function AllPage({ stalls, numberOfPages, pageNumber }: AllProps)
         </Typography>
       </Container>
       <Container fixed className="py-16">
+        <SearchBar className="mb-16" />
         <SquareLinkGrid
           items={stalls.map((stall) => ({
             href: `/${stall.location.slug}/${stall.slug}`,
