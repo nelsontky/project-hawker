@@ -74,13 +74,18 @@ export default function AllPage({
           page={pageNumber}
           count={numberOfPages}
           classes={{ ul: classes.pageUl }}
-          renderItem={(item) => (
-            <Link href={`/all/${item.page}`}>
-              <a>
-                <PaginationItem {...item} />
-              </a>
-            </Link>
-          )}
+          renderItem={(item) => {
+            if (item.page > numberOfPages || item.page === 0) {
+              return <PaginationItem {...item} />;
+            }
+            return (
+              <Link href={`/all/${item.page}`}>
+                <a>
+                  <PaginationItem {...item} />
+                </a>
+              </Link>
+            );
+          }}
         />
       </Container>
     </div>
