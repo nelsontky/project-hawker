@@ -4,6 +4,7 @@ import Head from "next/head";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 import SquareLinkGrid from "components/SquareLinkGrid";
+import HomeButton from "components/HomeButton";
 
 import { LocationsService } from "modules/locations/locations.service";
 import { Location } from "modules/locations/entities/location.entity";
@@ -33,6 +34,7 @@ export default function HawkerCenter({
       <Head>
         <title>{locationData.name}</title>
       </Head>
+      <HomeButton />
       <Container
         maxWidth="md"
         className="flex flex-col justify-center h-full text-center pt-10"
