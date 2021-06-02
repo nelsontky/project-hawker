@@ -48,18 +48,20 @@ export default function StallContent({ stallData }: StallContentProps) {
                 )}
             </div>
           ))}
-          <RatioContainer percentage={isLarge ? "56.25%" : "100%"}>
-            <iframe
-              className="absolute top-0 w-full h-full"
-              loading="lazy"
-              src={`https://www.google.com/maps/embed/v1/place?key=${
-                process.env.NEXT_PUBLIC_GOOGLE_API_KEY
-              }&q=${encodeURIComponent(
-                stallData.location.name + " " + stallData.location.postalCode
-              )}`}
-              allowFullScreen
-            ></iframe>
-          </RatioContainer>
+          {stallData.location && (
+            <RatioContainer percentage={isLarge ? "56.25%" : "100%"}>
+              <iframe
+                className="absolute top-0 w-full h-full"
+                loading="lazy"
+                src={`https://www.google.com/maps/embed/v1/place?key=${
+                  process.env.NEXT_PUBLIC_GOOGLE_API_KEY
+                }&q=${encodeURIComponent(
+                  stallData.location.name + " " + stallData.location.postalCode ?? ""
+                )}`}
+                allowFullScreen
+              ></iframe>
+            </RatioContainer>
+          )}
         </Grid>
         <Grid container item xs={12} sm={6} spacing={4}>
           {stallData.images.map((image, i) => (
