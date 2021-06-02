@@ -2,6 +2,10 @@ import { Stall } from "modules/stalls/entities/stall.entity";
 import { Container, Grid, Typography, Button } from "@material-ui/core";
 import { Phone } from "@material-ui/icons";
 import _ from "lodash";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+
+import RatioContainer from "components/RatioContainer";
 
 interface StallContentProps {
   stallData: Stall;
@@ -9,6 +13,8 @@ interface StallContentProps {
 
 export default function StallContent({ stallData }: StallContentProps) {
   const { information } = stallData;
+  const theme = useTheme();
+  const isLarge = useMediaQuery(theme.breakpoints.up("lg"));
 
   return (
     <Container fixed className="py-8">
@@ -42,6 +48,18 @@ export default function StallContent({ stallData }: StallContentProps) {
                 )}
             </div>
           ))}
+          <RatioContainer percentage={isLarge ? "56.25%" : "100%"}>
+            <iframe
+              className="absolute top-0 w-full h-full"
+              loading="lazy"
+              src={`https://www.google.com/maps/embed/v1/place?key=${
+                process.env.NEXT_PUBLIC_GOOGLE_API_KEY
+              }&q=${encodeURIComponent(
+                stallData.location.name + " " + stallData.location.postalCode
+              )}`}
+              allowFullScreen
+            ></iframe>
+          </RatioContainer>
         </Grid>
         <Grid container item xs={12} sm={6} spacing={4}>
           {stallData.images.map((image, i) => (

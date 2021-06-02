@@ -9,6 +9,7 @@ interface StyleProps {
 const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) =>
   createStyles({
     root: {
+      position: "relative",
       height: 0,
       paddingTop: (props) => props.percentage,
     },
