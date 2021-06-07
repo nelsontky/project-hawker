@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 
 import AppHero from "components/AppHero";
 import ExploreList from "components/ExploreList";
@@ -26,7 +26,7 @@ export default function Home({ allStalls }: HomeProps) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const stallsService = await StallsService.build();
   const allStalls = await stallsService.findAll({
     limit: 8,
