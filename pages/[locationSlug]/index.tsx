@@ -40,17 +40,15 @@ export default function HawkerCenter({
         <meta property="og:url" content="https://projecthawker.com/" />
         <meta property="og:title" content={locationData.name} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={locationData.images[0].link} />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://projecthawker.com/" />
         <meta property="twitter:title" content={locationData.name} />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={locationData.images[0].link} />
       </Head>
       <HomeButton />
       <Container
         maxWidth="md"
-        className="flex flex-col justify-center h-full text-center pt-10"
+        className="flex flex-col justify-center text-center pt-10"
       >
         <Typography variant="h2" className="font-bold">
           {locationData.name}
