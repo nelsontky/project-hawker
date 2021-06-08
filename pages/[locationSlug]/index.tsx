@@ -28,11 +28,24 @@ export default function HawkerCenter({
   locationSlug,
 }: HawkerCenterProps) {
   const classes = useStyles();
+  const description = `${locationData.name} is a hawker center serving great food in Singapore. Learn more about ${locationData.name} here!`;
 
   return (
     <div className={classes.root}>
       <Head>
         <title>{locationData.name}</title>
+        <meta name="title" content={locationData.name} />
+        <meta name="description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://projecthawker.com/" />
+        <meta property="og:title" content={locationData.name} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={locationData.images[0].link} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://projecthawker.com/" />
+        <meta property="twitter:title" content={locationData.name} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={locationData.images[0].link} />
       </Head>
       <HomeButton />
       <Container

@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const description =
+  "Explore new hawkers in Singapore! Learn more about their story, and their amazing food right here at Project Hawker!";
+  
 export default function All({ initialData }: AllProps) {
   const classes = useStyles();
 
@@ -38,6 +41,18 @@ export default function All({ initialData }: AllProps) {
     <div className={classes.root}>
       <Head>
         <title>All Stalls</title>
+        <meta name="title" content="Project Hawker" />
+        <meta name="description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://projecthawker.com/" />
+        <meta property="og:title" content="Project Hawker" />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content="/images/hero-background.jpg" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://projecthawker.com/" />
+        <meta property="twitter:title" content="Project Hawker" />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content="/images/hero-background.jpg" />
       </Head>
       <HomeButton />
       <Container

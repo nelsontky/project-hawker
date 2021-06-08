@@ -16,10 +16,24 @@ interface StallPageProps {
 }
 
 export default function StallPage({ stallData }: StallPageProps) {
+  const description = `${stallData.name} is a hawker stall at ${stallData.location.name}. Learn more about ${stallData.name} here!`;
+
   return (
     <div>
       <Head>
         <title>{stallData.name}</title>
+        <meta name="title" content={stallData.name} />
+        <meta name="description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://projecthawker.com/" />
+        <meta property="og:title" content={stallData.name} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={stallData.images[0].link} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://projecthawker.com/" />
+        <meta property="twitter:title" content={stallData.name} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={stallData.images[0].link} />
       </Head>
       <BannerTop image={stallData.images[0]}>
         <div className="relative h-full">
