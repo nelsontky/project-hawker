@@ -3,7 +3,7 @@ import { Container, Typography } from "@material-ui/core";
 import Head from "next/head";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-import SquareLinkGrid from "components/SquareLinkGrid";
+import InfiniteStallsContainer from "components/InfiniteStallsContainer";
 import SearchBar from "components/SearchBar";
 import HomeButton from "components/HomeButton";
 
@@ -50,22 +50,10 @@ export default function All({ initialData }: AllProps) {
       </Container>
       <Container fixed className="py-16">
         <SearchBar className="mb-16" />
-        <SquareLinkGrid
+        <InfiniteStallsContainer
+          apiPath="/api/v1/stalls"
           initialData={initialData}
           pageSize={PAGE_SIZE}
-          // items={stalls.map((stall) => ({
-          //   href: `/${stall.location.slug}/${stall.slug}`,
-          //   image: stall.images[0],
-          //   children: (
-          //     <span>
-          //       {stall.name}
-          //       <br />
-          //       <Typography color="textSecondary" variant="subtitle2">
-          //         ({stall.location.name})
-          //       </Typography>
-          //     </span>
-          //   ),
-          // }))}
         />
       </Container>
     </div>
