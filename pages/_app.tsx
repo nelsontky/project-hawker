@@ -48,8 +48,10 @@ export default function App({ Component, pageProps }: AppProps) {
           value={{ fetcher: (url) => axios.get(url).then((res) => res.data) }}
         >
           <CssBaseline />
-          <Component {...pageProps} />
-          <AppFooter />
+          <div className="h-full flex flex-col">
+            <Component {...pageProps} />
+            <AppFooter />
+          </div>
         </SWRConfig>
       </ThemeProvider>
     </React.Fragment>

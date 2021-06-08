@@ -10,15 +10,17 @@ interface InfiniteStallsContainerProps {
   initialData: Stall[];
   pageSize: number;
   apiPath: string;
+  emptyMessageComponent?: React.ReactNode;
 }
 
 export default function InfiniteStallsContainer({
   initialData,
   pageSize,
-  apiPath
+  apiPath,
+  emptyMessageComponent,
 }: InfiniteStallsContainerProps) {
   const { data, size, setSize } = useSWRInfinite<Stall[]>(
-    (index) => `${apiPath}?limit=${pageSize}&skip=${index * pageSize}`,
+    (index) => `${apiPath}limit=${pageSize}&skip=${index * pageSize}`,
     {
       initialData: [initialData],
     }
@@ -27,6 +29,7 @@ export default function InfiniteStallsContainer({
   const stalls = data ? [].concat(...data) : [];
   const isLoadingMore =
     size > 0 && data && typeof data[size - 1] === "undefined";
+  const isEmpty = data?.[0]?.length === 0;
 
   return (
     <>
@@ -52,6 +55,7 @@ export default function InfiniteStallsContainer({
           setSize(size + 1);
         }}
       />
+      {isEmpty && !!emptyMessageComponent && emptyMessageComponent}
     </>
   );
 }

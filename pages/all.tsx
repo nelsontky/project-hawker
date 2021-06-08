@@ -42,7 +42,7 @@ export default function All({ initialData }: AllProps) {
       <HomeButton />
       <Container
         maxWidth="md"
-        className="flex flex-col justify-center h-full text-center pt-10"
+        className="flex flex-col justify-center text-center pt-10"
       >
         <Typography variant="h2" className="font-bold">
           All Stalls
@@ -51,7 +51,7 @@ export default function All({ initialData }: AllProps) {
       <Container fixed className="py-16">
         <SearchBar className="mb-16" />
         <InfiniteStallsContainer
-          apiPath="/api/v1/stalls"
+          apiPath="/api/v1/stalls?"
           initialData={initialData}
           pageSize={PAGE_SIZE}
         />

@@ -14,14 +14,15 @@ export class SearchService {
     return new SearchService(stallsService);
   }
 
-  async search(query: string) {
+  async search(options: { query: string; limit: number; skip: number }) {
     const response = await axios.post("http://es:9200/stalls/_search", {
+      from: options.skip,
+      size: options.limit,
       query: {
         multi_match: {
-          query,
+          query: options.query,
         },
       },
-      fields: ["id"],
       _source: false,
     });
 
@@ -29,6 +30,6 @@ export class SearchService {
       (hit: { _id: string }) => hit._id
     );
 
-    return this.stallsService.findAllIds(stallIds);
+    return this.stallsService.findAllByIds(stallIds);
   }
 }

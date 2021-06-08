@@ -16,6 +16,9 @@ let theme = createMuiTheme({
           paddingLeft: "24px !important",
           paddingRight: "24px !important",
         },
+        "html, body, #__next": {
+          height: "100%",
+        },
       },
     },
   },

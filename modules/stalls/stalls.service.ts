@@ -59,7 +59,11 @@ export class StallsService {
       .getMany();
   }
 
-  findAllIds(ids: string[]) {
+  findAllByIds(ids: string[]) {
+    if (ids.length === 0) {
+      return [];
+    }
+
     return this.stallsRepository
       .createQueryBuilder("stall")
       .select([
