@@ -1,21 +1,23 @@
-import React from "react";
 import { GetServerSideProps } from "next";
-import { Container, Typography, LinearProgress } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import Head from "next/head";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
+import InfiniteStallsContainer from "components/InfiniteStallsContainer";
 import SearchBar from "components/SearchBar";
 import HomeButton from "components/HomeButton";
-import InfiniteStallsContainer from "components/InfiniteStallsContainer";
 
+import { StallsService } from "modules/stalls/stalls.service";
 import { Stall } from "modules/stalls/entities/stall.entity";
-import { SearchService } from "modules/search/search.service";
 
 import { entityToObject } from "lib/utils/entity-to-object.util";
 
-interface SearchProps {
+const PAGE_SIZE = 12;
+
+interface AllProps {
   initialData: Stall[];
-  query: string;
+  numberOfPages: number;
+  pageNumber: number;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,19 +25,22 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       backgroundColor: theme.palette.primary.main,
     },
+    pageUl: {
+      justifyContent: "center",
+    },
   })
 );
 
-const PAGE_SIZE = 12;
 const description =
-  "Search for hawkers in Singapore! Learn more about their story, and their amazing food right here at Project Hawker!";
-
-export default function Search({ initialData, query }: SearchProps) {
+  "Explore new hawkers in Singapore! Learn more about their story, and their amazing food right here at Project Hawker!";
+  
+export default function All({ initialData }: AllProps) {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <Head>
-        <title>Search Results</title>
+        <title>All Stalls</title>
         <meta name="title" content="Project Hawker" />
         <meta name="description" content={description} />
         <meta property="og:type" content="website" />
@@ -55,60 +60,31 @@ export default function Search({ initialData, query }: SearchProps) {
         className="flex flex-col justify-center text-center pt-10"
       >
         <Typography variant="h2" className="font-bold">
-          Search Results
+          All Stalls
         </Typography>
       </Container>
       <Container fixed className="py-16">
-        <SearchBar initialValue={query} className="mb-16" />
+        <SearchBar className="mb-16" />
         <InfiniteStallsContainer
-          apiPath={`/api/v1/search?q=${query}&`}
+          apiPath="/api/v1/stalls?"
           initialData={initialData}
           pageSize={PAGE_SIZE}
-          emptyMessageComponent={
-            <div className="text-center">
-              <Typography>
-                Oh the sadness... No results found! Try another search term or
-                add a new entry{" "}
-                <a
-                  className="underline"
-                  href="https://projecthawker.com/submit"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  here
-                </a>
-                .
-              </Typography>
-            </div>
-          }
         />
       </Container>
     </div>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { q } = query;
-
-  if (!q) {
-    return {
-      props: {
-        initialData: [],
-        query: "",
-      },
-    };
-  }
-
-  const searchService = await SearchService.build();
-  const results = await searchService.search({
-    query: q as string,
+export const getServerSideProps: GetServerSideProps = async () => {
+  const stallsService = await StallsService.build();
+  const stalls = await stallsService.findAll({
     skip: 0,
     limit: PAGE_SIZE,
   });
+
   return {
     props: {
-      initialData: entityToObject(results),
-      query: q,
+      initialData: entityToObject(stalls),
     },
   };
 };

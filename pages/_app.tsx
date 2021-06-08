@@ -2,6 +2,8 @@ import React from "react";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { SWRConfig } from "swr";
+import axios from "axios";
 
 import "tailwindcss/tailwind.css";
 import { AppProps } from "next/app";
@@ -42,9 +44,15 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="manifest" href="/images/icons/favicons/site.webmanifest" />
       </Head>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-        <AppFooter />
+        <SWRConfig
+          value={{ fetcher: (url) => axios.get(url).then((res) => res.data) }}
+        >
+          <CssBaseline />
+          <div className="h-full flex flex-col">
+            <Component {...pageProps} />
+            <AppFooter />
+          </div>
+        </SWRConfig>
       </ThemeProvider>
     </React.Fragment>
   );

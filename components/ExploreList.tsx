@@ -67,7 +67,7 @@ export default function LocationList({ allStalls }: ExploreListProps) {
             }))}
         />
         <div className="text-center mt-10">
-          <Link href="/all/1">
+          <Link href="/all">
             <a>
               <Button variant="contained" color="secondary">
                 View All

@@ -2,12 +2,12 @@ version: "3.8"
 
 services:
   next:
-    build: ./
-    command: sh -c "npm install && npm run dev"
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.production   
     ports:
       - 3000:3000
-    volumes:
-      - ./:/app
     env_file: ./.env
 
   postgres:
@@ -15,11 +15,12 @@ services:
     env_file: ./.env
     image: postgres:12
     volumes:
-      - project-hawker-dev:/var/lib/postgresql/data
+      - project-hawker:/var/lib/postgresql/data
     expose:
       - "5432"
 
   adminer:
+    restart: always
     image: adminer
     ports:
       - 8081:8080
@@ -27,18 +28,19 @@ services:
       driver: none
 
   es:
+    restart: always
     image: docker.elastic.co/elasticsearch/elasticsearch:7.13.1
     environment:
       - discovery.type=single-node
     volumes:
-      - es-dev:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
+      - es:/usr/share/elasticsearch/data
+    expose:
+      - "9200"
 
   logstash:
     build: ./logstash
     env_file: ./.env
 
 volumes:
-  project-hawker-dev:
-  es-dev:
+  project-hawker:
+  es:

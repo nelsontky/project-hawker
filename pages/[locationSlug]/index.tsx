@@ -1,5 +1,5 @@
-import { GetStaticProps, GetStaticPaths } from "next";
-import { Container, Typography, Grid } from "@material-ui/core";
+import { GetServerSideProps } from "next";
+import { Container, Typography } from "@material-ui/core";
 import Head from "next/head";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
@@ -28,11 +28,24 @@ export default function HawkerCenter({
   locationSlug,
 }: HawkerCenterProps) {
   const classes = useStyles();
+  const description = `${locationData.name} is a hawker center serving great food in Singapore. Learn more about ${locationData.name} here!`;
 
   return (
     <div className={classes.root}>
       <Head>
         <title>{locationData.name}</title>
+        <meta name="title" content={locationData.name} />
+        <meta name="description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://projecthawker.com/" />
+        <meta property="og:title" content={locationData.name} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={locationData.images[0].link} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://projecthawker.com/" />
+        <meta property="twitter:title" content={locationData.name} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={locationData.images[0].link} />
       </Head>
       <HomeButton />
       <Container
@@ -56,21 +69,7 @@ export default function HawkerCenter({
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async (locationSlug) => {
-  const locationsService = await LocationsService.build();
-  const locations = await locationsService.findAll();
-
-  const paths = locations.map((location) => ({
-    params: { locationSlug: location.slug },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const locationsService = await LocationsService.build();
   const locationData = await locationsService.findOneDeep(
     params.locationSlug as string
