@@ -35,6 +35,10 @@ services:
     ports:
       - 9200:9200
 
+  logstash:
+    build: ./logstash
+    env_file: ./.env
+
 volumes:
   project-hawker-dev:
   es-dev:
