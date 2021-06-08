@@ -7,10 +7,7 @@ export class StallsService {
   private connection: Connection;
   private stallsRepository: Repository<Stall>;
 
-  constructor(
-    connection: Connection,
-    stallsRepository: Repository<Stall>,
-  ) {
+  constructor(connection: Connection, stallsRepository: Repository<Stall>) {
     this.connection = connection;
     this.stallsRepository = stallsRepository;
   }
@@ -21,10 +18,7 @@ export class StallsService {
       "Stall"
     ) as Repository<Stall>;
 
-    return new StallsService(
-      connection,
-      stallsRepository,
-    );
+    return new StallsService(connection, stallsRepository);
   }
 
   findAllSlugs(locationSlug: string) {
@@ -62,6 +56,30 @@ export class StallsService {
       )
       .skip(options.skip)
       .take(options.limit)
+      .getMany();
+  }
+
+  findAllIds(ids: string[]) {
+    return this.stallsRepository
+      .createQueryBuilder("stall")
+      .select([
+        "stall.id",
+        "stall.name",
+        "stall.stallNumber",
+        "stall.information",
+        "stall.slug",
+        "stall.createdAt",
+        "stall.updatedAt",
+        "images.link",
+        "images.compressedBase64",
+        "location.name",
+        "location.slug",
+        "locationImages.link",
+      ])
+      .leftJoin("stall.images", "images")
+      .leftJoin("stall.location", "location")
+      .leftJoin("location.images", "locationImages")
+      .where("stall.id IN (:...ids)", { ids })
       .getMany();
   }
 

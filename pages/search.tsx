@@ -11,6 +11,7 @@ import HomeButton from "components/HomeButton";
 
 import { StallsService } from "modules/stalls/stalls.service";
 import { Stall } from "modules/stalls/entities/stall.entity";
+import { SearchService } from "modules/search/search.service";
 
 import { entityToObject } from "lib/utils/entity-to-object.util";
 import { searchStallsArray } from "lib/utils/search-stalls-array.util";
@@ -27,7 +28,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function Search({ stalls }: SearchProps) {
+export default function Search({ stalls, results }: any) {
+  console.log(results);
   const classes = useStyles();
   const router = useRouter();
   const [filteredStalls, setFilteredStalls] =
@@ -106,9 +108,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const stallsService = await StallsService.build();
   const stalls = await stallsService.findAll();
 
+  const searchService = await SearchService.build();
+  const results = await searchService.search("curry");
+
   return {
     props: {
       stalls: entityToObject(stalls),
+      results: entityToObject(results),
     },
   };
 };
