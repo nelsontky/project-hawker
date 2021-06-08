@@ -26,5 +26,15 @@ services:
     logging:
       driver: none
 
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.1
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - es-dev:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+
 volumes:
   project-hawker-dev:
+  es-dev:
