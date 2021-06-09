@@ -9,7 +9,7 @@ export class LocationsService {
 
   constructor(
     connection: Connection,
-    locationsRepository: Repository<Location>,
+    locationsRepository: Repository<Location>
   ) {
     this.connection = connection;
     this.locationsRepository = locationsRepository;
@@ -38,6 +38,23 @@ export class LocationsService {
         "location.createdAt",
       ])
       .leftJoin("location.images", "images")
+      .getMany();
+  }
+
+  async findAllByIds(ids: string[]) {
+    if (ids.length === 0) {
+      return [];
+    }
+
+    return this.locationsRepository
+      .createQueryBuilder("location")
+      .select([
+        "location.id",
+        "location.name",
+        "location.postalCode",
+        "location.slug",
+      ])
+      .where("location.id IN (:...ids)", { ids })
       .getMany();
   }
 

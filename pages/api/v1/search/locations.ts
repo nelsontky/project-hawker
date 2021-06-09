@@ -4,14 +4,12 @@ import { SearchService } from "modules/search/search.service";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const searchService = await SearchService.build();
-  const { limit, skip, q } = req.query;
+  const { q } = req.query;
 
   switch (req.method) {
     case "GET":
-      const results = await searchService.search({
+      const results = await searchService.searchLocations({
         query: q as string,
-        skip: typeof skip === "string" ? +skip : undefined,
-        limit: typeof limit === "string" ? +limit : undefined,
       });
       return res.json(results);
     default:

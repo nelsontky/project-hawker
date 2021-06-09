@@ -63,7 +63,7 @@ export default function Search({ initialData, query }: SearchProps) {
       <Container fixed className="py-16">
         <SearchBar initialValue={query} className="mb-16" />
         <InfiniteStallsContainer
-          apiPath={`/api/v1/search?q=${query}&`}
+          apiPath={`/api/v1/search/stalls?q=${query}&`}
           initialData={initialData}
           pageSize={PAGE_SIZE}
           emptyMessageComponent={
@@ -102,7 +102,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }
 
   const searchService = await SearchService.build();
-  const results = await searchService.search({
+  const results = await searchService.searchStalls({
     query: q as string,
     skip: 0,
     limit: PAGE_SIZE,
