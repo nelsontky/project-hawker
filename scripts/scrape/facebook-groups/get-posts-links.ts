@@ -43,11 +43,3 @@ export async function getPostsLinks(
 
   return links;
 }
-
-getPostsLinks(
-  "https://mbasic.facebook.com/groups/2773435079585801",
-  2,
-  true
-).then((links) => {
-  console.log(links);
-});
