@@ -49,12 +49,12 @@ export default function All({ initialData }: AllProps) {
         <meta property="og:url" content="https://projecthawker.com/" />
         <meta property="og:title" content="Project Hawker" />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content="/images/hero-background.jpg" />
+        <meta property="og:image" content="https://projecthawker.com/images/hero-background.jpg" />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://projecthawker.com/" />
         <meta property="twitter:title" content="Project Hawker" />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content="/images/hero-background.jpg" />
+        <meta property="twitter:image" content="https://projecthawker.com/images/hero-background.jpg" />
       </Head>
       <HomeButton />
       <Container

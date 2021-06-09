@@ -31,7 +31,7 @@ export default function Home({ allStalls }: HomeProps) {
           property="og:description"
           content="Project Hawker is a passion project aiming to be a consolidated place to list all hawkers and their stories. Help us reach out to them and let their stories be heard."
         />
-        <meta property="og:image" content="/images/hero-background.jpg" />
+        <meta property="og:image" content="https://projecthawker.com/images/hero-background.jpg" />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://projecthawker.com/" />
         <meta property="twitter:title" content="Project Hawker" />
@@ -39,7 +39,7 @@ export default function Home({ allStalls }: HomeProps) {
           property="twitter:description"
           content="Project Hawker is a passion project aiming to be a consolidated place to list all hawkers and their stories. Help us reach out to them and let their stories be heard."
         />
-        <meta property="twitter:image" content="/images/hero-background.jpg" />
+        <meta property="twitter:image" content="https://projecthawker.com/images/hero-background.jpg" />
       </Head>
       
       <AppHero />
