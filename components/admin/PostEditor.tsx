@@ -17,8 +17,14 @@ import { ScrapeFacebook } from "modules/scrape-facebook/entities/scrape-facebook
 import { convertMbasicToFacebook } from "lib/utils/convert-mbasic-to-facebook";
 
 const validationSchema = yup.object({
-  description: yup.string().required("Description is required"),
-  nameOfHawker: yup.string().required("Name of hawker is required"),
+  description: yup
+    .string()
+    .transform((value) => value.trim())
+    .required("Description is required"),
+  nameOfHawker: yup
+    .string()
+    .transform((value) => value.trim())
+    .required("Name of hawker is required"),
 });
 
 interface PostEditorProps {
