@@ -20,6 +20,8 @@
 .env
 scripts/sheets-import/credentials.json
 token.json
+scripts/scrape/facebook-groups/constants/headers.constant.ts
+
 
 # debug
 npm-debug.log*

@@ -1,4 +1,4 @@
-// npx ts-node -r tsconfig-paths/register --project tsconfig.json   scripts/sheets-import/index.ts
+// npx ts-node -r tsconfig-paths/register --project tsconfig.json  scripts/sheets-import/index.ts
 
 import { v4 as uuidv4 } from "uuid";
 import { readCsv } from "./read-csv";
