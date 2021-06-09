@@ -10,10 +10,9 @@ export default function TokenInput() {
   const [error, setError] = React.useState("");
   const dispatch = useAppDispatch();
 
-  const onSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
-    if (e) {
-      e.preventDefault();
-    }
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
     try {
       const response = await axios.post("/api/v1/auth", undefined, {
         headers: { "admin-token": token },
@@ -31,6 +30,7 @@ export default function TokenInput() {
     <Container fixed>
       <form onSubmit={onSubmit}>
         <TextField
+          type="password"
           variant="outlined"
           fullWidth
           label="Password"
@@ -42,12 +42,7 @@ export default function TokenInput() {
           error={error.length > 0}
           helperText={error.length > 0 ? error : undefined}
         />
-        <Button
-          variant="contained"
-          onClick={() => {
-            onSubmit();
-          }}
-        >
+        <Button variant="contained" type="submit">
           Submit
         </Button>
       </form>

@@ -6,6 +6,8 @@ import { Pagination, PaginationItem } from "@material-ui/lab";
 import Link from "next/link";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
+import PostEditor from "components/admin/PostEditor";
+
 import { useAppSelector } from "lib/hooks/redux.hook";
 import { ScrapeFacebook } from "modules/scrape-facebook/entities/scrape-facebook.entity";
 
@@ -50,7 +52,7 @@ export default function MainPortal({
       {!data || error ? (
         <LinearProgress />
       ) : (
-        data.map((post) => <p key={post.id}>{post.postUrl}</p>)
+        data.map((post) => <PostEditor key={post.id} post={post} />)
       )}
       <Pagination
         className="mt-8"
@@ -58,7 +60,11 @@ export default function MainPortal({
         count={numberOfPages}
         classes={{ ul: classes.pageUl }}
         renderItem={(item) => {
-          if (item.page > numberOfPages || item.page === 0) {
+          if (
+            item.page > numberOfPages ||
+            item.page === 0 ||
+            item.page === null
+          ) {
             return <PaginationItem {...item} />;
           }
           return (

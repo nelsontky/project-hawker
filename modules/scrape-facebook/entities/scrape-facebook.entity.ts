@@ -5,9 +5,18 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   ManyToOne,
+  OneToOne,
+  JoinColumn,
 } from "typeorm";
 
 import { Location } from "modules/locations/entities/location.entity";
+import { Stall } from "modules/stalls/entities/stall.entity";
+
+export enum PostStatus {
+  PENDING = "PENDING",
+  REJECTED = "REJECTED",
+  APPROVED = "APPROVED",
+}
 
 @Entity()
 export class ScrapeFacebook {
@@ -26,44 +35,51 @@ export class ScrapeFacebook {
   @Column("text")
   postUrl: string;
 
+  @Column({ type: "enum", enum: PostStatus, default: PostStatus.PENDING })
+  status: PostStatus;
+
+  @OneToOne(() => Stall, { nullable: true })
+  @JoinColumn()
+  stall?: Stall;
+
   @ManyToOne(() => Location, (location) => location.stalls, {
     onDelete: "CASCADE",
     nullable: true,
   })
-  location: Location;
+  location?: Location;
 
   @Column("text", { nullable: true })
-  stallName: string;
+  stallName?: string;
 
   @Column("text", { nullable: true })
-  stallNumber: string;
+  stallNumber?: string;
 
   @Column("text", { nullable: true })
-  deliveryAvailable: string;
+  deliveryAvailable?: string;
 
   @Column("text", { nullable: true })
-  contact: string;
+  contact?: string;
 
   @Column("text", { nullable: true })
-  foodTheyServe: string;
+  foodTheyServe?: string;
 
   @Column("text", { nullable: true })
-  favorites: string;
+  favorites?: string;
 
   @Column("text", { nullable: true })
-  dietaryRestrictions: string;
+  dietaryRestrictions?: string;
 
   @Column("text", { nullable: true })
-  priceRange: string;
+  priceRange?: string;
 
   @Column("text", { nullable: true })
-  nameOfHawker: string;
+  nameOfHawker?: string;
 
   @Column("text", { nullable: true })
-  openingHours: string;
+  openingHours?: string;
 
   @Column("text", { nullable: true })
-  whatAreTheConcernsThisHawkerIsFacing: string;
+  whatAreTheConcernsThisHawkerIsFacing?: string;
 
   @CreateDateColumn()
   createdAt: Date;
