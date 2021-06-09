@@ -70,7 +70,12 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <SWRConfig
-          value={{ fetcher: (url) => axios.get(url).then((res) => res.data) }}
+          value={{
+            fetcher: (url, token) =>
+              axios
+                .get(url, { headers: { "admin-token": token } })
+                .then((res) => res.data),
+          }}
         >
           <Provider store={store}>
             <CssBaseline />
