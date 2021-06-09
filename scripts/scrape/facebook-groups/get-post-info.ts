@@ -24,17 +24,29 @@ export async function getPostInfo(postUrl: string, debug: boolean = false) {
   const description = $(DESCRIPTION_SELECTOR).text().trim();
   const imageLinks = $(IMAGES_SELECTOR)
     .map(function () {
-      return "https://mbasic.facebook.com" + $(this).parent().attr("href");
+      const imagePath = $(this).parent().attr("href");
+
+      if (imagePath) {
+        return "https://mbasic.facebook.com" + imagePath;
+      }
+
+      return undefined;
     })
     .toArray();
 
   let imageNames = [];
   for (let i = 0; i < imageLinks.length; i++) {
-    const imageName = await downloadImageFromFacebook(imageLinks[i], postId, i);
-    imageNames.push(imageName);
+    if (imageLinks[i]) {
+      const imageName = await downloadImageFromFacebook(
+        imageLinks[i],
+        postId,
+        i
+      );
+      imageNames.push(imageName);
+    }
   }
 
-  const result = { postId, recommendedBy, description, imageNames };
+  const result = { postId, recommendedBy, description, imageNames, postUrl };
   console.log(result);
   return result;
 }

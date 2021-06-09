@@ -18,10 +18,13 @@ export class ScrapeFacebook {
   recommendedBy: string;
 
   @Column("text")
-  desscription: string;
+  description: string;
 
   @Column("text", { array: true })
   imageNames: string[];
+
+  @Column("text")
+  postUrl: string;
 
   @ManyToOne(() => Location, (location) => location.stalls, {
     onDelete: "CASCADE",
