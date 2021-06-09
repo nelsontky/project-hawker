@@ -1,11 +1,12 @@
 import React from "react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { SWRConfig } from "swr";
 import axios from "axios";
 import { Provider } from "react-redux";
+import NProgress from "nprogress";
 
 import "tailwindcss/tailwind.css";
 import { AppProps } from "next/app";
@@ -14,7 +15,7 @@ import AppFooter from "components/AppFooter";
 
 import theme from "lib/theme";
 import store from "lib/store";
-import NProgress from "nprogress";
+import * as gtag from "lib/gtag";
 
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);
@@ -24,6 +25,8 @@ Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
@@ -31,6 +34,16 @@ export default function App({ Component, pageProps }: AppProps) {
       jssStyles.parentElement!.removeChild(jssStyles);
     }
   }, []);
+
+  React.useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      gtag.pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <React.Fragment>
