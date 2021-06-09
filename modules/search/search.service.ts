@@ -21,6 +21,7 @@ export class SearchService {
       query: {
         multi_match: {
           query: options.query,
+          fuzziness: "AUTO",
         },
       },
       _source: false,
