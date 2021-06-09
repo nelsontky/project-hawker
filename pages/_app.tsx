@@ -4,6 +4,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { SWRConfig } from "swr";
 import axios from "axios";
+import { Provider } from "react-redux";
 
 import "tailwindcss/tailwind.css";
 import { AppProps } from "next/app";
@@ -11,6 +12,7 @@ import { AppProps } from "next/app";
 import AppFooter from "components/AppFooter";
 
 import theme from "lib/theme";
+import store from "lib/store";
 
 export default function App({ Component, pageProps }: AppProps) {
   React.useEffect(() => {
@@ -47,11 +49,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <SWRConfig
           value={{ fetcher: (url) => axios.get(url).then((res) => res.data) }}
         >
-          <CssBaseline />
-          <div className="h-full flex flex-col">
-            <Component {...pageProps} />
-            <AppFooter />
-          </div>
+          <Provider store={store}>
+            <CssBaseline />
+            <div className="h-full flex flex-col">
+              <Component {...pageProps} />
+              <AppFooter />
+            </div>
+          </Provider>
         </SWRConfig>
       </ThemeProvider>
     </React.Fragment>
