@@ -20,10 +20,12 @@
 .env
 scripts/sheets-import/credentials.json
 token.json
-scripts/scrape/facebook-groups/constants/headers.constant.ts
-
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# scraping
+scripts/scrape/facebook-groups/constants/headers.constant.ts
+scripts/scrape/facebook-groups/debug
