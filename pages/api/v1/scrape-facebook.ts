@@ -20,6 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             location: "post.location",
           },
         },
+        where: `array_length("imageNames", 1) > 0`,
       });
       return res.json(posts);
     default:

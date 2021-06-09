@@ -86,6 +86,7 @@ export default function PostEditor({ post }: PostEditorProps) {
   return (
     <>
       <CreateLocationDialog
+        description={formik.values.description}
         open={isAddLocation}
         setOpen={setIsAddLocation}
         setLocationInput={setLocationInput}

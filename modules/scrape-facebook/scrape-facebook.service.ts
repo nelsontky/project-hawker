@@ -30,7 +30,10 @@ export class ScrapeFacebookService {
   }
 
   async findMany(options?: FindManyOptions<ScrapeFacebook>) {
-    return this.facebookRepository.find(options);
+    return this.facebookRepository.find({
+      ...options,
+      order: { createdAt: "DESC" },
+    });
   }
 
   async count(options?: FindManyOptions<ScrapeFacebook>) {

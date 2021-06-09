@@ -12,11 +12,15 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Typography,
 } from "@material-ui/core";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import _ from "lodash";
+import axios from "axios";
 
 import { Location } from "modules/locations/entities/location.entity";
+import { useAppSelector } from "lib/hooks/redux.hook";
 
 const REGION_OPTIONS = [
   "North",
@@ -49,13 +53,19 @@ interface CreateLocationDialogProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setLocationInput: React.Dispatch<React.SetStateAction<Location>>;
+  description?: string;
 }
 
 export default function CreateLocationDialog({
   open,
   setOpen,
   setLocationInput,
+  description,
 }: CreateLocationDialogProps) {
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const token = useAppSelector((state) => state.admin.token);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -63,9 +73,26 @@ export default function CreateLocationDialog({
       postalCode: "",
     },
     validationSchema,
-    onSubmit: (values, formikHelpers) => {
-      alert(JSON.stringify(values, null, 2));
-      formikHelpers.resetForm();
+    onSubmit: async (values, formikHelpers) => {
+      try {
+        const response = await axios.post<Location>(
+          "/api/v1/locations",
+          values,
+          { headers: { "admin-token": token } }
+        );
+        setLocationInput(response.data);
+        formikHelpers.resetForm();
+        handleClose();
+      } catch {
+        formikHelpers.setFieldError(
+          "name",
+          "You may have tried to add a location with the same name as another existing location"
+        );
+        formikHelpers.setFieldError(
+          "postalCode",
+          "You may have tried to add a location with the same postal code as another existing location"
+        );
+      }
     },
   });
 
@@ -73,15 +100,14 @@ export default function CreateLocationDialog({
     formik.submitForm();
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Dialog open={open}>
       <DialogTitle>Create new location</DialogTitle>
       <DialogContent>
-        <Grid container spacing={4}>
+        {description && description.length > 0 && (
+          <Typography variant="caption">{`Description: ${description}`}</Typography>
+        )}
+        <Grid className="mt-4" container spacing={4}>
           {Object.keys(formik.values).map((field, i) => (
             <Grid item xs={i < 1 ? 12 : 6} key={field}>
               {field === "region" ? (
@@ -129,10 +155,19 @@ export default function CreateLocationDialog({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button
+          disabled={formik.isSubmitting}
+          onClick={handleClose}
+          color="primary"
+        >
           Cancel
         </Button>
-        <Button onClick={handleAdd} color="primary" autoFocus>
+        <Button
+          disabled={formik.isSubmitting}
+          onClick={handleAdd}
+          color="primary"
+          autoFocus
+        >
           Add
         </Button>
       </DialogActions>

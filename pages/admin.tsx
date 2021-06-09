@@ -32,7 +32,11 @@ export default function Admin({ numberOfPages }: AdminProps) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const facebookService = await ScrapeFacebookService.build();
-  const numberOfPages = Math.ceil((await facebookService.count()) / PAGE_SIZE);
+  const numberOfPages = Math.ceil(
+    (await facebookService.count({
+      where: `array_length("imageNames", 1) > 0`,
+    })) / PAGE_SIZE
+  );
 
   return {
     props: {

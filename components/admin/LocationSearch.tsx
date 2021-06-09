@@ -41,7 +41,7 @@ export default function LocationSearch({
   return (
     <Autocomplete
       getOptionLabel={(option) =>
-        typeof option === "string" ? option : option.name
+        typeof option === "string" ? option : `${option.name} (${option.postalCode})`
       }
       filterOptions={(x) => x}
       options={options}
@@ -72,7 +72,7 @@ export default function LocationSearch({
         return (
           <Grid container alignItems="center">
             <Grid item xs>
-              <Typography>{option.name}</Typography>
+              <Typography>{`${option.name} (${option.postalCode})`}</Typography>
             </Grid>
           </Grid>
         );
