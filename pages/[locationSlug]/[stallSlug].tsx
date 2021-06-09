@@ -28,12 +28,18 @@ export default function StallPage({ stallData }: StallPageProps) {
         <meta property="og:url" content="https://projecthawker.com/" />
         <meta property="og:title" content={stallData.name} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={stallData.images[0].link} />
+        <meta
+          property="og:image"
+          content={`https://projecthawker.com${stallData.images[0].link}`}
+        />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://projecthawker.com/" />
         <meta property="twitter:title" content={stallData.name} />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={stallData.images[0].link} />
+        <meta
+          property="twitter:image"
+          content={`https://projecthawker.com${stallData.images[0].link}`}
+        />
       </Head>
       <BannerTop image={stallData.images[0]}>
         <div className="relative h-full">

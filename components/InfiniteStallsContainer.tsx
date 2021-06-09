@@ -30,6 +30,8 @@ export default function InfiniteStallsContainer({
   const isLoadingMore =
     size > 0 && data && typeof data[size - 1] === "undefined";
   const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.length < pageSize);
 
   return (
     <>
@@ -52,7 +54,9 @@ export default function InfiniteStallsContainer({
       {isLoadingMore && <LinearProgress className="mt-10" color="secondary" />}
       <Waypoint
         onEnter={() => {
-          setSize(size + 1);
+          if (!isReachingEnd) {
+            setSize(size + 1);
+          }
         }}
       />
       {isEmpty && !!emptyMessageComponent && emptyMessageComponent}

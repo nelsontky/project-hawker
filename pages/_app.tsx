@@ -1,9 +1,11 @@
 import React from "react";
+import Router from "next/router";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { SWRConfig } from "swr";
 import axios from "axios";
+import { Provider } from "react-redux";
 
 import "tailwindcss/tailwind.css";
 import { AppProps } from "next/app";
@@ -11,6 +13,15 @@ import { AppProps } from "next/app";
 import AppFooter from "components/AppFooter";
 
 import theme from "lib/theme";
+import store from "lib/store";
+import NProgress from "nprogress";
+
+Router.events.on("routeChangeStart", (url) => {
+  console.log(`Loading: ${url}`);
+  NProgress.start();
+});
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 
 export default function App({ Component, pageProps }: AppProps) {
   React.useEffect(() => {
@@ -42,16 +53,19 @@ export default function App({ Component, pageProps }: AppProps) {
           href="/images/icons/favicons/favicon-16x16.png"
         />
         <link rel="manifest" href="/images/icons/favicons/site.webmanifest" />
+        <link rel="stylesheet" type="text/css" href="/nprogress.css" />
       </Head>
       <ThemeProvider theme={theme}>
         <SWRConfig
           value={{ fetcher: (url) => axios.get(url).then((res) => res.data) }}
         >
-          <CssBaseline />
-          <div className="h-full flex flex-col">
-            <Component {...pageProps} />
-            <AppFooter />
-          </div>
+          <Provider store={store}>
+            <CssBaseline />
+            <div className="h-full flex flex-col">
+              <Component {...pageProps} />
+              <AppFooter />
+            </div>
+          </Provider>
         </SWRConfig>
       </ThemeProvider>
     </React.Fragment>

@@ -12,6 +12,7 @@ import { Stall } from "modules/stalls/entities/stall.entity";
 import { SearchService } from "modules/search/search.service";
 
 import { entityToObject } from "lib/utils/entity-to-object.util";
+import { useRestoreScroll } from "lib/hooks/use-restore-scroll.hook";
 
 interface SearchProps {
   initialData: Stall[];
@@ -31,6 +32,7 @@ const description =
   "Search for hawkers in Singapore! Learn more about their story, and their amazing food right here at Project Hawker!";
 
 export default function Search({ initialData, query }: SearchProps) {
+  useRestoreScroll();
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -42,12 +44,12 @@ export default function Search({ initialData, query }: SearchProps) {
         <meta property="og:url" content="https://projecthawker.com/" />
         <meta property="og:title" content="Project Hawker" />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content="/images/hero-background.jpg" />
+        <meta property="og:image" content="https://projecthawker.com/images/hero-background.jpg" />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://projecthawker.com/" />
         <meta property="twitter:title" content="Project Hawker" />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content="/images/hero-background.jpg" />
+        <meta property="twitter:image" content="https://projecthawker.com/images/hero-background.jpg" />
       </Head>
       <HomeButton />
       <Container

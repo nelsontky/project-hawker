@@ -47,9 +47,10 @@ interface StallLinkProps {
   image: Image;
   href: string;
   children?: React.ReactNode;
+  scroll?: boolean;
 }
 
-export default function StallLink({ image, href, children }: StallLinkProps) {
+export default function StallLink({ image, href, children, scroll }: StallLinkProps) {
   const { src, blur } = useProgressiveImage({
     compressedSrc: image.compressedBase64,
     src: image.link,
@@ -65,7 +66,7 @@ export default function StallLink({ image, href, children }: StallLinkProps) {
     >
       <div className={classes.root}>
         <FadeUp in={isShow}>
-          <Link href={href}>
+          <Link href={href} scroll={scroll}>
             <a>
               <RatioContainer
                 className={classes.ratioContainer}
