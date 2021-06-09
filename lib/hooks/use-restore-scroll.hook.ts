@@ -10,7 +10,7 @@ export function useRestoreScroll() {
 
   const setScrollPosition = _.throttle(() => {
     dispatch(set(window.scrollY));
-  });
+  }, 100);
 
   React.useEffect(() => {
     window.scrollTo(0, scrollPosition);

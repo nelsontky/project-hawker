@@ -9,6 +9,7 @@ import HomeButton from "components/HomeButton";
 import { LocationsService } from "modules/locations/locations.service";
 import { Location } from "modules/locations/entities/location.entity";
 import { entityToObject } from "lib/utils/entity-to-object.util";
+import { useRestoreScroll } from "lib/hooks/use-restore-scroll.hook";
 
 interface HawkerCenterProps {
   locationData: Location;
@@ -27,6 +28,7 @@ export default function HawkerCenter({
   locationData,
   locationSlug,
 }: HawkerCenterProps) {
+  useRestoreScroll();
   const classes = useStyles();
   const description = `${locationData.name} is a hawker center serving great food in Singapore. Learn more about ${locationData.name} here!`;
 

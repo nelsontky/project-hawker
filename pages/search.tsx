@@ -12,6 +12,7 @@ import { Stall } from "modules/stalls/entities/stall.entity";
 import { SearchService } from "modules/search/search.service";
 
 import { entityToObject } from "lib/utils/entity-to-object.util";
+import { useRestoreScroll } from "lib/hooks/use-restore-scroll.hook";
 
 interface SearchProps {
   initialData: Stall[];
@@ -31,6 +32,7 @@ const description =
   "Search for hawkers in Singapore! Learn more about their story, and their amazing food right here at Project Hawker!";
 
 export default function Search({ initialData, query }: SearchProps) {
+  useRestoreScroll();
   const classes = useStyles();
   return (
     <div className={classes.root}>
