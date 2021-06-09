@@ -14,6 +14,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const posts = await facebookService.findMany({
         skip: typeof skip === "string" ? +skip : undefined,
         take: typeof limit === "string" ? +limit : undefined,
+        join: {
+          alias: "post",
+          leftJoinAndSelect: {
+            location: "post.location",
+          },
+        },
       });
       return res.json(posts);
     default:

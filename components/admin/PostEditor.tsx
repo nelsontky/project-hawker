@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Card,
   CardActions,
@@ -12,9 +13,11 @@ import _ from "lodash";
 import * as yup from "yup";
 
 import StatusChip from "components/admin/StatusChip";
+import LocationSearch from "components/admin/LocationSearch";
 
 import { ScrapeFacebook } from "modules/scrape-facebook/entities/scrape-facebook.entity";
 import { convertMbasicToFacebook } from "lib/utils/convert-mbasic-to-facebook";
+import { Location } from "modules/locations/entities/location.entity";
 
 const validationSchema = yup.object({
   description: yup
@@ -75,6 +78,9 @@ export default function PostEditor({ post }: PostEditorProps) {
     },
   });
 
+  const [locationInput, setLocationInput] =
+    React.useState<Location | null>(location);
+
   return (
     <Card className="my-8">
       <CardContent>
@@ -96,6 +102,9 @@ export default function PostEditor({ post }: PostEditorProps) {
           ))}
         </Grid>
         <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <LocationSearch value={locationInput} setValue={setLocationInput} />
+          </Grid>
           {Object.keys(formik.values).map((field, i) => (
             <Grid item xs={field === "description" ? 12 : 6} key={field}>
               <TextField

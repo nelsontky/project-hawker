@@ -45,7 +45,7 @@ export default function MainPortal({
         setPage(+(page as string));
       }
     }
-  }, [router]);
+  }, [router.query]);
 
   return (
     <Container fixed>
