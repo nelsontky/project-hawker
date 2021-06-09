@@ -11,6 +11,7 @@ import { StallsService } from "modules/stalls/stalls.service";
 import { Stall } from "modules/stalls/entities/stall.entity";
 
 import { entityToObject } from "lib/utils/entity-to-object.util";
+import { useRestoreScroll } from "lib/hooks/use-restore-scroll.hook";
 
 const PAGE_SIZE = 12;
 
@@ -33,8 +34,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const description =
   "Explore new hawkers in Singapore! Learn more about their story, and their amazing food right here at Project Hawker!";
-  
+
 export default function All({ initialData }: AllProps) {
+  useRestoreScroll();
   const classes = useStyles();
 
   return (
