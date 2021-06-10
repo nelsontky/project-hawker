@@ -6,7 +6,7 @@ import { set } from "lib/slices/scroll-position.slice";
 
 export function useRestoreScroll() {
   const dispatch = useAppDispatch();
-  const scrollPosition = useAppSelector((state) => state.scollPosition.value);
+  const scrollPosition = useAppSelector((state) => state.scrollPosition.value);
 
   const setScrollPosition = _.throttle(() => {
     dispatch(set(window.scrollY));

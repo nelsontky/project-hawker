@@ -45,7 +45,7 @@ export default function StallPage({ stallData }: StallPageProps) {
         <div className="relative h-full">
           <HomeButton className="absolute top-0 left-0" />
           <Typography variant="h4" className="font-bold absolute top-4 right-4">
-            {stallData.stallNumber}
+            {stallData.stallNumber ?? ""}
           </Typography>
           <Container
             maxWidth="md"

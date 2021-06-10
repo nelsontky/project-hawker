@@ -34,6 +34,7 @@ services:
       - es-dev:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+    mem_limit: 2g
 
   logstash:
     build: ./logstash

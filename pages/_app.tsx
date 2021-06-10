@@ -7,14 +7,16 @@ import { SWRConfig } from "swr";
 import axios from "axios";
 import { Provider } from "react-redux";
 import NProgress from "nprogress";
+import { PersistGate } from "redux-persist/integration/react";
 
 import "tailwindcss/tailwind.css";
 import { AppProps } from "next/app";
 
 import AppFooter from "components/AppFooter";
+import AppSnackbar from "components/AppSnackbar";
 
 import theme from "lib/theme";
-import store from "lib/store";
+import store, { persistor } from "lib/store";
 import * as gtag from "lib/gtag";
 
 Router.events.on("routeChangeStart", (url) => {
@@ -70,14 +72,22 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <SWRConfig
-          value={{ fetcher: (url) => axios.get(url).then((res) => res.data) }}
+          value={{
+            fetcher: (url, token) =>
+              axios
+                .get(url, { headers: { "admin-token": token } })
+                .then((res) => res.data),
+          }}
         >
           <Provider store={store}>
-            <CssBaseline />
-            <div className="h-full flex flex-col">
-              <Component {...pageProps} />
-              <AppFooter />
-            </div>
+            <PersistGate loading={null} persistor={persistor}>
+              <CssBaseline />
+              <div className="h-full flex flex-col">
+                <AppSnackbar />
+                <Component {...pageProps} />
+                <AppFooter />
+              </div>
+            </PersistGate>
           </Provider>
         </SWRConfig>
       </ThemeProvider>

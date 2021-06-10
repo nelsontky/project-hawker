@@ -1,4 +1,3 @@
-import { Connection, Repository } from "typeorm";
 import slugify from "slugify";
 
 import getDbConnection from "../../lib/utils/get-db-connection.util";
@@ -6,6 +5,7 @@ import { compressImage } from "./compress-image";
 import { Stall } from "../../modules/stalls/entities/stall.entity";
 import { Image } from "../../modules/images/entities/image.entity";
 import { Location } from "../../modules/locations/entities/location.entity";
+import { Repository } from "typeorm";
 
 export async function addToDatabase(row: any, imageNames: any[] = []) {
   const connection = await getDbConnection();

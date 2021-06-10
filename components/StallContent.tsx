@@ -26,28 +26,30 @@ export default function StallContent({ stallData }: StallContentProps) {
               {stallData.location.name} ({stallData.location.postalCode})
             </Typography>
           </div>
-          {Object.keys(information).map((property, i) => (
-            <div key={i} className="mb-4">
-              <Typography className="font-bold text-left">
-                {_.startCase(property)}
-              </Typography>
-              <Typography className="text-justify">
-                {information[property]}
-              </Typography>
-              {property === "contact" &&
-                !!information[property] &&
-                information[property].trim().length > 7 && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<Phone />}
-                    href={`tel:+65${information[property]}`}
-                  >
-                    Call to dabao
-                  </Button>
-                )}
-            </div>
-          ))}
+          {Object.keys(information)
+            .filter((property) => information[property].trim().length > 0)
+            .map((property, i) => (
+              <div key={i} className="mb-4">
+                <Typography className="font-bold text-left">
+                  {_.startCase(property)}
+                </Typography>
+                <Typography className="text-justify">
+                  {information[property]}
+                </Typography>
+                {property === "contact" &&
+                  !!information[property] &&
+                  information[property].trim().length > 7 && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<Phone />}
+                      href={`tel:+65${information[property]}`}
+                    >
+                      Call to dabao
+                    </Button>
+                  )}
+              </div>
+            ))}
           {stallData.location && (
             <RatioContainer percentage={isLarge ? "56.25%" : "100%"}>
               <iframe
@@ -56,7 +58,9 @@ export default function StallContent({ stallData }: StallContentProps) {
                 src={`https://www.google.com/maps/embed/v1/place?key=${
                   process.env.NEXT_PUBLIC_GOOGLE_API_KEY
                 }&q=${encodeURIComponent(
-                  stallData.location.name + " " + stallData.location.postalCode ?? ""
+                  stallData.location.name +
+                    " " +
+                    stallData.location.postalCode ?? ""
                 )}`}
                 allowFullScreen
               ></iframe>

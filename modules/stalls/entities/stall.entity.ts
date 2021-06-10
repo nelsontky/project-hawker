@@ -23,7 +23,7 @@ export class Stall {
   @Column("text")
   slug: string;
 
-  @Column("text")
+  @Column("text", { nullable: true })
   stallNumber: string;
 
   @Column("json")

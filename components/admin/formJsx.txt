@@ -1,0 +1,212 @@
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={4}
+              name="description"
+              label="Description"
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.description && Boolean(formik.errors.description)
+              }
+              helperText={
+                formik.touched.description && formik.errors.description
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="recommendedBy"
+              label="Recommended By"
+              value={formik.values.recommendedBy}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.recommendedBy &&
+                Boolean(formik.errors.recommendedBy)
+              }
+              helperText={
+                formik.touched.recommendedBy && formik.errors.recommendedBy
+              }
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="contact"
+              label="Contact"
+              value={formik.values.contact}
+              onChange={formik.handleChange}
+              error={formik.touched.contact && Boolean(formik.errors.contact)}
+              helperText={formik.touched.contact && formik.errors.contact}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="deliveryAvailable"
+              label="Delivery Available"
+              value={formik.values.deliveryAvailable}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.deliveryAvailable &&
+                Boolean(formik.errors.deliveryAvailable)
+              }
+              helperText={
+                formik.touched.deliveryAvailable &&
+                formik.errors.deliveryAvailable
+              }
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="dietaryRestrictions"
+              label="Dietary Restrictions"
+              value={formik.values.dietaryRestrictions}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.dietaryRestrictions &&
+                Boolean(formik.errors.dietaryRestrictions)
+              }
+              helperText={
+                formik.touched.dietaryRestrictions &&
+                formik.errors.dietaryRestrictions
+              }
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="favorites"
+              label="Favorites"
+              value={formik.values.favorites}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.favorites && Boolean(formik.errors.favorites)
+              }
+              helperText={formik.touched.favorites && formik.errors.favorites}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="foodTheyServe"
+              label="Food they serve"
+              value={formik.values.foodTheyServe}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.foodTheyServe &&
+                Boolean(formik.errors.foodTheyServe)
+              }
+              helperText={
+                formik.touched.foodTheyServe && formik.errors.foodTheyServe
+              }
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="nameOfHawker"
+              label="Name of hawker"
+              value={formik.values.nameOfHawker}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.nameOfHawker &&
+                Boolean(formik.errors.nameOfHawker)
+              }
+              helperText={
+                formik.touched.nameOfHawker && formik.errors.nameOfHawker
+              }
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="openingHours"
+              label="Opening hours"
+              value={formik.values.openingHours}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.openingHours &&
+                Boolean(formik.errors.openingHours)
+              }
+              helperText={
+                formik.touched.openingHours && formik.errors.openingHours
+              }
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="priceRange"
+              label="Price range"
+              value={formik.values.priceRange}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.priceRange && Boolean(formik.errors.priceRange)
+              }
+              helperText={formik.touched.priceRange && formik.errors.priceRange}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="stallName"
+              label="Stall name"
+              value={formik.values.stallName}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.stallName && Boolean(formik.errors.stallName)
+              }
+              helperText={formik.touched.stallName && formik.errors.stallName}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              name="stallNumber"
+              label="Stall number"
+              value={formik.values.stallNumber}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.stallNumber && Boolean(formik.errors.stallNumber)
+              }
+              helperText={
+                formik.touched.stallNumber && formik.errors.stallNumber
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              fullWidth
+              multiline
+              name="whatAreTheConcernsThisHawkerIsFacing"
+              label="What are the concerns this hawker is facing"
+              value={formik.values.whatAreTheConcernsThisHawkerIsFacing}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.whatAreTheConcernsThisHawkerIsFacing &&
+                Boolean(formik.errors.whatAreTheConcernsThisHawkerIsFacing)
+              }
+              helperText={
+                formik.touched.whatAreTheConcernsThisHawkerIsFacing &&
+                formik.errors.whatAreTheConcernsThisHawkerIsFacing
+              }
+            />
+          </Grid>

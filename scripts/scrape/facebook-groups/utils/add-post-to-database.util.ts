@@ -1,7 +1,6 @@
-import { Repository } from "typeorm";
-
 import getDbConnection from "lib/utils/get-db-connection.util";
 import { ScrapeFacebook } from "modules/scrape-facebook/entities/scrape-facebook.entity";
+import { Repository } from "typeorm";
 
 export async function addPostToDatabase({
   postId,
