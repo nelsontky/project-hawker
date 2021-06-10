@@ -55,6 +55,7 @@ export class UpdateFacebookDto {
   stallNumber?: string;
 
   @IsEnum(PostStatus)
+  @IsOptional()
   status?: PostStatus;
 
   @IsString()

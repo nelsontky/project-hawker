@@ -91,7 +91,13 @@ export default function PostEditor({ post, mutate }: PostEditorProps) {
     },
     validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      const confirm = window.confirm(
+        `Are you sure you want to proceed? This action cannot be undone!\n${JSON.stringify(
+          { location: location?.name, ...values },
+          null,
+          2
+        )}`
+      );
     },
   });
 
@@ -121,6 +127,29 @@ export default function PostEditor({ post, mutate }: PostEditorProps) {
   const [locationInput, setLocationInput] =
     React.useState<Location | null>(location);
   const [isAddLocation, setIsAddLocation] = React.useState(false);
+
+  const onSave = async () => {
+    try {
+      await axios.put(
+        `/api/v1/scrape-facebook/${id}`,
+        { ...formik.values, locationId: locationInput?.id },
+        {
+          headers: { "admin-token": token },
+        }
+      );
+      if (mutate) {
+        mutate();
+      }
+      open({
+        message: "Post updated!",
+      });
+    } catch {
+      open({
+        message: "An error has occurred. Please try again",
+        severity: "error",
+      });
+    }
+  };
 
   return (
     <>
@@ -192,20 +221,20 @@ export default function PostEditor({ post, mutate }: PostEditorProps) {
           <CardActions>
             <InstructionTooltip />
             <Button
-              color="secondary"
-              variant="contained"
-              fullWidth
-              onClick={formik.submitForm}
-            >
-              Save
-            </Button>
-            <Button
               color="primary"
               variant="contained"
               fullWidth
               onClick={formik.submitForm}
             >
               Approve
+            </Button>
+            <Button
+              color="secondary"
+              variant="contained"
+              fullWidth
+              onClick={onSave}
+            >
+              Save
             </Button>
             <Button variant="contained" fullWidth onClick={onReject}>
               Reject
