@@ -42,7 +42,8 @@
     "swr": "^0.5.6",
     "typeorm": "^0.2.32",
     "uuid": "^8.3.2",
-    "yup": "^0.32.9"
+    "yup": "^0.32.9",
+    "react-native-sqlite-storage": "file:./shims/react-native-sqlite-storage"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
