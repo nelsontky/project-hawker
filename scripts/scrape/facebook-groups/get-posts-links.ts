@@ -26,6 +26,7 @@ export async function getPostsLinks(
   let urlToScrape = groupUrl;
   let links = [];
   for (let i = 0; i < numberOfPages; i++) {
+    console.log(`Getting from page ${i + 1} / ${numberOfPages}`);
     const response = await axios.get(urlToScrape, { headers });
     const pageHtml = response.data;
 
