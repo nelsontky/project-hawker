@@ -1,30 +1,24 @@
-import { Connection, createConnection } from "typeorm";
+import { Connection, createConnection, getConnection } from "typeorm";
 
 import config from "ormconfig";
 
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This prevents connections growing exponentially
- * during API Route usage.
- */
-let cached = (global as any).typeorm;
-
-if (!cached) {
-  cached = (global as any).typeorm = { conn: null, promise: null };
-}
+let connectionCreated = false;
 
 async function getDbConnection(): Promise<Connection> {
-  if (cached.conn) {
-    return cached.conn;
+  const currentConnection = getConnection();
+  try {
+    if (connectionCreated) {
+      return currentConnection;
+    }
+
+    // Close connection on hot reload - hot reload causes connectionCreated to revert to false
+    await currentConnection.close();
+  } catch {
+    // ignore connection errors
   }
 
-  if (!cached.promise) {
-    cached.promise = createConnection(config).then((connection) => {
-      return connection;
-    });
-  }
-  cached.conn = await cached.promise;
-  return cached.conn;
+  connectionCreated = true;
+  return await createConnection(config);
 }
 
 export default getDbConnection;

@@ -1,7 +1,6 @@
 import getDbConnection from "lib/utils/get-db-connection.util";
 import {
   Connection,
-  FindOneOptions,
   Repository,
   FindManyOptions,
 } from "typeorm";
@@ -22,9 +21,7 @@ export class ScrapeFacebookService {
 
   static async build() {
     const connection = await getDbConnection();
-    const facebookRepository = connection.getRepository(
-      "ScrapeFacebook"
-    ) as Repository<ScrapeFacebook>;
+    const facebookRepository = connection.getRepository(ScrapeFacebook);
 
     return new ScrapeFacebookService(connection, facebookRepository);
   }

@@ -1,3 +1,5 @@
+import "reflect-metadata";
+import { plainToClass } from "class-transformer";
 import getDbConnection from "lib/utils/get-db-connection.util";
 import { Connection, FindOneOptions, Repository } from "typeorm";
 import { validateOrReject } from "class-validator";
@@ -21,9 +23,7 @@ export class LocationsService {
 
   static async build() {
     const connection = await getDbConnection();
-    const locationsRepository = connection.getRepository(
-      "Location"
-    ) as Repository<Location>;
+    const locationsRepository = connection.getRepository(Location);
 
     return new LocationsService(connection, locationsRepository);
   }
@@ -89,38 +89,38 @@ export class LocationsService {
   }
 
   async createLocationsDoc(location: Location) {
-    const response = await axios.post(`http://es:9200/locations/_doc/${location.id}`, {
-      id: location.id,
-      name: location.name,
-      region: location.region,
-      postalCode: location.postalCode,
-      createdAt: location.createdAt,
-      updatedAt: location.updatedAt,
-    });
+    const response = await axios.post(
+      `http://es:9200/locations/_doc/${location.id}`,
+      {
+        id: location.id,
+        name: location.name,
+        region: location.region,
+        postalCode: location.postalCode,
+        createdAt: location.createdAt,
+        updatedAt: location.updatedAt,
+      }
+    );
 
     return response.data;
   }
 
   async create(body: any) {
-    const createLocationDto = new CreateLocationDto();
-    createLocationDto.name = body.name;
-    createLocationDto.postalCode = body.postalCode;
-    createLocationDto.region = body.region;
+    const createLocationDto = plainToClass(CreateLocationDto, body);
     await validateOrReject(createLocationDto);
 
-    const { name, postalCode, region } = createLocationDto;
-    const location = new Location();
-
-    location.name = name;
-    location.postalCode = postalCode;
-    location.region = region;
-    location.slug = slugify(name, {
-      replacement: "-",
-      lower: true,
+    const { name } = createLocationDto;
+    const location = plainToClass(Location, {
+      ...createLocationDto,
+      slug: slugify(name, {
+        replacement: "-",
+        lower: true,
+      }),
     });
 
-    const result = await this.locationsRepository.save(location);
-    await this.createLocationsDoc(result);
-    return result;
+    return this.connection.transaction(async (manager) => {
+      const result = await manager.save(location);
+      await this.createLocationsDoc(result);
+      return result;
+    });
   }
 }

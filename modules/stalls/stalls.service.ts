@@ -14,9 +14,7 @@ export class StallsService {
 
   static async build() {
     const connection = await getDbConnection();
-    const stallsRepository = connection.getRepository(
-      "Stall"
-    ) as Repository<Stall>;
+    const stallsRepository = connection.getRepository(Stall);
 
     return new StallsService(connection, stallsRepository);
   }

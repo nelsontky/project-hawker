@@ -1,4 +1,3 @@
-import { Connection, Repository } from "typeorm";
 import slugify from "slugify";
 
 import getDbConnection from "../../lib/utils/get-db-connection.util";
@@ -9,15 +8,9 @@ import { Location } from "../../modules/locations/entities/location.entity";
 
 export async function addToDatabase(row: any, imageNames: any[] = []) {
   const connection = await getDbConnection();
-  const stallsRepository = connection.getRepository(
-    "Stall"
-  ) as Repository<Stall>;
-  const imagesRepository = connection.getRepository(
-    "Image"
-  ) as Repository<Image>;
-  const locationsRepository = connection.getRepository(
-    "Location"
-  ) as Repository<Location>;
+  const stallsRepository = connection.getRepository(Stall);
+  const imagesRepository = connection.getRepository(Image);
+  const locationsRepository = connection.getRepository(Location);
 
   const {
     stallName,
