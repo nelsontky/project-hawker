@@ -15,6 +15,7 @@ import * as yup from "yup";
 import StatusChip from "components/admin/StatusChip";
 import LocationSearch from "components/admin/LocationSearch";
 import CreateLocationDialog from "components/admin/CreateLocationDialog";
+import InstructionTooltip from "components/admin/InstructionTooltip";
 
 import { ScrapeFacebook } from "modules/scrape-facebook/entities/scrape-facebook.entity";
 import { convertMbasicToFacebook } from "lib/utils/convert-mbasic-to-facebook";
@@ -151,13 +152,25 @@ export default function PostEditor({ post }: PostEditorProps) {
             ))}
           </Grid>
           <CardActions>
+            <InstructionTooltip />
+            <Button
+              color="secondary"
+              variant="contained"
+              fullWidth
+              onClick={formik.submitForm}
+            >
+              Save
+            </Button>
             <Button
               color="primary"
               variant="contained"
               fullWidth
               onClick={formik.submitForm}
             >
-              Submit
+              Approve
+            </Button>
+            <Button variant="contained" fullWidth onClick={formik.submitForm}>
+              Reject
             </Button>
           </CardActions>
         </CardContent>

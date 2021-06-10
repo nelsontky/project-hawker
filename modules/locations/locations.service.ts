@@ -23,7 +23,9 @@ export class LocationsService {
 
   static async build() {
     const connection = await getDbConnection();
-    const locationsRepository = connection.getRepository(Location);
+    const locationsRepository = connection.getRepository(
+      "Location"
+    ) as Repository<Location>;
 
     return new LocationsService(connection, locationsRepository);
   }

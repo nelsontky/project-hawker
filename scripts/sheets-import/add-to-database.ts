@@ -5,12 +5,19 @@ import { compressImage } from "./compress-image";
 import { Stall } from "../../modules/stalls/entities/stall.entity";
 import { Image } from "../../modules/images/entities/image.entity";
 import { Location } from "../../modules/locations/entities/location.entity";
+import { Repository } from "typeorm";
 
 export async function addToDatabase(row: any, imageNames: any[] = []) {
   const connection = await getDbConnection();
-  const stallsRepository = connection.getRepository(Stall);
-  const imagesRepository = connection.getRepository(Image);
-  const locationsRepository = connection.getRepository(Location);
+  const stallsRepository = connection.getRepository(
+    "Stall"
+  ) as Repository<Stall>;
+  const imagesRepository = connection.getRepository(
+    "Image"
+  ) as Repository<Image>;
+  const locationsRepository = connection.getRepository(
+    "Location"
+  ) as Repository<Location>;
 
   const {
     stallName,
