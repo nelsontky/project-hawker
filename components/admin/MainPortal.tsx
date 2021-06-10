@@ -33,7 +33,7 @@ export default function MainPortal({
   const [page, setPage] = React.useState(1);
   const token = useAppSelector((state) => state.admin.token);
 
-  const { data, error } = useSWR<ScrapeFacebook[]>([
+  const { data, error, mutate } = useSWR<ScrapeFacebook[]>([
     `/api/v1/scrape-facebook?limit=${pageSize}&skip=${pageSize * (page - 1)}`,
     token,
   ]);
@@ -52,7 +52,7 @@ export default function MainPortal({
       {!data || error ? (
         <LinearProgress />
       ) : (
-        data.map((post) => <PostEditor key={post.id} post={post} />)
+        data.map((post) => <PostEditor key={post.id} post={post} mutate={mutate} />)
       )}
       <Pagination
         className="mt-8"

@@ -1,7 +1,15 @@
-import getDbConnection from "lib/utils/get-db-connection.util";
 import { Connection, Repository, FindManyOptions } from "typeorm";
+import "reflect-metadata";
+import { plainToClass, plainToClassFromExist } from "class-transformer";
+import { validateOrReject } from "class-validator";
 
-import { ScrapeFacebook } from "modules/scrape-facebook/entities/scrape-facebook.entity";
+import getDbConnection from "lib/utils/get-db-connection.util";
+
+import {
+  ScrapeFacebook,
+  PostStatus,
+} from "modules/scrape-facebook/entities/scrape-facebook.entity";
+import { UpdateFacebookDto } from "./dto/update-facebook.dto";
 
 export class ScrapeFacebookService {
   private connection: Connection;
@@ -33,5 +41,14 @@ export class ScrapeFacebookService {
 
   async count(options?: FindManyOptions<ScrapeFacebook>) {
     return this.facebookRepository.count(options);
+  }
+
+  async update(id: string, body: any) {
+    const updateFacebookDto = plainToClass(UpdateFacebookDto, body);
+    await validateOrReject(updateFacebookDto);
+
+    const post = await this.facebookRepository.findOne(id);
+    const updatedPost = plainToClassFromExist(post, { ...updateFacebookDto });
+    return this.facebookRepository.save(updatedPost);
   }
 }

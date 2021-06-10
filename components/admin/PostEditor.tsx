@@ -11,15 +11,21 @@ import {
 import { useFormik } from "formik";
 import _ from "lodash";
 import * as yup from "yup";
+import axios from "axios";
 
 import StatusChip from "components/admin/StatusChip";
 import LocationSearch from "components/admin/LocationSearch";
 import CreateLocationDialog from "components/admin/CreateLocationDialog";
 import InstructionTooltip from "components/admin/InstructionTooltip";
 
-import { ScrapeFacebook } from "modules/scrape-facebook/entities/scrape-facebook.entity";
+import {
+  PostStatus,
+  ScrapeFacebook,
+} from "modules/scrape-facebook/entities/scrape-facebook.entity";
 import { convertMbasicToFacebook } from "lib/utils/convert-mbasic-to-facebook";
 import { Location } from "modules/locations/entities/location.entity";
+import { useSnackbar } from "lib/hooks/use-snackbar.hook";
+import { useAppSelector } from "lib/hooks/redux.hook";
 
 const validationSchema = yup.object({
   description: yup
@@ -30,14 +36,23 @@ const validationSchema = yup.object({
     .string()
     .transform((value) => value.trim())
     .required("Name of hawker is required"),
+  recommendedBy: yup
+    .string()
+    .transform((value) => value.trim())
+    .required("Recommender is required"),
 });
 
 interface PostEditorProps {
   post: ScrapeFacebook;
+  mutate?: Function;
 }
 
-export default function PostEditor({ post }: PostEditorProps) {
+export default function PostEditor({ post, mutate }: PostEditorProps) {
+  const { open } = useSnackbar();
+  const token = useAppSelector((state) => state.admin.token);
+
   const {
+    id,
     contact,
     deliveryAvailable,
     description,
@@ -79,6 +94,29 @@ export default function PostEditor({ post }: PostEditorProps) {
       alert(JSON.stringify(values, null, 2));
     },
   });
+
+  const onReject = async () => {
+    try {
+      await axios.put(
+        `/api/v1/scrape-facebook/${id}`,
+        { status: PostStatus.REJECTED },
+        {
+          headers: { "admin-token": token },
+        }
+      );
+      if (mutate) {
+        mutate();
+      }
+      open({
+        message: "Post rejected!",
+      });
+    } catch {
+      open({
+        message: "An error has occurred. Please try again",
+        severity: "error",
+      });
+    }
+  };
 
   const [locationInput, setLocationInput] =
     React.useState<Location | null>(location);
@@ -169,7 +207,7 @@ export default function PostEditor({ post }: PostEditorProps) {
             >
               Approve
             </Button>
-            <Button variant="contained" fullWidth onClick={formik.submitForm}>
+            <Button variant="contained" fullWidth onClick={onReject}>
               Reject
             </Button>
           </CardActions>
