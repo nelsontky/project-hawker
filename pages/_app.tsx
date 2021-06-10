@@ -12,6 +12,7 @@ import "tailwindcss/tailwind.css";
 import { AppProps } from "next/app";
 
 import AppFooter from "components/AppFooter";
+import AppSnackbar from "components/AppSnackbar";
 
 import theme from "lib/theme";
 import store from "lib/store";
@@ -80,6 +81,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Provider store={store}>
             <CssBaseline />
             <div className="h-full flex flex-col">
+              <AppSnackbar />
               <Component {...pageProps} />
               <AppFooter />
             </div>
