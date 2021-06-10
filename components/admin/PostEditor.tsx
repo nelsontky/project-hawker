@@ -32,10 +32,10 @@ const validationSchema = yup.object({
     .string()
     .transform((value) => value.trim())
     .required("Description is required"),
-  nameOfHawker: yup
+  stallName: yup
     .string()
     .transform((value) => value.trim())
-    .required("Name of hawker is required"),
+    .required("Stall name is required"),
   recommendedBy: yup
     .string()
     .transform((value) => value.trim())
@@ -75,7 +75,7 @@ export default function PostEditor({ post, mutate }: PostEditorProps) {
   const formik = useFormik({
     initialValues: {
       description,
-      nameOfHawker: nameOfHawker ?? "",
+      stallName: stallName ?? "",
       recommendedBy: recommendedBy,
       contact: contact ?? "",
       deliveryAvailable: deliveryAvailable ?? "",
@@ -84,13 +84,13 @@ export default function PostEditor({ post, mutate }: PostEditorProps) {
       foodTheyServe: foodTheyServe ?? "",
       openingHours: openingHours ?? "",
       priceRange: priceRange ?? "",
-      stallName: stallName ?? "",
+      nameOfHawker: nameOfHawker ?? "",
       stallNumber: stallNumber ?? "",
       whatAreTheConcernsThisHawkerIsFacing:
         whatAreTheConcernsThisHawkerIsFacing ?? "",
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const confirm = window.confirm(
         `Are you sure you want to proceed? This action cannot be undone!\n${JSON.stringify(
           { location: location?.name, ...values },
@@ -98,6 +98,25 @@ export default function PostEditor({ post, mutate }: PostEditorProps) {
           2
         )}`
       );
+
+      if (confirm) {
+        try {
+          await axios.put(`/api/v1/scrape-facebook/approve/${id}`, undefined, {
+            headers: { "admin-token": token },
+          });
+          if (mutate) {
+            mutate();
+          }
+          open({
+            message: "Post approved!",
+          });
+        } catch {
+          open({
+            message: "Make sure you have filled up the location, and have saved the entry beforehand",
+            severity: "error",
+          });
+        }
+      }
     },
   });
 

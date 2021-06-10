@@ -161,15 +161,16 @@ export class StallsService {
       whatAreTheConcernsThisHawkerIsFacing,
     } = createStallDto;
 
+    const location = await this.locationsService.findOne({
+      where: { id: locationId },
+    });
+
     let images = [];
     for (const imageLink of imageLinks) {
       const image = await this.imagesService.create(imageLink);
       images.push(image);
     }
 
-    const location = await this.locationsService.findOne({
-      where: { id: locationId },
-    });
     const stall = plainToClass(Stall, {
       name,
       slug: slugify(name, {

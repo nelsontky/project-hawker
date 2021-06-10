@@ -5,8 +5,8 @@ import config from "ormconfig";
 let connectionCreated = false;
 
 async function getDbConnection(): Promise<Connection> {
-  const currentConnection = getConnection();
   try {
+    const currentConnection = getConnection();
     if (connectionCreated) {
       return currentConnection;
     }
@@ -14,7 +14,7 @@ async function getDbConnection(): Promise<Connection> {
     // Close connection on hot reload - hot reload causes connectionCreated to revert to false
     await currentConnection.close();
   } catch {
-    // ignore connection close errors
+    // ignore connection errors
   }
 
   connectionCreated = true;

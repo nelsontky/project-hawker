@@ -1,6 +1,7 @@
 import getDbConnection from "lib/utils/get-db-connection.util";
 import { Connection, Repository } from "typeorm";
 import sharp from "sharp";
+import path from "path";
 
 import { Image } from "modules/images/entities/image.entity";
 
@@ -33,7 +34,10 @@ export class ImagesService {
 
   async create(link: string) {
     const format = link.split(".").reverse()[0];
-    const compressedBase64 = await this.compressImage(link, format);
+    const compressedBase64 = await this.compressImage(
+      path.join("public", link),
+      format
+    );
 
     const image = new Image();
     image.link = link;

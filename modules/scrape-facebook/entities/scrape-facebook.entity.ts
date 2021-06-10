@@ -38,12 +38,12 @@ export class ScrapeFacebook {
   @Column({ type: "enum", enum: PostStatus, default: PostStatus.PENDING })
   status: PostStatus;
 
-  @OneToOne(() => Stall, { nullable: true })
+  @OneToOne(() => Stall, { nullable: true, onDelete: "SET NULL" })
   @JoinColumn()
   stall?: Stall;
 
   @ManyToOne(() => Location, (location) => location.stalls, {
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
     nullable: true,
   })
   location?: Location;
