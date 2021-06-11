@@ -114,7 +114,6 @@ export class ScrapeFacebookService {
     }
 
     const { imageNames, location, ...rest } = post;
-    console.log(rest);
     const stall = await this.stallsService.create({
       ...rest,
       locationId: location.id,
