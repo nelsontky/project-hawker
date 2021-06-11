@@ -9,6 +9,7 @@ import { Stall } from "modules/stalls/entities/stall.entity";
 import { CreateStallDto } from "./dto/create-stall.dto";
 import { LocationsService } from "modules/locations/locations.service";
 import { ImagesService } from "modules/images/images.service";
+import { imagesToBase64 } from "lib/utils/images-to-base64";
 
 export class StallsService {
   private connection: Connection;
@@ -53,8 +54,10 @@ export class StallsService {
       .getMany();
   }
 
-  findAll(options: { limit?: number; skip?: number; orderBy?: any[] } = {}) {
-    return this.stallsRepository
+  async findAll(
+    options: { limit?: number; skip?: number; orderBy?: any[] } = {}
+  ) {
+    const stalls = await this.stallsRepository
       .createQueryBuilder("stall")
       .select([
         "stall.id",
@@ -65,7 +68,7 @@ export class StallsService {
         "stall.createdAt",
         "stall.updatedAt",
         "images.link",
-        "images.compressedBase64",
+        "images.compressedImage",
         "location.name",
         "location.slug",
         "locationImages.link",
@@ -80,14 +83,19 @@ export class StallsService {
       .skip(options.skip)
       .take(options.limit)
       .getMany();
+
+    return stalls.map((stall) => ({
+      ...stall,
+      images: imagesToBase64(stall.images),
+    }));
   }
 
-  findAllByIds(ids: string[]) {
+  async findAllByIds(ids: string[]) {
     if (ids.length === 0) {
       return [];
     }
 
-    return this.stallsRepository
+    const stalls = await this.stallsRepository
       .createQueryBuilder("stall")
       .select([
         "stall.id",
@@ -98,7 +106,7 @@ export class StallsService {
         "stall.createdAt",
         "stall.updatedAt",
         "images.link",
-        "images.compressedBase64",
+        "images.compressedImage",
         "location.name",
         "location.slug",
         "locationImages.link",
@@ -108,14 +116,19 @@ export class StallsService {
       .leftJoin("location.images", "locationImages")
       .where("stall.id IN (:...ids)", { ids })
       .getMany();
+
+    return stalls.map((stall) => ({
+      ...stall,
+      images: imagesToBase64(stall.images),
+    }));
   }
 
   countStalls() {
     return this.stallsRepository.count();
   }
 
-  findOneDeep(locationSlug: string, stallSlug: string) {
-    return this.stallsRepository
+  async findOneDeep(locationSlug: string, stallSlug: string) {
+    const stall = await this.stallsRepository
       .createQueryBuilder("stall")
       .select([
         "stall.name",
@@ -124,7 +137,7 @@ export class StallsService {
         "stall.createdAt",
         "stall.updatedAt",
         "images.link",
-        "images.compressedBase64",
+        "images.compressedImage",
         "locationImages.link",
       ])
       .leftJoin("stall.images", "images")
@@ -135,6 +148,8 @@ export class StallsService {
         stallSlug,
       })
       .getOne();
+
+    return { ...stall, images: imagesToBase64(stall.images) };
   }
 
   async create(body: any) {

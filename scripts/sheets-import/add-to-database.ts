@@ -49,7 +49,7 @@ export async function addToDatabase(row: any, imageNames: any[] = []) {
   for (const imageName of imageNames) {
     const image = new Image();
     const path = "public/images/submissions/" + imageName.fileName;
-    image.compressedBase64 = await compressImage(path, imageName.format);
+    image.compressedImage = await compressImage(path);
     image.link = "/images/submissions/" + imageName.fileName;
     const result = await imagesRepository.save(image);
     images.push(result);

@@ -10,4 +10,7 @@ export class Image {
 
   @Column("text")
   compressedBase64: string;
+
+  @Column("bytea", { nullable: true })
+  compressedImage: Buffer;
 }
