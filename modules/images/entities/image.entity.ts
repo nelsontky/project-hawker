@@ -8,9 +8,6 @@ export class Image {
   @Column("text")
   link: string;
 
-  @Column("text")
-  compressedBase64: string;
-
-  @Column("bytea", { nullable: true })
+  @Column("bytea")
   compressedImage: Buffer;
 }
