@@ -49,7 +49,7 @@ export default function BannerTop({
 }: BannerTopProps) {
   const { src, blur } = useProgressiveImage({
     src: image.link,
-    compressedSrc: image.compressedBase64,
+    compressedSrc: image.compressedImage.toString(),
   });
   const classes = useStyles({ src, blur });
 

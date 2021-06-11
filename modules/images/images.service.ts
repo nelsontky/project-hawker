@@ -23,25 +23,25 @@ export class ImagesService {
     return new ImagesService(connection, imagesRepository);
   }
 
-  async compressImage(path: string, format: string) {
-    const resized = await sharp(path)
+  async compressImage(path: string) {
+    const format = "png";
+    const resizedBuffer = await sharp(path)
       .resize(undefined, 20)
       .withMetadata()
+      .toFormat(format)
       .toBuffer();
-    const base64 = `data:image/${format};base64,${resized.toString("base64")}`;
-    return base64;
+
+    return resizedBuffer
   }
 
   async create(link: string) {
-    const format = link.split(".").reverse()[0];
-    const compressedBase64 = await this.compressImage(
-      path.join("public", link),
-      format
+    const resizedBuffer = await this.compressImage(
+      path.join("public", link)
     );
 
     const image = new Image();
     image.link = link;
-    image.compressedBase64 = compressedBase64;
+    image.compressedImage = resizedBuffer;
 
     const result = await this.imagesRepository.save(image);
     return result;

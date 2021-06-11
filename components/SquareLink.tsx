@@ -50,9 +50,14 @@ interface StallLinkProps {
   scroll?: boolean;
 }
 
-export default function StallLink({ image, href, children, scroll }: StallLinkProps) {
+export default function StallLink({
+  image,
+  href,
+  children,
+  scroll,
+}: StallLinkProps) {
   const { src, blur } = useProgressiveImage({
-    compressedSrc: image.compressedBase64,
+    compressedSrc: image.compressedImage.toString(),
     src: image.link,
   });
   const classes = useStyles({ src, blur });

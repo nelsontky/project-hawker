@@ -8,6 +8,7 @@ import axios from "axios";
 
 import { Location } from "modules/locations/entities/location.entity";
 import { CreateLocationDto } from "modules/locations/dto/create-location.dto";
+import { imagesToBase64 } from "lib/utils/images-to-base64";
 
 export class LocationsService {
   private connection: Connection;
@@ -31,20 +32,25 @@ export class LocationsService {
   }
 
   async findAll() {
-    return this.locationsRepository
+    const locations = await this.locationsRepository
       .createQueryBuilder("location")
       .select([
         "location.id",
         "location.name",
         "location.postalCode",
         "images.link",
-        "images.compressedBase64",
+        "images.compressedImage",
         "location.slug",
         "location.updatedAt",
         "location.createdAt",
       ])
       .leftJoin("location.images", "images")
       .getMany();
+
+    return locations.map((location) => ({
+      ...location,
+      images: imagesToBase64(location.images),
+    }));
   }
 
   async findAllByIds(ids: string[]) {
@@ -69,16 +75,16 @@ export class LocationsService {
   }
 
   async findOneDeep(locationSlug: string) {
-    return this.locationsRepository
+    const location = await this.locationsRepository
       .createQueryBuilder("location")
       .select([
         "location.name",
         "location.postalCode",
         "images.link",
-        "images.compressedBase64",
+        "images.compressedImage",
         "location.slug",
         "stallImages.link",
-        "stallImages.compressedBase64",
+        "stallImages.compressedImage",
         "location.updatedAt",
         "location.createdAt",
       ])
@@ -88,6 +94,8 @@ export class LocationsService {
       .leftJoin("stalls.images", "stallImages")
       .where("location.slug = :locationSlug", { locationSlug })
       .getOne();
+
+    return { ...location, images: imagesToBase64(location.images) };
   }
 
   async createLocationsDoc(location: Location) {

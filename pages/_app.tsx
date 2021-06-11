@@ -20,7 +20,6 @@ import store, { persistor } from "lib/store";
 import * as gtag from "lib/gtag";
 
 Router.events.on("routeChangeStart", (url) => {
-  console.log(`Loading: ${url}`);
   NProgress.start();
 });
 Router.events.on("routeChangeComplete", () => NProgress.done());
