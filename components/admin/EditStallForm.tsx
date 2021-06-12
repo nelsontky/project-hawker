@@ -24,36 +24,32 @@ const validationSchema = yup.object({
     .required("Recommender is required"),
 });
 
-interface StallFields {
-  contact: string;
-  deliveryAvailable: string;
+export interface StallFields {
+  contact?: string;
+  deliveryAvailable?: string;
   description: string;
-  dietaryRestrictions: string;
-  favorites: string;
-  foodTheyServe: string;
-  nameOfHawker: string;
-  openingHours: string;
-  priceRange: string;
+  dietaryRestrictions?: string;
+  favorites?: string;
+  foodTheyServe?: string;
+  nameOfHawker?: string;
+  openingHours?: string;
+  priceRange?: string;
   recommendedBy: string;
-  stallName: string;
-  stallNumber: string;
-  whatAreTheConcernsThisHawkerIsFacing: string;
+  stallName?: string;
+  stallNumber?: string;
+  whatAreTheConcernsThisHawkerIsFacing?: string;
 }
 
 interface StallInformation extends StallFields {
-  imageLinks: string[];
-  location: Location;
+  location?: Location;
 }
 
-interface EditStallFormProps {
-  stallInformation: StallInformation;
+interface UseStallFormProps {
+  fields: StallInformation;
   onSubmit: (values: StallFields) => Promise<void>;
 }
 
-export default function EditStallForm({
-  stallInformation,
-  onSubmit,
-}: EditStallFormProps) {
+export function useStallForm({ fields, onSubmit }: UseStallFormProps) {
   const {
     contact,
     deliveryAvailable,
@@ -61,7 +57,6 @@ export default function EditStallForm({
     dietaryRestrictions,
     favorites,
     foodTheyServe,
-    imageLinks,
     location,
     nameOfHawker,
     openingHours,
@@ -70,7 +65,7 @@ export default function EditStallForm({
     stallName,
     stallNumber,
     whatAreTheConcernsThisHawkerIsFacing,
-  } = stallInformation;
+  } = fields;
 
   const formik = useFormik({
     initialValues: {
@@ -95,7 +90,21 @@ export default function EditStallForm({
 
   const [locationInput, setLocationInput] =
     React.useState<Location | null>(location);
+
+  return { formik, locationInput, setLocationInput };
+}
+
+interface EditStallFormProps {
+  imageLinks: string[];
+  form: ReturnType<typeof useStallForm>;
+}
+
+export default function EditStallForm({
+  imageLinks,
+  form,
+}: EditStallFormProps) {
   const [isAddLocation, setIsAddLocation] = React.useState(false);
+  const { formik, locationInput, setLocationInput } = form;
 
   return (
     <>
