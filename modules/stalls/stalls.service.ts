@@ -55,24 +55,33 @@ export class StallsService {
   }
 
   async findAll(
-    options: { limit?: number; skip?: number; orderBy?: any[] } = {}
+    options: {
+      limit?: number;
+      skip?: number;
+      orderBy?: any[];
+      noCompressedImage?: boolean;
+    } = {}
   ) {
+    const selectOptions = [
+      "stall.id",
+      "stall.name",
+      "stall.stallNumber",
+      "stall.information",
+      "stall.slug",
+      "stall.createdAt",
+      "stall.updatedAt",
+      "images.link",
+      "location.name",
+      "location.slug",
+      "locationImages.link",
+    ];
+    if (!options.noCompressedImage) {
+      selectOptions.push("images.compressedImage");
+    }
+
     const stalls = await this.stallsRepository
       .createQueryBuilder("stall")
-      .select([
-        "stall.id",
-        "stall.name",
-        "stall.stallNumber",
-        "stall.information",
-        "stall.slug",
-        "stall.createdAt",
-        "stall.updatedAt",
-        "images.link",
-        "images.compressedImage",
-        "location.name",
-        "location.slug",
-        "locationImages.link",
-      ])
+      .select(selectOptions)
       .leftJoin("stall.images", "images")
       .leftJoin("stall.location", "location")
       .leftJoin("location.images", "locationImages")
@@ -84,6 +93,9 @@ export class StallsService {
       .take(options.limit)
       .getMany();
 
+    if (options.noCompressedImage) {
+      return stalls;
+    }
     return stalls.map((stall) => ({
       ...stall,
       images: imagesToBase64(stall.images),

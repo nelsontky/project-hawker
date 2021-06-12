@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import NavigationBar from "components/admin/NavigationBar";
 import ScrapedFacebook from "components/admin/ScrapedFacebook";
-import EditStalls from "components/admin/EditStalls";
+import EditStalls from "components/admin/stalls/EditStalls";
 
 interface MainPortalProps {
   numberOfPages: number;

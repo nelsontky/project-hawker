@@ -11,6 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const stalls = await stallsService.findAll({
         skip: typeof skip === "string" ? +skip : undefined,
         limit: typeof limit === "string" ? +limit : undefined,
+        noCompressedImage: !!req.query["hide-compressed"],
       });
       return res.json(stalls);
     default:

@@ -11,10 +11,7 @@ import axios from "axios";
 
 import StatusChip from "components/admin/StatusChip";
 import InstructionTooltip from "components/admin/InstructionTooltip";
-import EditStallForm, {
-  useStallForm,
-  StallFields,
-} from "components/admin/EditStallForm";
+import EditStallForm, { useStallForm } from "components/admin/EditStallForm";
 
 import {
   PostStatus,
@@ -35,7 +32,7 @@ export default function PostEditor({ post, mutate }: PostEditorProps) {
 
   const { id, status, postUrl, imageNames, ...rest } = post;
 
-  const onSubmit = async (values: StallFields) => {
+  const onSubmit = async () => {
     const confirm = window.confirm(
       `Are you sure you want to proceed? This action cannot be undone!`
     );
