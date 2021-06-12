@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 import NavigationBar from "components/admin/NavigationBar";
 import ScrapedFacebook from "components/admin/ScrapedFacebook";
-import EditStalls from "components/admin/stalls/EditStalls";
+import ManageStalls from "components/admin/stalls/ManageStalls";
 
 interface MainPortalProps {
   numberOfPages: number;
@@ -19,14 +19,14 @@ export default function MainPortal({
   const router = useRouter();
 
   return (
-    <TabContext value={router.asPath ?? "/admin"}>
+    <TabContext value={router.asPath.split("?")[0] ?? "/admin"}>
       <NavigationBar />
       <Container fixed>
         <TabPanel value="/admin">
           <ScrapedFacebook numberOfPages={numberOfPages} pageSize={pageSize} />
         </TabPanel>
         <TabPanel value="/admin/stalls">
-          <EditStalls />
+          <ManageStalls />
         </TabPanel>
       </Container>
     </TabContext>

@@ -164,6 +164,27 @@ export class StallsService {
     return { ...stall, images: imagesToBase64(stall.images) };
   }
 
+  async findOneDeepById(id: string) {
+    return this.stallsRepository
+      .createQueryBuilder("stall")
+      .select([
+        "stall.name",
+        "stall.stallNumber",
+        "stall.information",
+        "stall.createdAt",
+        "stall.updatedAt",
+        "images.link",
+        "locationImages.link",
+      ])
+      .leftJoin("stall.images", "images")
+      .leftJoinAndSelect("stall.location", "location")
+      .leftJoin("location.images", "locationImages")
+      .where("stall.id = :id", {
+        id,
+      })
+      .getOne();
+  }
+
   async create(body: any) {
     const createStallDto = plainToClass(CreateStallDto, body);
     await validateOrReject(createStallDto);

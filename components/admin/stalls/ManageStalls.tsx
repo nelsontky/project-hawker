@@ -5,14 +5,12 @@ import StallsTable from "components/admin/stalls/StallsTable";
 
 import { Stall } from "modules/stalls/entities/stall.entity";
 
-export default function EditStalls() {
-  const { data, error } = useSWR<Stall[]>(
-    "/api/v1/stalls?hide-compressed=true"
-  );
+export default function ManageStalls() {
+  const { data } = useSWR<Stall[]>("/api/v1/stalls?hide-compressed=true");
 
   return (
     <div>
-      <Typography variant="h3">Edit Stalls</Typography>
+      <Typography variant="h5">Manage Stalls</Typography>
       <StallsTable stalls={data} />
     </div>
   );

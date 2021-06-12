@@ -27,7 +27,7 @@ const validationSchema = yup.object({
 export interface StallFields {
   contact?: string;
   deliveryAvailable?: string;
-  description: string;
+  description?: string;
   dietaryRestrictions?: string;
   favorites?: string;
   foodTheyServe?: string;
@@ -40,7 +40,7 @@ export interface StallFields {
   whatAreTheConcernsThisHawkerIsFacing?: string;
 }
 
-interface StallInformation extends StallFields {
+export interface StallInformation extends StallFields {
   location?: Location;
 }
 
@@ -95,7 +95,7 @@ export function useStallForm({ fields, onSubmit }: UseStallFormProps) {
 }
 
 interface EditStallFormProps {
-  imageLinks: string[];
+  imageLinks?: string[];
   form: ReturnType<typeof useStallForm>;
 }
 
@@ -116,11 +116,12 @@ export default function EditStallForm({
       />
       <div className="my-8">
         <Grid container spacing={4} className="my-4">
-          {imageLinks.map((link) => (
-            <Grid item xs={6} key={link}>
-              <img src={link} />
-            </Grid>
-          ))}
+          {imageLinks &&
+            imageLinks.map((link) => (
+              <Grid item xs={6} key={link}>
+                <img src={link} />
+              </Grid>
+            ))}
         </Grid>
         <Grid container spacing={4}>
           <Grid item xs={12}>
