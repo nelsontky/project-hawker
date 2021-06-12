@@ -6,9 +6,10 @@ import { useRouter } from "next/router";
 export default function NavigationBar() {
   const router = useRouter();
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const handleChange = (_: React.ChangeEvent<{}>, newValue: string) => {
     router.push(newValue);
   };
+  
   return (
     <>
       <AppBar position="fixed">
