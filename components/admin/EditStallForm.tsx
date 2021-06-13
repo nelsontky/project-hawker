@@ -12,7 +12,7 @@ import { Location } from "modules/locations/entities/location.entity";
 export interface StallFields {
   contact?: string;
   deliveryAvailable?: string;
-  description?: string;
+  moreAboutThisHawker?: string;
   dietaryRestrictions?: string;
   favorites?: string;
   foodTheyServe?: string;
@@ -44,7 +44,7 @@ const getInitialValues = (fields: StallInformation) => {
   const {
     contact,
     deliveryAvailable,
-    description,
+    moreAboutThisHawker,
     dietaryRestrictions,
     favorites,
     foodTheyServe,
@@ -58,7 +58,7 @@ const getInitialValues = (fields: StallInformation) => {
   } = fields;
 
   return {
-    description: description ?? "",
+    moreAboutThisHawker: moreAboutThisHawker ?? "",
     stallName: stallName ?? "",
     recommendedBy: recommendedBy ?? "",
     contact: contact ?? "",
@@ -85,6 +85,10 @@ export function useStallForm({
 
   const [locationInput, setLocationInput] =
     React.useState<Location | null>(location);
+
+  React.useEffect(() => {
+    setLocationInput(location);
+  }, [location]);
 
   const formik = useFormik({
     initialValues,
@@ -113,7 +117,7 @@ export default function EditStallForm({
   return (
     <>
       <CreateLocationDialog
-        description={formik.values.description}
+        moreAboutThisHawker={formik.values.moreAboutThisHawker}
         open={isAddLocation}
         setOpen={setIsAddLocation}
         setLocationInput={setLocationInput}
@@ -139,14 +143,18 @@ export default function EditStallForm({
             </Button>
           </Grid>
           {Object.keys(formik.values).map((field, i) => (
-            <Grid item xs={field === "description" ? 12 : 6} key={field}>
+            <Grid
+              item
+              xs={field === "moreAboutThisHawker" ? 12 : 6}
+              key={field}
+            >
               <TextField
                 multiline={
-                  field === "description" ||
+                  field === "moreAboutThisHawker" ||
                   field === "whatAreTheConcernsThisHawkerIsFacing"
                 }
                 rows={
-                  field === "description" ||
+                  field === "moreAboutThisHawker" ||
                   field === "whatAreTheConcernsThisHawkerIsFacing"
                     ? 4
                     : undefined

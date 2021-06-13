@@ -34,7 +34,7 @@ export default function EditStallDialog() {
     const {
       contact,
       deliveryAvailable,
-      moreAboutThisHawker: description,
+      moreAboutThisHawker,
       dietaryRestrictions,
       favorites,
       foodTheyServe,
@@ -50,7 +50,7 @@ export default function EditStallDialog() {
       stallNumber,
       contact,
       deliveryAvailable,
-      description,
+      moreAboutThisHawker,
       dietaryRestrictions,
       favorites,
       foodTheyServe,

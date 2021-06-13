@@ -23,10 +23,10 @@ import { useSnackbar } from "lib/hooks/use-snackbar.hook";
 import { useAppSelector } from "lib/hooks/redux.hook";
 
 const validationSchema = yup.object({
-  description: yup
+  moreAboutThisHawker: yup
     .string()
     .transform((value) => value.trim())
-    .required("Description is required"),
+    .required("More about this hawker is required"),
   stallName: yup
     .string()
     .transform((value) => value.trim())

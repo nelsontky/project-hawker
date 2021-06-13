@@ -12,7 +12,7 @@ export class UpdateFacebookDto {
 
   @IsString()
   @IsOptional()
-  description?: string;
+  moreAboutThisHawker?: string;
 
   @IsString()
   @IsOptional()

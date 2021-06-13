@@ -200,7 +200,7 @@ export class StallsService {
 
       // Information JSON
       nameOfHawker,
-      description,
+      moreAboutThisHawker,
       recommendedBy,
       contact,
       deliveryAvailable,
@@ -239,7 +239,7 @@ export class StallsService {
         dietaryRestrictions,
         priceRange,
         nameOfHawker,
-        description,
+        moreAboutThisHawker,
         openingHours,
         whatAreTheConcernsThisHawkerIsFacing,
         recommendedBy,
@@ -260,7 +260,7 @@ export class StallsService {
 
       // Information JSON
       nameOfHawker,
-      description,
+      moreAboutThisHawker,
       recommendedBy,
       contact,
       deliveryAvailable,
@@ -286,7 +286,7 @@ export class StallsService {
           dietaryRestrictions,
           priceRange,
           nameOfHawker,
-          moreAboutThisHawker: description,
+          moreAboutThisHawker,
           openingHours,
           whatAreTheConcernsThisHawkerIsFacing,
           recommendedBy,

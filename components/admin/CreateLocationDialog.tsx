@@ -53,14 +53,14 @@ interface CreateLocationDialogProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setLocationInput: React.Dispatch<React.SetStateAction<Location>>;
-  description?: string;
+  moreAboutThisHawker?: string;
 }
 
 export default function CreateLocationDialog({
   open,
   setOpen,
   setLocationInput,
-  description,
+  moreAboutThisHawker,
 }: CreateLocationDialogProps) {
   const handleClose = () => {
     setOpen(false);
@@ -104,8 +104,8 @@ export default function CreateLocationDialog({
     <Dialog open={open}>
       <DialogTitle>Create new location</DialogTitle>
       <DialogContent>
-        {description && description.length > 0 && (
-          <Typography variant="caption">{`Description: ${description}`}</Typography>
+        {moreAboutThisHawker && moreAboutThisHawker.length > 0 && (
+          <Typography variant="caption">{`Description: ${moreAboutThisHawker}`}</Typography>
         )}
         <Grid className="mt-4" container spacing={4}>
           {Object.keys(formik.values).map((field, i) => (

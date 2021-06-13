@@ -1,10 +1,4 @@
-import {
-  IsString,
-  IsOptional,
-  IsNotEmpty,
-  IsArray,
-  ArrayNotEmpty,
-} from "class-validator";
+import { IsString, IsOptional } from "class-validator";
 
 export class UpdateStallDto {
   @IsString()
@@ -17,7 +11,7 @@ export class UpdateStallDto {
 
   @IsString()
   @IsOptional()
-  description?: string;
+  moreAboutThisHawker?: string;
 
   @IsString()
   @IsOptional()
