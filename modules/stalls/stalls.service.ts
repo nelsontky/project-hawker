@@ -162,8 +162,6 @@ export class StallsService {
       })
       .getOne();
 
-    console.log(stall);
-
     return { ...stall, images: imagesToBase64(stall.images) };
   }
 

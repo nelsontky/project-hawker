@@ -8,5 +8,4 @@ import sharp from "sharp";
     .withMetadata()
     .toBuffer();
   const base64 = `data:image/png;base64,${resized.toString("base64")}`;
-  console.log(base64);
 })();
