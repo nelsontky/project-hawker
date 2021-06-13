@@ -1,23 +1,11 @@
 import React from "react";
+import { Container } from "@material-ui/core";
+import { TabPanel, TabContext } from "@material-ui/lab";
 import { useRouter } from "next/router";
-import { Container, LinearProgress } from "@material-ui/core";
-import useSWR from "swr";
-import { Pagination, PaginationItem } from "@material-ui/lab";
-import Link from "next/link";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-import PostEditor from "components/admin/PostEditor";
-
-import { useAppSelector } from "lib/hooks/redux.hook";
-import { ScrapeFacebook } from "modules/scrape-facebook/entities/scrape-facebook.entity";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    pageUl: {
-      justifyContent: "center",
-    },
-  })
-);
+import NavigationBar from "components/admin/NavigationBar";
+import ScrapedFacebook from "components/admin/ScrapedFacebook";
+import ManageStalls from "components/admin/stalls/ManageStalls";
 
 interface MainPortalProps {
   numberOfPages: number;
@@ -28,54 +16,19 @@ export default function MainPortal({
   numberOfPages,
   pageSize,
 }: MainPortalProps) {
-  const classes = useStyles();
   const router = useRouter();
-  const [page, setPage] = React.useState(1);
-  const token = useAppSelector((state) => state.admin.token);
-
-  const { data, error, mutate } = useSWR<ScrapeFacebook[]>([
-    `/api/v1/scrape-facebook?limit=${pageSize}&skip=${pageSize * (page - 1)}`,
-    token,
-  ]);
-
-  React.useEffect(() => {
-    if (router.isReady) {
-      const page = router.query.page;
-      if (page) {
-        setPage(+(page as string));
-      }
-    }
-  }, [router.query]);
 
   return (
-    <Container fixed>
-      {!data || error ? (
-        <LinearProgress />
-      ) : (
-        data.map((post) => <PostEditor key={post.id} post={post} mutate={mutate} />)
-      )}
-      <Pagination
-        className="mt-8"
-        page={page}
-        count={numberOfPages}
-        classes={{ ul: classes.pageUl }}
-        renderItem={(item) => {
-          if (
-            item.page > numberOfPages ||
-            item.page === 0 ||
-            item.page === null
-          ) {
-            return <PaginationItem {...item} />;
-          }
-          return (
-            <Link href={`/admin?page=${item.page}`}>
-              <a>
-                <PaginationItem {...item} />
-              </a>
-            </Link>
-          );
-        }}
-      />
-    </Container>
+    <TabContext value={router.asPath.split("?")[0] ?? "/admin"}>
+      <NavigationBar />
+      <Container fixed>
+        <TabPanel value="/admin">
+          <ScrapedFacebook numberOfPages={numberOfPages} pageSize={pageSize} />
+        </TabPanel>
+        <TabPanel value="/admin/stalls">
+          <ManageStalls />
+        </TabPanel>
+      </Container>
+    </TabContext>
   );
 }

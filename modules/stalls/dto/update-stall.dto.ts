@@ -1,7 +1,6 @@
-import { IsString, IsOptional, IsEnum } from "class-validator";
-import { PostStatus } from "../entities/scrape-facebook.entity";
+import { IsString, IsOptional } from "class-validator";
 
-export class UpdateFacebookDto {
+export class UpdateStallDto {
   @IsString()
   @IsOptional()
   recommendedBy?: string;
@@ -53,10 +52,6 @@ export class UpdateFacebookDto {
   @IsString()
   @IsOptional()
   stallNumber?: string;
-
-  @IsEnum(PostStatus)
-  @IsOptional()
-  status?: PostStatus;
 
   @IsString()
   @IsOptional()

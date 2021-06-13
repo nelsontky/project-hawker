@@ -17,7 +17,7 @@ export class CreateStallDto {
 
   @IsString()
   @IsNotEmpty()
-  description: string;
+  moreAboutThisHawker: string;
 
   @IsString()
   @IsNotEmpty()

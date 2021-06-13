@@ -23,7 +23,7 @@ export async function addPostToDatabase({
   const newPost = new ScrapeFacebook();
   newPost.id = postId;
   newPost.recommendedBy = recommendedBy;
-  newPost.description = description;
+  newPost.moreAboutThisHawker = description;
   newPost.imageNames = imageNames;
   newPost.postUrl = postUrl;
 

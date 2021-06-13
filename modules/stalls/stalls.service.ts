@@ -6,7 +6,8 @@ import { Connection, Repository } from "typeorm";
 import slugify from "slugify";
 
 import { Stall } from "modules/stalls/entities/stall.entity";
-import { CreateStallDto } from "./dto/create-stall.dto";
+import { CreateStallDto } from "modules/stalls/dto/create-stall.dto";
+import { UpdateStallDto } from "modules/stalls/dto/update-stall.dto";
 import { LocationsService } from "modules/locations/locations.service";
 import { ImagesService } from "modules/images/images.service";
 import { imagesToBase64 } from "lib/utils/images-to-base64";
@@ -55,24 +56,33 @@ export class StallsService {
   }
 
   async findAll(
-    options: { limit?: number; skip?: number; orderBy?: any[] } = {}
+    options: {
+      limit?: number;
+      skip?: number;
+      orderBy?: any[];
+      noCompressedImage?: boolean;
+    } = {}
   ) {
+    const selectOptions = [
+      "stall.id",
+      "stall.name",
+      "stall.stallNumber",
+      "stall.information",
+      "stall.slug",
+      "stall.createdAt",
+      "stall.updatedAt",
+      "images.link",
+      "location.name",
+      "location.slug",
+      "locationImages.link",
+    ];
+    if (!options.noCompressedImage) {
+      selectOptions.push("images.compressedImage");
+    }
+
     const stalls = await this.stallsRepository
       .createQueryBuilder("stall")
-      .select([
-        "stall.id",
-        "stall.name",
-        "stall.stallNumber",
-        "stall.information",
-        "stall.slug",
-        "stall.createdAt",
-        "stall.updatedAt",
-        "images.link",
-        "images.compressedImage",
-        "location.name",
-        "location.slug",
-        "locationImages.link",
-      ])
+      .select(selectOptions)
       .leftJoin("stall.images", "images")
       .leftJoin("stall.location", "location")
       .leftJoin("location.images", "locationImages")
@@ -84,6 +94,9 @@ export class StallsService {
       .take(options.limit)
       .getMany();
 
+    if (options.noCompressedImage) {
+      return stalls;
+    }
     return stalls.map((stall) => ({
       ...stall,
       images: imagesToBase64(stall.images),
@@ -149,7 +162,30 @@ export class StallsService {
       })
       .getOne();
 
+    console.log(stall);
+
     return { ...stall, images: imagesToBase64(stall.images) };
+  }
+
+  async findOneDeepById(id: string) {
+    return this.stallsRepository
+      .createQueryBuilder("stall")
+      .select([
+        "stall.name",
+        "stall.stallNumber",
+        "stall.information",
+        "stall.createdAt",
+        "stall.updatedAt",
+        "images.link",
+        "locationImages.link",
+      ])
+      .leftJoin("stall.images", "images")
+      .leftJoinAndSelect("stall.location", "location")
+      .leftJoin("location.images", "locationImages")
+      .where("stall.id = :id", {
+        id,
+      })
+      .getOne();
   }
 
   async create(body: any) {
@@ -164,7 +200,7 @@ export class StallsService {
 
       // Information JSON
       nameOfHawker,
-      description,
+      moreAboutThisHawker,
       recommendedBy,
       contact,
       deliveryAvailable,
@@ -203,12 +239,83 @@ export class StallsService {
         dietaryRestrictions,
         priceRange,
         nameOfHawker,
-        description,
+        moreAboutThisHawker,
         openingHours,
         whatAreTheConcernsThisHawkerIsFacing,
         recommendedBy,
       },
     });
+
+    return this.stallsRepository.save(stall);
+  }
+
+  async update(id: string, body: any) {
+    const updateStallDto = plainToClass(UpdateStallDto, body);
+    await validateOrReject(updateStallDto);
+
+    const {
+      stallName: name,
+      stallNumber,
+      locationId,
+
+      // Information JSON
+      nameOfHawker,
+      moreAboutThisHawker,
+      recommendedBy,
+      contact,
+      deliveryAvailable,
+      dietaryRestrictions,
+      favorites,
+      foodTheyServe,
+      openingHours,
+      priceRange,
+      whatAreTheConcernsThisHawkerIsFacing,
+    } = updateStallDto;
+
+    const toUpdate = await this.stallsRepository.findOne(id);
+    const informationToUpdate = toUpdate.information ?? {};
+
+    const information = {
+      ...informationToUpdate,
+      ...JSON.parse(
+        JSON.stringify({
+          deliveryAvailable,
+          contact,
+          foodTheyServe,
+          favorites,
+          dietaryRestrictions,
+          priceRange,
+          nameOfHawker,
+          moreAboutThisHawker,
+          openingHours,
+          whatAreTheConcernsThisHawkerIsFacing,
+          recommendedBy,
+        })
+      ),
+    };
+
+    const stall = plainToClass(
+      Stall,
+      JSON.parse(
+        JSON.stringify({
+          id,
+          name,
+          slug:
+            name &&
+            slugify(name, {
+              replacement: "-",
+              lower: true,
+            }),
+          stallNumber,
+          location:
+            locationId &&
+            (await this.locationsService.findOne({
+              where: { id: locationId },
+            })),
+          information,
+        })
+      )
+    );
 
     return this.stallsRepository.save(stall);
   }

@@ -27,7 +27,7 @@ export class ScrapeFacebook {
   recommendedBy: string;
 
   @Column("text")
-  description: string;
+  moreAboutThisHawker: string;
 
   @Column("text", { array: true })
   imageNames: string[];
