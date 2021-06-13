@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import _ from "lodash";
 import axios from "axios";
+import * as yup from "yup";
 
 import StatusChip from "components/admin/StatusChip";
 import InstructionTooltip from "components/admin/InstructionTooltip";
@@ -20,6 +21,21 @@ import {
 import { convertMbasicToFacebook } from "lib/utils/convert-mbasic-to-facebook";
 import { useSnackbar } from "lib/hooks/use-snackbar.hook";
 import { useAppSelector } from "lib/hooks/redux.hook";
+
+const validationSchema = yup.object({
+  description: yup
+    .string()
+    .transform((value) => value.trim())
+    .required("Description is required"),
+  stallName: yup
+    .string()
+    .transform((value) => value.trim())
+    .required("Stall name is required"),
+  recommendedBy: yup
+    .string()
+    .transform((value) => value.trim())
+    .required("Recommender is required"),
+});
 
 interface PostEditorProps {
   post: ScrapeFacebook;
@@ -81,7 +97,7 @@ export default function PostEditor({ post, mutate }: PostEditorProps) {
     }
   };
 
-  const form = useStallForm({ fields: rest, onSubmit });
+  const form = useStallForm({ fields: rest, onSubmit, validationSchema });
   const { formik, locationInput } = form;
 
   const onSave = async () => {

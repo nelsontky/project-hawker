@@ -9,21 +9,6 @@ import CreateLocationDialog from "components/admin/CreateLocationDialog";
 
 import { Location } from "modules/locations/entities/location.entity";
 
-const validationSchema = yup.object({
-  description: yup
-    .string()
-    .transform((value) => value.trim())
-    .required("Description is required"),
-  stallName: yup
-    .string()
-    .transform((value) => value.trim())
-    .required("Stall name is required"),
-  recommendedBy: yup
-    .string()
-    .transform((value) => value.trim())
-    .required("Recommender is required"),
-});
-
 export interface StallFields {
   contact?: string;
   deliveryAvailable?: string;
@@ -47,9 +32,14 @@ export interface StallInformation extends StallFields {
 interface UseStallFormProps {
   fields: StallInformation;
   onSubmit: (values: StallFields) => Promise<void>;
+  validationSchema?: ReturnType<typeof yup.object>;
 }
 
-export function useStallForm({ fields, onSubmit }: UseStallFormProps) {
+export function useStallForm({
+  fields,
+  onSubmit,
+  validationSchema,
+}: UseStallFormProps) {
   const {
     contact,
     deliveryAvailable,
@@ -137,7 +127,6 @@ export default function EditStallForm({
           {Object.keys(formik.values).map((field, i) => (
             <Grid item xs={field === "description" ? 12 : 6} key={field}>
               <TextField
-                required={i < 2}
                 multiline={
                   field === "description" ||
                   field === "whatAreTheConcernsThisHawkerIsFacing"

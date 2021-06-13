@@ -5,19 +5,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-  Typography,
 } from "@material-ui/core";
-import { useFormik } from "formik";
 import * as yup from "yup";
 import _ from "lodash";
-import axios from "axios";
 
 import EditStallForm, {
   useStallForm,
@@ -25,14 +15,21 @@ import EditStallForm, {
   StallFields,
 } from "components/admin/EditStallForm";
 
-import { Location } from "modules/locations/entities/location.entity";
 import { useAppSelector } from "lib/hooks/redux.hook";
+
+const validationSchema = yup.object({
+  stallName: yup
+    .string()
+    .transform((value) => value.trim())
+    .required("Stall name is required"),
+});
 
 interface StallFormDialog {
   stallInformation: StallInformation;
   imageLinks?: string[];
   open: boolean;
   close: () => void;
+  onSubmit: (values: StallFields) => Promise<void>;
 }
 
 export default function StallFormDialog({
@@ -40,12 +37,14 @@ export default function StallFormDialog({
   imageLinks,
   open,
   close,
+  onSubmit,
 }: StallFormDialog) {
   const token = useAppSelector((state) => state.admin.token);
 
   const form = useStallForm({
     fields: stallInformation,
-    onSubmit: async (values: StallFields) => {},
+    onSubmit,
+    validationSchema,
   });
   const { formik } = form;
 

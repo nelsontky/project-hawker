@@ -15,7 +15,7 @@ export default function NavigationBar() {
       <AppBar position="fixed">
         <TabList onChange={handleChange}>
           <Tab value="/admin" label="Scraped from Facebook" />
-          <Tab value="/admin/stalls" label="Edit Stalls" />
+          <Tab value="/admin/stalls" label="Manage Stalls" />
           {/* <Tab label="Edit Locations" /> */}
         </TabList>
       </AppBar>

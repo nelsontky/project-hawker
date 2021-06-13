@@ -6,7 +6,8 @@ import { Connection, Repository } from "typeorm";
 import slugify from "slugify";
 
 import { Stall } from "modules/stalls/entities/stall.entity";
-import { CreateStallDto } from "./dto/create-stall.dto";
+import { CreateStallDto } from "modules/stalls/dto/create-stall.dto";
+import { UpdateStallDto } from "modules/stalls/dto/update-stall.dto";
 import { LocationsService } from "modules/locations/locations.service";
 import { ImagesService } from "modules/images/images.service";
 import { imagesToBase64 } from "lib/utils/images-to-base64";
@@ -241,6 +242,72 @@ export class StallsService {
         whatAreTheConcernsThisHawkerIsFacing,
         recommendedBy,
       },
+    });
+
+    return this.stallsRepository.save(stall);
+  }
+
+  async update(id: string, body: any) {
+    const updateStallDto = plainToClass(UpdateStallDto, body);
+    await validateOrReject(updateStallDto);
+
+    const {
+      stallName: name,
+      stallNumber,
+      locationId,
+
+      // Information JSON
+      nameOfHawker,
+      description,
+      recommendedBy,
+      contact,
+      deliveryAvailable,
+      dietaryRestrictions,
+      favorites,
+      foodTheyServe,
+      openingHours,
+      priceRange,
+      whatAreTheConcernsThisHawkerIsFacing,
+    } = updateStallDto;
+
+    const toUpdate = await this.stallsRepository.findOne(id);
+    const informationToUpdate = toUpdate.information ?? {};
+
+    const information = {
+      ...informationToUpdate,
+      ...JSON.parse(
+        JSON.stringify({
+          deliveryAvailable,
+          contact,
+          foodTheyServe,
+          favorites,
+          dietaryRestrictions,
+          priceRange,
+          nameOfHawker,
+          moreAboutThisHawker: description,
+          openingHours,
+          whatAreTheConcernsThisHawkerIsFacing,
+          recommendedBy,
+        })
+      ),
+    };
+
+    const stall = plainToClass(Stall, {
+      id,
+      name,
+      slug:
+        name &&
+        slugify(name, {
+          replacement: "-",
+          lower: true,
+        }),
+      stallNumber,
+      location:
+        locationId &&
+        (await this.locationsService.findOne({
+          where: { id: locationId },
+        })),
+      information,
     });
 
     return this.stallsRepository.save(stall);
