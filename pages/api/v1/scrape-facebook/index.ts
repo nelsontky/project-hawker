@@ -18,6 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           alias: "post",
           leftJoinAndSelect: {
             location: "post.location",
+            stall: "post.stall",
           },
         },
         where: `array_length("imageNames", 1) > 0`,

@@ -105,11 +105,13 @@ export function useStallForm({
 interface EditStallFormProps {
   imageLinks?: string[];
   form: ReturnType<typeof useStallForm>;
+  readonly?: boolean;
 }
 
 export default function EditStallForm({
   imageLinks,
   form,
+  readonly,
 }: EditStallFormProps) {
   const [isAddLocation, setIsAddLocation] = React.useState(false);
   const { formik, locationInput, setLocationInput } = form;
@@ -133,7 +135,7 @@ export default function EditStallForm({
         </Grid>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <LocationSearch value={locationInput} setValue={setLocationInput} />
+            <LocationSearch value={locationInput} setValue={setLocationInput} disabled={readonly} />
             <Button
               onClick={() => {
                 setIsAddLocation(true);
@@ -167,6 +169,7 @@ export default function EditStallForm({
                 onChange={formik.handleChange}
                 error={formik.touched[field] && Boolean(formik.errors[field])}
                 helperText={formik.touched[field] && formik.errors[field]}
+                disabled={readonly}
               />
             </Grid>
           ))}

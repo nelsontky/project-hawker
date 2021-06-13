@@ -9,11 +9,13 @@ import { Location } from "modules/locations/entities/location.entity";
 interface LocationSearchProps {
   value: Location | null;
   setValue: React.Dispatch<React.SetStateAction<Location | null>>;
+  disabled?: boolean;
 }
 
 export default function LocationSearch({
   value,
   setValue,
+  disabled,
 }: LocationSearchProps) {
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState<Location[]>([]);
@@ -40,8 +42,11 @@ export default function LocationSearch({
 
   return (
     <Autocomplete
+      disabled={disabled}
       getOptionLabel={(option) =>
-        typeof option === "string" ? option : `${option.name} (${option.postalCode})`
+        typeof option === "string"
+          ? option
+          : `${option.name} (${option.postalCode})`
       }
       filterOptions={(x) => x}
       options={options}
@@ -52,7 +57,7 @@ export default function LocationSearch({
       getOptionSelected={(option, value) => {
         return option?.id === value?.id;
       }}
-      onChange={(event: any, newValue: Location | null) => {
+      onChange={(_: any, newValue: Location | null) => {
         setOptions(newValue ? [newValue, ...options] : options);
         setValue(newValue);
       }}

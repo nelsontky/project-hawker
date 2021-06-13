@@ -45,6 +45,7 @@ interface PostEditorProps {
 export default function PostEditor({ post, mutate }: PostEditorProps) {
   const { open } = useSnackbar();
   const token = useAppSelector((state) => state.admin.token);
+  const isApproved = !!post.stall;
 
   const { id, status, postUrl, imageNames, ...rest } = post;
 
@@ -139,28 +140,44 @@ export default function PostEditor({ post, mutate }: PostEditorProps) {
         <EditStallForm
           form={form}
           imageLinks={imageNames.map((name) => `/images/facebook/${name}`)}
+          readonly={isApproved}
         />
         <CardActions>
-          <InstructionTooltip />
-          <Button
-            color="primary"
-            variant="contained"
-            fullWidth
-            onClick={formik.submitForm}
-          >
-            Approve
-          </Button>
-          <Button
-            color="secondary"
-            variant="contained"
-            fullWidth
-            onClick={onSave}
-          >
-            Save
-          </Button>
-          <Button variant="contained" fullWidth onClick={onReject}>
-            Reject
-          </Button>
+          {isApproved ? (
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              component="a"
+              href={`/admin/stalls?edit=${encodeURIComponent(post.stall.id)}`}
+              target="_blank"
+            >
+              Edit Stall
+            </Button>
+          ) : (
+            <>
+              <InstructionTooltip />
+              <Button
+                color="primary"
+                variant="contained"
+                fullWidth
+                onClick={formik.submitForm}
+              >
+                Approve
+              </Button>
+              <Button
+                color="secondary"
+                variant="contained"
+                fullWidth
+                onClick={onSave}
+              >
+                Save
+              </Button>
+              <Button variant="contained" fullWidth onClick={onReject}>
+                Reject
+              </Button>
+            </>
+          )}
         </CardActions>
       </CardContent>
     </Card>
