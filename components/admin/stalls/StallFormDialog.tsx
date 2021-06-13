@@ -12,10 +12,8 @@ import _ from "lodash";
 import EditStallForm, {
   useStallForm,
   StallInformation,
-  StallFields,
+  IOnSubmit,
 } from "components/admin/EditStallForm";
-
-import { useAppSelector } from "lib/hooks/redux.hook";
 
 const validationSchema = yup.object({
   stallName: yup
@@ -29,7 +27,7 @@ interface StallFormDialog {
   imageLinks?: string[];
   open: boolean;
   close: () => void;
-  onSubmit: (values: StallFields) => Promise<void>;
+  onSubmit: IOnSubmit;
 }
 
 export default function StallFormDialog({
@@ -39,8 +37,6 @@ export default function StallFormDialog({
   close,
   onSubmit,
 }: StallFormDialog) {
-  const token = useAppSelector((state) => state.admin.token);
-
   const form = useStallForm({
     fields: stallInformation,
     onSubmit,
@@ -60,11 +56,11 @@ export default function StallFormDialog({
         </Button>
         <Button
           disabled={formik.isSubmitting}
-          onClick={close}
+          onClick={formik.submitForm}
           color="primary"
           autoFocus
         >
-          Add
+          Save
         </Button>
       </DialogActions>
     </Dialog>

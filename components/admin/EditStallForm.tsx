@@ -29,17 +29,18 @@ export interface StallInformation extends StallFields {
   location?: Location;
 }
 
+export type IOnSubmit = (
+  values?: StallFields,
+  locationInput?: string
+) => Promise<void>;
+
 interface UseStallFormProps {
   fields: StallInformation;
-  onSubmit: (values: StallFields) => Promise<void>;
+  onSubmit: IOnSubmit;
   validationSchema?: ReturnType<typeof yup.object>;
 }
 
-export function useStallForm({
-  fields,
-  onSubmit,
-  validationSchema,
-}: UseStallFormProps) {
+const getInitialValues = (fields: StallInformation) => {
   const {
     contact,
     deliveryAvailable,
@@ -47,7 +48,6 @@ export function useStallForm({
     dietaryRestrictions,
     favorites,
     foodTheyServe,
-    location,
     nameOfHawker,
     openingHours,
     priceRange,
@@ -57,29 +57,43 @@ export function useStallForm({
     whatAreTheConcernsThisHawkerIsFacing,
   } = fields;
 
-  const formik = useFormik({
-    initialValues: {
-      description,
-      stallName: stallName ?? "",
-      recommendedBy: recommendedBy,
-      contact: contact ?? "",
-      deliveryAvailable: deliveryAvailable ?? "",
-      dietaryRestrictions: dietaryRestrictions ?? "",
-      favorites: favorites ?? "",
-      foodTheyServe: foodTheyServe ?? "",
-      openingHours: openingHours ?? "",
-      priceRange: priceRange ?? "",
-      nameOfHawker: nameOfHawker ?? "",
-      stallNumber: stallNumber ?? "",
-      whatAreTheConcernsThisHawkerIsFacing:
-        whatAreTheConcernsThisHawkerIsFacing ?? "",
-    },
-    validationSchema,
-    onSubmit,
-  });
+  return {
+    description: description ?? "",
+    stallName: stallName ?? "",
+    recommendedBy: recommendedBy ?? "",
+    contact: contact ?? "",
+    deliveryAvailable: deliveryAvailable ?? "",
+    dietaryRestrictions: dietaryRestrictions ?? "",
+    favorites: favorites ?? "",
+    foodTheyServe: foodTheyServe ?? "",
+    openingHours: openingHours ?? "",
+    priceRange: priceRange ?? "",
+    nameOfHawker: nameOfHawker ?? "",
+    stallNumber: stallNumber ?? "",
+    whatAreTheConcernsThisHawkerIsFacing:
+      whatAreTheConcernsThisHawkerIsFacing ?? "",
+  };
+};
+
+export function useStallForm({
+  fields,
+  onSubmit,
+  validationSchema,
+}: UseStallFormProps) {
+  const { location } = fields;
+  const initialValues = getInitialValues(fields);
 
   const [locationInput, setLocationInput] =
     React.useState<Location | null>(location);
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: async (values) => {
+      onSubmit(values, locationInput?.id);
+    },
+    enableReinitialize: true,
+  });
 
   return { formik, locationInput, setLocationInput };
 }

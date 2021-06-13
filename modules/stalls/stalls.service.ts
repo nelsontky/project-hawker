@@ -162,6 +162,8 @@ export class StallsService {
       })
       .getOne();
 
+    console.log(stall);
+
     return { ...stall, images: imagesToBase64(stall.images) };
   }
 
@@ -292,23 +294,28 @@ export class StallsService {
       ),
     };
 
-    const stall = plainToClass(Stall, {
-      id,
-      name,
-      slug:
-        name &&
-        slugify(name, {
-          replacement: "-",
-          lower: true,
-        }),
-      stallNumber,
-      location:
-        locationId &&
-        (await this.locationsService.findOne({
-          where: { id: locationId },
-        })),
-      information,
-    });
+    const stall = plainToClass(
+      Stall,
+      JSON.parse(
+        JSON.stringify({
+          id,
+          name,
+          slug:
+            name &&
+            slugify(name, {
+              replacement: "-",
+              lower: true,
+            }),
+          stallNumber,
+          location:
+            locationId &&
+            (await this.locationsService.findOne({
+              where: { id: locationId },
+            })),
+          information,
+        })
+      )
+    );
 
     return this.stallsRepository.save(stall);
   }

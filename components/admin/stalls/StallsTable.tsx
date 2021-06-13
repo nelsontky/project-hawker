@@ -11,7 +11,7 @@ import {
   TextField,
   IconButton,
 } from "@material-ui/core";
-import { Edit } from "@material-ui/icons";
+import { Edit, Visibility } from "@material-ui/icons";
 import _ from "lodash";
 import { useRouter } from "next/router";
 
@@ -34,8 +34,8 @@ export default function StallsTable({ stalls }: StallsTableProps) {
 
   const filterStalls = _.throttle((term: string) => {
     if (term !== "") {
-      setFilteredStalls((filteredStalls) =>
-        filteredStalls.filter(
+      setFilteredStalls(
+        stalls.filter(
           (stall) =>
             stall.name.toLowerCase().includes(term.toLowerCase()) ||
             stall.location.name.toLowerCase().includes(term.toLowerCase())
@@ -72,6 +72,7 @@ export default function StallsTable({ stalls }: StallsTableProps) {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Location</TableCell>
+              <TableCell>View</TableCell>
               <TableCell>Created At</TableCell>
               <TableCell>Updated At</TableCell>
               <TableCell>Edit</TableCell>
@@ -83,6 +84,15 @@ export default function StallsTable({ stalls }: StallsTableProps) {
               <TableRow key={stall.name}>
                 <TableCell>{stall.name}</TableCell>
                 <TableCell>{stall.location.name}</TableCell>
+                <TableCell>
+                  <IconButton
+                    component="a"
+                    href={`/${stall.location.slug}/${stall.slug}`}
+                    target="_blank"
+                  >
+                    <Visibility />
+                  </IconButton>
+                </TableCell>
                 <TableCell>
                   {new Date(stall.createdAt).toLocaleString()}
                 </TableCell>
